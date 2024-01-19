@@ -1,7 +1,11 @@
 import React from 'react'
+import Nav from '../components/nav'
 
 export default function BlogPage() {
   return (
-    <div>BlogPage</div>
+    <>
+      <Nav />
+      <div>BlogPage</div>
+    </>
   )
 }

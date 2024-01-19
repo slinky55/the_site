@@ -1,7 +1,11 @@
 import React from 'react'
+import Nav from '../components/nav'
 
 export default function AboutUsPage() {
   return (
-    <div>AboutUsPage</div>
+    <>
+      <Nav />
+      <div>AboutUsPage</div>
+    </>
   )
 }

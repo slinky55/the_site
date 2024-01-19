@@ -1,11 +1,11 @@
 import React from 'react'
 import Nav from '../components/nav'
 
-export default function ResearchLibraryPage() {
+export default function NewsPage() {
   return (
     <>
       <Nav />
-      <div>ResearchLibraryPage</div>
+      <div>NewsPage</div>
     </>
   )
 }

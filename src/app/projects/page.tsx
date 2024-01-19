@@ -1,7 +1,11 @@
 import React from 'react'
+import Nav from '../components/nav'
 
 export default function ProjectPage() {
   return (
-    <div>ProjectPage</div>
+    <>
+      <Nav />
+      <div>ProjectPage</div>
+    </>
   )
 }
