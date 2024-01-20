@@ -1,10 +1,10 @@
 import React from 'react'
-import Nav from '../components/nav'
+import { Header } from '../components/Header'
 
 export default function BlogPage() {
   return (
     <>
-      <Nav />
+      <Header />
       <div>BlogPage</div>
     </>
   )

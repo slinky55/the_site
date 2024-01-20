@@ -1,11 +1,9 @@
-import styles from "page.module.css";
-import Nav from "./components/nav";
+import { Header } from '@/app/components/Header'
 
 export default function Home() {
   return (
     <main>
-      <Nav/>
-      <div>HomePage</div>
+      <Header/>
     </main>
   )
 }
