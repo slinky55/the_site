@@ -1,0 +1,13 @@
+.projectGrid {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5rem;
+}
+
+.projectDisplay {
+    width: 30em;
+    height: 40em;
+
+    display: flex;
+    flex-direction: column;
+}

@@ -13,6 +13,6 @@ export default function Nav() {
         <Link className={styles.link} href="/projects">Projects</Link>
         <Link className={styles.link} href="/blog">Blog</Link>
         <Link className={styles.link} href="/contact">Contact Us</Link>
-      </nav>
+    </nav>
   )
 }
