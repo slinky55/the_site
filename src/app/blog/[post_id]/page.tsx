@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Nav from '../../components/nav';
 import styles from './page.module.css';
+import { useRouter } from 'next/navigation';
 
 interface PostPageProps {
   params: {
@@ -19,6 +20,8 @@ type Post = {
 }
 
 const PostPage: React.FC<PostPageProps> = ({ params }) => {
+
+    const router = useRouter();
 
     const [post, setPost] = useState<Post | null>(null);
     const [loading, setLoading] = useState(true);
@@ -61,6 +64,23 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         }
       }, [post]);
 
+
+    async function deletePost() {
+      const postData = {
+        method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            post_id: params.post_id,
+          }),
+      }
+
+      await fetch(`/api/deletepost`, postData);
+
+      router.push('/blog')
+    }
+
   return (
 <>
       <Nav />
@@ -78,6 +98,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                 <p key={post.post_id}>Created at: {new Date(post.created_at).toLocaleString()}</p>
                 <p key={post.post_id}>Last Modified: {new Date(post.last_modified).toLocaleString()}</p>
             </div>
+            <button onClick={deletePost}>Delete Post</button>
           </div>
         ) : (
           <p>No posts available.</p>

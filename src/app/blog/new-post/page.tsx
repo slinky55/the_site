@@ -1,12 +1,14 @@
 'use client'
-import React, { useState } from 'react'
+import { useRouter } from 'next/navigation';
+import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 
 export default function NewPostPage() {
+    const router = useRouter();
     const [authorName, setAuthorName] = useState('');
     const [postContent, setPostContent] = useState('');
 
-    function createPost() {
+    async function createPost() {
         const postData = {
             method: "POST",
             headers: {
@@ -20,7 +22,9 @@ export default function NewPostPage() {
             }),
         }
 
-        fetch('/api/createpost', postData);
+        await fetch('/api/createpost', postData);
+
+        router.push('/blog');
     }
 
     return (
