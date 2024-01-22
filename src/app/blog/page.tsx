@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from 'react';
 import Nav from '../components/nav';
 import styles from './page.module.css';
+import Link from 'next/link';
 
 type Post = {
   post_id: number,
@@ -18,9 +19,16 @@ export default function BlogPage() {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const postData = {
+      method: "GET",
+      header: {
+        "Content-Type": "application/json",
+      },
+    }
+
     async function getData() {
       try {
-        const res = await fetch("/api/getposts");
+        const res = await fetch("/api/getposts", postData);
 
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -40,7 +48,6 @@ export default function BlogPage() {
   useEffect(() => {
     if(posts) {
       setLoading(false);
-      console.log(posts[0].author)
     }
   }, [posts]);
 
@@ -56,12 +63,14 @@ export default function BlogPage() {
           <div className={styles.postsContainer} key={1}>
             <p className={styles.title} key={2}>Blog</p>
             {posts.map(post => (
-              <div className={styles.postContainer} key={post.post_id}>
-                <p className={styles.author} key={post.author_id}>{post.author}</p>
-                <p className={styles.post} key={post.post_id}>{post.post}</p>
-                <p key={post.post_id}>Created at: {new Date(post.created_at).toLocaleString()}</p>
-                <p key={post.post_id}>Last Modified: {new Date(post.last_modified).toLocaleString()}</p>
-              </div>
+              <Link href={`blog/${post.post_id}`}>
+                <div className={styles.postContainer} key={post.post_id}>
+                  <p className={styles.author} key={post.author_id}>{post.author}</p>
+                  <p className={styles.post} key={post.post_id}>{post.post}</p>
+                  <p key={post.post_id}>Created at: {new Date(post.created_at).toLocaleString()}</p>
+                  <p key={post.post_id}>Last Modified: {new Date(post.last_modified).toLocaleString()}</p>
+                </div>
+              </Link>
             ))}
           </div>
         ) : (
