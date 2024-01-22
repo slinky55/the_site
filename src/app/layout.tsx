@@ -6,11 +6,11 @@ import { type Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: {
-    template: '%s - UF Work Group --EL',
-    default: 'Work Group --EL',
+    template: '%s - UF Work Group',
+    default: 'Work Group',
   },
   description:
-      'Work Group --EL',
+      'Work Group',
 }
 
 const inter = Inter({
