@@ -1,0 +1,63 @@
+.body{
+    margin: 0;
+    padding: 0;
+}
+.global{
+    font-size: 14px;
+}
+.container{
+    width: 80%;
+    margin: 50px auto;
+}
+.contactBox{
+    background: #fff;
+    display: flex;
+}
+.contactLeft{
+    flex-basis: 60%;
+    padding: 40px 60px;
+}
+.contactRight{
+    flex-basis: 40%;
+    padding: 40px;
+    background: #1c00b5;
+    color: white;
+}
+.container p{
+    margin-bottom: 40px;
+}
+.inputRow{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.inputRow .inputGroup{
+    flex-basis: 45%;
+}
+.input{
+    width: 100%;
+    border: none;
+    border-bottom: 1px solid #ccc;
+    outline: none;
+    padding-bottom: 5px;
+}
+.input:focus {
+    border-bottom: 1.5px solid #777777;
+}
+.messageTextArea{
+    width: 100%;
+    height: 150px;
+    border: 1px solid #ccc;
+    outline: none;
+    padding: 10px;
+    box-sizing: border-box;
+    resize: none;
+}
+
+.messageTextArea:focus {
+    border: 1.5px solid #777777;
+}
+.label{
+    margin-bottom: 6px;
+    display: block;
+}
