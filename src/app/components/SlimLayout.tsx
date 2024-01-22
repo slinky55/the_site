@@ -1,6 +1,6 @@
 import Image from 'next/image'
 
-import backgroundImage from '@/images/background-auth.jpg'
+import backgroundImage from '@/images/background-root.jpg'
 
 export function SlimLayout({ children }: { children: React.ReactNode }) {
   return (
@@ -16,7 +16,6 @@ export function SlimLayout({ children }: { children: React.ReactNode }) {
             className="absolute inset-0 h-full w-full object-cover"
             src={backgroundImage}
             alt=""
-            unoptimized
           />
         </div>
       </div>
