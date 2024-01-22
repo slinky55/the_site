@@ -27,7 +27,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
     useEffect(() => {
         const postData = {
           method: "POST",
-          header: {
+          headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({

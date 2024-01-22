@@ -21,7 +21,7 @@ export default function BlogPage() {
   useEffect(() => {
     const postData = {
       method: "GET",
-      header: {
+      headers: {
         "Content-Type": "application/json",
       },
     }
@@ -54,6 +54,7 @@ export default function BlogPage() {
   return (
     <>
       <Nav />
+      <Link href="blog/new-post">Create Post</Link>
       <div>
         {loading ? (
           <p>Loading...</p>
