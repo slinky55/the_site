@@ -1,10 +1,10 @@
 import React from 'react'
-import Nav from '../components/nav'
+import { Header } from '../components/Header'
 
 export default function ProjectPage() {
   return (
     <>
-      <Nav />
+      <Header />
       <div>ProjectPage</div>
     </>
   )

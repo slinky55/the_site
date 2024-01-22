@@ -1,10 +1,10 @@
 import React from 'react'
-import Nav from '../components/nav'
+import { Header } from '../components/Header'
 
 export default function ResearchLibraryPage() {
   return (
     <>
-      <Nav />
+      <Header />
       <div>ResearchLibraryPage</div>
     </>
   )

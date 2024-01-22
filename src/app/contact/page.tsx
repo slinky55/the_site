@@ -1,8 +1,7 @@
 import React from 'react'
 import Nav from '../components/nav'
 import styles from './page.module.css'
-
-
+import { Header } from '../components/Header'
 
 export default function ContactPage() {
   return (
@@ -54,6 +53,7 @@ export default function ContactPage() {
       </div>
       </div>
       </body>
+      <Header />
     </>
   )
 }

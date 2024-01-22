@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import Nav from '../components/nav';
 import styles from './page.module.css';
 import Link from 'next/link';
+import { Header } from '../components/Header'
 
 type Post = {
   post_id: number,
@@ -80,4 +81,8 @@ export default function BlogPage() {
       </div>
     </>
   );
+}
+    <Header />
+    </>
+  )
 }
