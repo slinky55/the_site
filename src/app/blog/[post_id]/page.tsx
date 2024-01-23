@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import Nav from '../../components/nav';
 import styles from './page.module.css';
 import { useRouter } from 'next/navigation';
+import { Header } from '@/app/components/Header';
 
 interface PostPageProps {
   params: {
@@ -83,7 +83,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
   return (
 <>
-      <Nav />
+  <Header />
       <div>
         {loading ? (
           <p>Loading...</p>

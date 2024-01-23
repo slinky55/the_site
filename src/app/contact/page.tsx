@@ -34,6 +34,7 @@ export default function ContactPage() {
 
   return (
     <>
+      <Header />
       <body className={styles.body}>
       <div className={styles.global}>
       <div className={styles.container}>
@@ -112,7 +113,6 @@ export default function ContactPage() {
       </div>
       </div>
       </body>
-      <Header />
     </>
   )
 }
