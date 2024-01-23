@@ -1,15 +1,14 @@
 import { NextResponse } from "next/server";
-import executeQuery from "../../lib/db";
+import executeQuery from "../../../lib/db";
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 
-export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
-    const formData = await new Response(req.body).json();
-    const id = formData.post_id;
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
+    
     try  {
         const result = await executeQuery({
-            query: `DELETE FROM posts WHERE post_id = ?`,
-            values: [id],
+            query: 'SELECT * FROM posts',
+            values: '',
         })
         console.log(result);
 

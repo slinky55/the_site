@@ -22,7 +22,7 @@ export default function NewPostPage() {
             }),
         }
 
-        await fetch('/api/createpost', postData);
+        await fetch('/api/posts/createpost', postData);
 
         router.push('/blog');
     }

@@ -28,7 +28,7 @@ export default function BlogPage() {
 
     async function getData() {
       try {
-        const res = await fetch("/api/getposts", postData);
+        const res = await fetch("/api/posts/getposts", postData);
 
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
