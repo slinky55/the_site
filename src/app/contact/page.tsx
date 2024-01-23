@@ -1,8 +1,9 @@
 'use client'
 import React, { useState } from 'react'
-import Nav from '../components/nav'
 import styles from './page.module.css'
 import { v4 as uuidv4 } from 'uuid';
+import { Header } from '../components/Header'
+
 
 export default function ContactPage() {
   const [name, setName] = useState('');
@@ -33,7 +34,6 @@ export default function ContactPage() {
 
   return (
     <>
-      <Nav />
       <body className={styles.body}>
       <div className={styles.global}>
       <div className={styles.container}>
@@ -112,6 +112,7 @@ export default function ContactPage() {
       </div>
       </div>
       </body>
+      <Header />
     </>
   )
 }

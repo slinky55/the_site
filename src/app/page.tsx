@@ -1,11 +1,16 @@
-import styles from "page.module.css";
-import Nav from "./components/nav";
+import { Header } from '@/app/components/Header'
+import backgroundImage from '@/images/background-root.jpg'
+import Image from "next/image";
 
 export default function Home() {
   return (
     <main>
-      <Nav/>
-      <div>HomePage</div>
+      <Header/>
+        <Image
+            className="absolute inset-0 h-full w-full object-cover"
+            src={backgroundImage}
+            alt=""
+        />
     </main>
   )
 }
