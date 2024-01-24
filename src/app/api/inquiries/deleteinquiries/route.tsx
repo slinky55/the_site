@@ -1,19 +1,20 @@
 import { NextResponse } from "next/server";
-import executeQuery from "../../lib/db";
+import executeQuery from "../../../lib/db";
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
-    
+export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
+    const formData = await new Response(req.body).json();
+    const id = formData.msg_id;
     try  {
         const result = await executeQuery({
-            query: 'SELECT * FROM posts',
-            values: '',
+            query: `DELETE FROM inquiries WHERE msg_id = ?`,
+            values: [id],
         })
         console.log(result);
 
         if (res) {
-            return NextResponse.json({posts: result}, {status: 200})
+            return NextResponse.json({inquiries: result}, {status: 200})
         } else {
             console.error('Response object is undefined.');
         }

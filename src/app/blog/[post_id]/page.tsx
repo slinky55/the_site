@@ -1,8 +1,8 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import Nav from '../../components/nav';
 import styles from './page.module.css';
 import { useRouter } from 'next/navigation';
+import { Header } from '@/app/components/Header';
 
 interface PostPageProps {
   params: {
@@ -40,7 +40,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
         async function getData() {
         try {
-            const res = await fetch(`/api/getpost`, postData);
+            const res = await fetch(`/api/posts/getpost`, postData);
 
             if (!res.ok) {
             throw new Error(`HTTP error! Status: ${res.status}`);
@@ -76,14 +76,14 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
           }),
       }
 
-      await fetch(`/api/deletepost`, postData);
+      await fetch(`/api/posts/deletepost`, postData);
 
       router.push('/blog')
     }
 
   return (
 <>
-      <Nav />
+  <Header />
       <div>
         {loading ? (
           <p>Loading...</p>
