@@ -1,6 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import Nav from '../components/nav';
 import styles from './page.module.css';
 import Link from 'next/link';
 import { Header } from '../components/Header'
@@ -29,7 +28,7 @@ export default function BlogPage() {
 
     async function getData() {
       try {
-        const res = await fetch("/api/getposts", postData);
+        const res = await fetch("/api/posts/getposts", postData);
 
         if (!res.ok) {
           throw new Error(`HTTP error! Status: ${res.status}`);
@@ -54,7 +53,7 @@ export default function BlogPage() {
 
   return (
     <>
-      <Nav />
+    <Header />
       <Link href="blog/new-post">Create Post</Link>
       <div>
         {loading ? (
@@ -81,8 +80,4 @@ export default function BlogPage() {
       </div>
     </>
   );
-}
-    <Header />
-    </>
-  )
 }
