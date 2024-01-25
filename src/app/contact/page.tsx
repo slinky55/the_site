@@ -38,12 +38,10 @@ export default function ContactPage() {
       <body className={styles.body}>
       <div className={styles.global}>
       <div className={styles.container}>
-        <h1>Contact Us</h1>
+        <h1 className={styles.title}>Contact Us</h1>
         <div className={styles.contactBox}>
           <div className={styles.contactLeft}>
-            <h3>Sent your request</h3>
             <form>
-
               <div className={styles.inputRow}>
                 <div className={styles.inputGroup}>
                   <label className={styles.label}>Name</label>
