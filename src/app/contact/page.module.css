@@ -7,8 +7,13 @@
 }
 .container{
     width: 80%;
-    margin: 50px auto;
 }
+
+.title {
+    margin-left: 25px;
+    font-size: 20px;
+}
+
 .contactBox{
     background: #fff;
     display: flex;
