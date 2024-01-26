@@ -35,8 +35,6 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <body className={styles.body}>
-      <div className={styles.global}>
       <div className={styles.container}>
         <h1>Contact Us</h1>
         <div className={styles.contactBox}>
@@ -111,8 +109,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-      </div>
-      </body>
     </>
   )
 }
