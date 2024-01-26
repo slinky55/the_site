@@ -1,0 +1,93 @@
+.inquiriesContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 15px;
+    border-radius: 7px;
+    margin: 15px;
+}
+
+.title {
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.inquiryContainer {
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+.authorContainer {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.authorContainer:hover {
+    background-color: rgb(235, 235, 235);
+    cursor: pointer;
+}
+
+.author {
+    width: 175px;
+    padding: 5px 10px 5px 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+
+/* Fix the width property with media queries later... */
+.subj1 {
+    width: 500px;
+    padding: 5px 10px 5px 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.phone {
+    font-size: 12px;
+    padding: 5px 10px 5px 10px;
+}
+
+.email {
+    font-size: 12px;
+    padding: 5px 10px 5px 10px;
+}
+
+.subjContainer {
+    display: flex;
+}
+
+.subjTitle {
+    margin: 0px 5px 0px 5px;
+    padding: 5px 5px 0px 5px;
+    color: rgb(48, 48, 48);
+    font-weight: bold;
+    width: fit-content;
+}
+
+.subj {
+    margin: 0px 5px 0px 5px;
+    padding: 5px 5px 0px 5px;
+    grid-column: span 1;
+}
+
+.msg {
+    margin: 5px 5px 0px 5px;
+    padding: 5px 5px 0px 5px;
+}
+
+.date {
+    color: rgb(48, 48, 48);
+    font-size: 12px;
+    width: fit-content;
+    text-align: right;
+    margin-left: auto;
+    align-self: center;
+}
+
+.inquiryDivider {
+    margin: 15px 0px 15px 0px;
+    width: 95vw;
+}
