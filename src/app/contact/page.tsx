@@ -101,7 +101,7 @@ export default function ContactPage() {
               value={msg}
               onChange={(e) => setMsg(e.target.value)}
               required></textarea>
-              <button onClick={createInquiry}></button>
+              <button onClick={createInquiry}>Submit</button>
             </form>
           </div>
           <div className={styles.contactRight}>
