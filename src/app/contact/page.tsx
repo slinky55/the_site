@@ -1,8 +1,11 @@
 'use client'
-import React, { useState } from 'react'
-import styles from './page.module.css'
+import React, { useState } from 'react';
+import styles from './page.module.css';
 import { v4 as uuidv4 } from 'uuid';
-import { Header } from '../components/Header'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { Header } from '../components/Header';
+import Link from 'next/link';
 
 
 export default function ContactPage() {
@@ -38,12 +41,11 @@ export default function ContactPage() {
       <body className={styles.body}>
       <div className={styles.global}>
       <div className={styles.container}>
-        <h1>Contact Us</h1>
+        <h1 className={styles.title}>Contact Us</h1>
+        <div className={styles.instruction}>Use the form below to directly contact a group administrator. We'll respond as soon as we can!</div>
         <div className={styles.contactBox}>
           <div className={styles.contactLeft}>
-            <h3>Sent your request</h3>
             <form>
-
               <div className={styles.inputRow}>
                 <div className={styles.inputGroup}>
                   <label className={styles.label}>Name</label>
@@ -107,7 +109,18 @@ export default function ContactPage() {
             </form>
           </div>
           <div className={styles.contactRight}>
-            <h3>Reach Us</h3>
+            <div className={styles.contactRightBody}>Follow us on social media to keep in touch with the Technology, Health, and Equity Workgroup's latest updates.</div>
+            <div className={styles.socialsLinks}>
+              <Link href="instagram.com">
+                <FontAwesomeIcon className={styles.socialsLink} icon={faInstagram}/>
+              </Link>
+              <Link href="facebook.com">
+                <FontAwesomeIcon className={styles.socialsLink} icon={faFacebook} />
+              </Link>
+              <Link href="twitter.com">
+                <FontAwesomeIcon className={styles.socialsLink} icon={faTwitter} />
+              </Link>
+            </div>
           </div>
         </div>
       </div>
