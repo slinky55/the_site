@@ -38,8 +38,6 @@ export default function ContactPage() {
   return (
     <>
       <Header />
-      <body className={styles.body}>
-      <div className={styles.global}>
       <div className={styles.container}>
         <h1 className={styles.title}>Contact Us</h1>
         <div className={styles.instruction}>Use the form below to directly contact a group administrator. We'll respond as soon as we can!</div>
@@ -124,8 +122,6 @@ export default function ContactPage() {
           </div>
         </div>
       </div>
-      </div>
-      </body>
     </>
   )
 }
