@@ -21,7 +21,7 @@ export const authConfig = {
             },
 
             async authorize(credentials, req) {
-              const res = await fetch("/your/endpoint", {
+              const res = await fetch("/api/the/login", {
                 method: 'POST',
                 body: JSON.stringify(credentials),
                 headers: { "Content-Type": "application/json" }
@@ -36,4 +36,12 @@ export const authConfig = {
             }
           })
     ],
+    pages: {
+        signIn: "/login"
+    },
+    callbacks: {
+        async redirect({ url, baseUrl }) {
+          return "/";
+        }
+    },
 };

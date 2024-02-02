@@ -1,31 +1,23 @@
 "use client"
 
-import { getSession } from "next-auth/react";
+import { getSession, signIn, signOut } from "next-auth/react";
+import { redirect } from "next/navigation";
 
-export default function Login() {
-    async function loginWithGoogle(e: any) {
+export default async function Login() {
+    const loginWithGoogle = async () => {
         try {
-            const res = await fetch("/api/auth/signin/google", {
-                method: "POST",
-            });
-
-            console.log(res);
-            
-            const session = await getSession();
-            console.log(session);
+            await signIn("google");
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
+        
     }
 
-    async function loginWithGithub(e: any) {
+    const loginWithGithub = async () => {
         try {
-            await fetch("/api/auth/signin/github", {
-                method: "POST",
-            });
-            console.log("signed in");
+            await signIn("github");
         } catch (err) {
-            console.log(err)
+            console.log(err);
         }
     }
 
@@ -33,6 +25,7 @@ export default function Login() {
         <>
             <button onClick={loginWithGoogle}>Login With Google</button>
             <button onClick={loginWithGithub}>Login With Github</button>
+            <button onClick={() => {signOut()}}>Sign out</button>
         </>
     )
 }
