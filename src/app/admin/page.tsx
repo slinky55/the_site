@@ -45,10 +45,10 @@ export default function AdminPage() {
     const [comments, setComments] = useState<Comment[] | null>(null);
     const [loading2, setLoading2] = useState(true);
     const [error2, setError2] = useState<string | null>(null);
-    // And get their parent Comments
-    const [parentComments, setParentComments] = useState<Map<string, Comment> | null>(null);
-    // And get their parent Posts
-    const [parentPosts, setParentPosts] = useState<Map<string, Post> | null>(null);
+    // And get their parent Comment
+    const [parentComment, setParentComment] = useState<{[commentId: string]: string}>({});
+    // And get their parent Post
+    const [parentPost, setParentPost] = useState<{[commentId: string]: string}>({});
 
   
     useEffect(() => {
@@ -130,7 +130,12 @@ export default function AdminPage() {
               
               // Add to a map a pairing of key value 'comment_id' to mapped parent comment'
               if(comments) {
-                setParentComments(map => new Map(map?.set(comments[i].comment_id, data.comment)))
+                setParentComment(prev => {
+                  const newObj = { ...prev };
+                  newObj[comments[i].comment_id] = data.comment[0].cmt;
+                  return newObj;
+                });
+         
               }
   
             }
@@ -145,22 +150,28 @@ export default function AdminPage() {
               
               // Add to a map a pairing of key value 'comment_id' to mapped parent comment'
               if(comments) {
-                setParentPosts(map => new Map(map?.set(comments[i].comment_id, data.posts)))
+                setParentPost(prev => {
+                  const newObj = { ...prev };
+                  newObj[comments[i].comment_id] = data.posts[0].post;
+                  return newObj;
+                })
               }
             }
 
             getParentComments();
             getParentPost();
+            console.log(parentPost)
+            console.log(parentComment)
           }
         }
       }
     }, [comments]);
 
     useEffect(() => {
-      if(parentComments && parentComments.size > 0) {
+      if(Object.keys(parentComment).length > 0) {
         setLoading2(false);
       }
-    }, [parentComments]);
+    }, [parentComment]);
 
     function expand(index: number) {
       setExpandInquiry((prevArray) => {
@@ -173,6 +184,10 @@ export default function AdminPage() {
     function approveComment(id: string) {
       // Create the same comment in the comments table.
 
+      // Delete the comment in the unapproved comments table
+    }
+
+    function rejectComment(id: string) {
       // Delete the comment in the unapproved comments table
     }
 
@@ -240,16 +255,17 @@ export default function AdminPage() {
                     {comment.cmt}
                   </span>
                   <span className={styles.msg}>
-                    {comment.comment_id && parentComments && parentComments.size > 0 ? 
+                    {comment.comment_id && comment.comment_id in parentComment ? 
                     (
-                      <span>In response to Comment: {parentComments.get(comment.comment_id)[0].cmt}</span>
+                      <span>In response to Comment: {parentComment[comment.comment_id]}</span>
                     ) : (
                       <></>
                     )}
                   </span>
-                  <span className={styles.msg}>{parentPosts && parentPosts.size > 0 ? 
+                  <span className={styles.msg}>
+                    {comment.comment_id && comment.comment_id in parentPost ? 
                     (
-                      <span>In response to Post: {parentPosts.get(comment.comment_id)[0].post}</span>
+                      <span>In response to Post: {parentPost[comment.comment_id]}</span>
                     ) : (
                       <></>
                     )}
