@@ -19,16 +19,40 @@ type Post = {
   last_modified: Date
 }
 
+type Comment = {
+  comment_id: string,
+  author_id: string,
+  post_id: string,
+  parent_comment_id: string,
+  cmt: string,
+  author: string,
+  created_at: Date,
+  last_modified: Date,
+}
+
 const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
     const router = useRouter();
 
+    // Posts
     const [post, setPost] = useState<Post | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
+    // Comments
+    const [comments, setComments] = useState<Comment[] | null>(null)
+    const [loading2, setLoading2] = useState(true);
+    const [error2, setError2] = useState<string | null>(null);
+
+    // Displaying comments in nested structure
+    const [rootComments, setRootComments] = useState<Comment[]>([])
+    const [nestedComments, setNestedComments] = useState<{[parentId: string]: Comment[]}>({});
+
+    // Expand reply chatbox based on index
+    const [expandReply, setExpandReply] = useState<{[commentId: string]: boolean}>({});
+
     useEffect(() => {
-        const postData = {
+        const queryData = {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -38,31 +62,68 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
           }),
         }
 
-        async function getData() {
-        try {
-            const res = await fetch(`/api/posts/getpost`, postData);
+        async function getPost() {
+          try {
+              const res = await fetch(`/api/posts/getpost`, queryData);
 
-            if (!res.ok) {
-            throw new Error(`HTTP error! Status: ${res.status}`);
-            }
+              if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+              }
 
-            const data = await res.json();
-            setPost(data.posts[0]);
-        } catch (error) {
-            console.error(error);
-            setError('Failed to load data');
+              const data = await res.json();
+              setPost(data.posts[0]);
+          } catch (error) {
+              setError('Failed to load data');
+          }
         }
+
+        async function getComments() {
+          try {
+              const res = await fetch(`/api/comments/getcomments`, queryData);
+
+              if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+              }
+
+              const data = await res.json();
+              setComments(data.comments);
+          } catch (error2) {
+              setError2('Failed to load data');
+          }
         }
 
-        getData();
+        getPost();
+        getComments();
     }, []);
 
     useEffect(() => {
         if(post) {
-          console.log(post)
           setLoading(false);
         }
-      }, [post]);
+    }, [post]);
+
+    useEffect(() => {
+      if(comments) {
+        const group: {[parentId: string]: Comment[] } = {};
+        const roots: Comment[] = [];
+        const init: {[commentId: string]: boolean} = {};
+        comments.forEach((comment: Comment) => {
+            init[comment.comment_id] = false;
+            if(comment.parent_comment_id) {
+              group[comment.parent_comment_id] ||= [];
+              group[comment.parent_comment_id].push(comment);
+            }
+            else {
+              roots.push(comment);
+            }
+        });
+
+        setNestedComments(group);
+        setRootComments(roots);
+        setExpandReply(init);
+        setLoading2(false);
+      }
+    }, [comments]);  
 
 
     async function deletePost() {
@@ -80,6 +141,47 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
       router.push('/blog')
     }
+
+    function toggleReply(id: string) {
+      setExpandReply(prevExpandReply => {
+        const newObj = { ...prevExpandReply };
+        newObj[id] = !newObj[id];
+        return newObj;
+      });
+    }
+
+    const renderComments = (roots: Comment[]) => (
+      <>
+      {
+        roots.map(comment => (
+          <div key={comment.comment_id}>
+            <div className={styles.postContainer} key={comment.comment_id}>
+                <p className={styles.author} key={comment.author_id}>{comment.author}</p>
+                <p className={styles.post} key={comment.comment_id}>{comment.cmt}</p>
+                <p key={comment.comment_id}>Created at: {new Date(comment.created_at).toLocaleString()}</p>
+                <p key={comment.comment_id}>Last Modified: {new Date(comment.last_modified).toLocaleString()}</p>
+            </div>
+            {expandReply[comment.comment_id] ? (
+              <>
+                <div><input type="text"></input></div>
+                <button>Post</button>
+                <button onClick={() => toggleReply(comment.comment_id)}>Cancel</button>
+              </>
+              ) : (
+              <>
+                <button onClick={() => toggleReply(comment.comment_id)}>Reply</button>
+              </>
+            )}
+            {
+              nestedComments[comment.comment_id] && (
+                renderComments(nestedComments[comment.comment_id])
+              )
+            }
+          </div>
+        ))
+      }
+      </>
+    )
 
   return (
 <>
@@ -99,6 +201,27 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                 <p key={post.post_id}>Last Modified: {new Date(post.last_modified).toLocaleString()}</p>
             </div>
             <button onClick={deletePost}>Delete Post</button>
+          </div>
+        ) : (
+          <p>No posts available.</p>
+        )}
+      </div>
+      <div>
+        ---------------------------
+      </div>
+      <div key={3}>
+        {loading2 ? (
+          <p>Loading...</p>
+        ) : error2 ? (
+          <p>Error: {error2}</p>
+        ) : comments && comments.length > 0 ? (
+          <div className={styles.postsContainer} key={4}>
+            <p className={styles.title} key={5}>Comments</p>
+            <div key={6}>
+              {
+                renderComments(rootComments)
+              }
+            </div>
           </div>
         ) : (
           <p>No posts available.</p>
