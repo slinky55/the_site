@@ -1,3 +1,5 @@
+"use client"
+
 import Link from 'next/link'
 
 import { Button } from '@/app/components/Button'
@@ -10,6 +12,32 @@ export const metadata: Metadata = {
 }
 
 export default function Login() {
+    const router = useRouter();
+    getSession().then((s) => {
+        if (s != null) {
+            router.push("/");
+        }
+    }).catch((err) => {
+        console.log(err);
+    })
+
+    const loginWithGoogle = async () => {
+        try {
+            await signIn("google");
+        } catch (err) {
+            console.log(err);
+        }
+        
+    }
+
+    const loginWithGithub = async () => {
+        try {
+            await signIn("github");
+        } catch (err) {
+            console.log(err);
+        }
+    }
+    
     return (
         <SlimLayout>
             <h2 className="mt-20 text-lg font-semibold text-gray-900">
@@ -46,6 +74,8 @@ export default function Login() {
                     </Button>
                 </div>
             </form>
+            <button onClick={loginWithGoogle}>Login With Google</button>
+            <button onClick={loginWithGithub}>Login With Github</button>
         </SlimLayout>
     )
 }
