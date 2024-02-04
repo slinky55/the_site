@@ -21,26 +21,26 @@ export const authConfig = {
             },
 
             async authorize(credentials, req) {
-              const res = await fetch("/api/the/login", {
-                method: 'POST',
-                body: JSON.stringify(credentials),
-                headers: { "Content-Type": "application/json" }
-              })
-              const user = await res.json()
-        
-              if (res.ok && user) {
-                return user
-              }
+                const res = await fetch("/api/the/login", {
+                    method: 'POST',
+                    body: JSON.stringify(credentials),
+                    headers: { "Content-Type": "application/json" }
+                })
+                const user = await res.json()
+            
+                if (res.ok && user) {
+                    return user
+                }
 
-              return null
-            }
-          })
+                return null
+                }
+            })
     ],
     pages: {
         signIn: "/login"
     },
     callbacks: {
-        async redirect({ url, baseUrl }) {
+        async redirect() {
           return "/";
         }
     },

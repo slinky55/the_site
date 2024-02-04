@@ -1,9 +1,19 @@
 "use client"
 
-import { getSession, signIn, signOut } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { getSession, signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
-export default async function Login() {
+export default function Login() {
+    const router = useRouter();
+    getSession().then((s) => {
+        if (s != null) {
+            router.push("/");
+        }
+    }).catch((err) => {
+        console.log(err);
+    })
+
     const loginWithGoogle = async () => {
         try {
             await signIn("google");
@@ -25,7 +35,7 @@ export default async function Login() {
         <>
             <button onClick={loginWithGoogle}>Login With Google</button>
             <button onClick={loginWithGithub}>Login With Github</button>
-            <button onClick={() => {signOut()}}>Sign out</button>
         </>
     )
 }
+
