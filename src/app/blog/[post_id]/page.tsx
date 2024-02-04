@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/app/components/Header';
+import { v4 as uuidv4 } from 'uuid';
 
 interface PostPageProps {
   params: {
@@ -50,6 +51,10 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
     // Expand reply chatbox based on index
     const [expandReply, setExpandReply] = useState<{[commentId: string]: boolean}>({});
+
+    // Making a comment
+    const [authorName, setAuthorName] = useState('');
+    const [content, setContent] = useState('');
 
     useEffect(() => {
         const queryData = {
@@ -142,6 +147,25 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
       router.push('/blog')
     }
 
+    async function createComment(postId: string, parentId: string) {
+      const queryData = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          comment_id: uuidv4(),
+          author_id: uuidv4(),
+          post_id: postId,
+          parent_comment_id: parentId,
+          cmt: content,
+          author: authorName
+        })
+      }
+
+      await fetch('/api/unapprovedcomments/createunapprovedcomment', queryData);
+    }
+
     function toggleReply(id: string) {
       setExpandReply(prevExpandReply => {
         const newObj = { ...prevExpandReply };
@@ -163,8 +187,23 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             </div>
             {expandReply[comment.comment_id] ? (
               <>
-                <div><input type="text"></input></div>
-                <button>Post</button>
+                <div>
+                  <input
+                    type="text"
+                    id="authorName"
+                    value={authorName}
+                    onChange={(e) => setAuthorName(e.target.value)}
+                    required
+                  />
+                  <input 
+                    type="text" 
+                    id="content"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    required
+                  />
+                </div>
+                <button onClick={() => createComment(comment.post_id, comment.comment_id)}>Post</button>
                 <button onClick={() => toggleReply(comment.comment_id)}>Cancel</button>
               </>
               ) : (

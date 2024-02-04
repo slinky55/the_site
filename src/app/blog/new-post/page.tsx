@@ -16,10 +16,10 @@ export default function NewPostPage() {
             "Content-Type": "application/json",
             },
             body: JSON.stringify({
-            post_id: uuidv4(),
-            author_id: uuidv4(),
-            post: postContent,
-            author: authorName
+                post_id: uuidv4(),
+                author_id: uuidv4(),
+                post: postContent,
+                author: authorName
             }),
         }
 
