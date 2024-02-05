@@ -63,8 +63,8 @@ export default function BlogPage() {
         ) : posts && posts.length > 0 ? (
           <div className={styles.postsContainer} key={1}>
             <p className={styles.title} key={2}>Blog</p>
-            {posts.map(post => (
-              <Link href={`blog/${post.post_id}`}>
+            {posts.map((post, id) => (
+              <Link key={id}href={`blog/${post.post_id}`}>
                 <div className={styles.postContainer} key={post.post_id}>
                   <p className={styles.author} key={post.author_id}>{post.author}</p>
                   <p className={styles.post} key={post.post_id}>{post.post}</p>
