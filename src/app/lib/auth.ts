@@ -2,6 +2,19 @@ import GithubProvider from "next-auth/providers/github";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials"
 
+import { TypeORMAdapter } from "@auth/typeorm-adapter";
+import { DataSourceOptions } from "typeorm";
+
+const dataSourceOptions: DataSourceOptions = {
+    host: process.env.MYSQL_HOST,
+    port: parseInt(process.env.MYSQL_PORT!),
+    username: process.env.MYSQL_USER,
+    password: process.env.MYSQL_PASSWORD,
+    database: process.env.MYSQL_DATABASE,
+    driver: "mariadb"
+}
+
+
 export const authConfig = {
     providers: [    
         GithubProvider({      
@@ -44,4 +57,5 @@ export const authConfig = {
           return "/";
         }
     },
+    adapter: TypeORMAdapter(dataSourceOptions)
 };

@@ -9,10 +9,12 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@auth/typeorm-adapter": "^1.4.3",
     "@headlessui/react": "2.0.0-alpha.4",
     "@headlessui/tailwindcss": "^0.2.0",
     "autoprefixer": "^10.4.17",
     "clsx": "^2.1.0",
+    "mariadb": "^3.2.3",
     "next": "14.0.4",
     "next-auth": "^4.24.5",
     "prettier": "^3.2.4",
@@ -20,6 +22,7 @@
     "react-dom": "^18.2.0",
     "serverless-mysql": "^1.5.5",
     "tailwindcss": "^3.4.1",
+    "typeorm": "^0.3.20",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
