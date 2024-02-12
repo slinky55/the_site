@@ -33,7 +33,7 @@ export default function NewPostPage() {
             <Header />
             <form>
                 <h2>Create a New Post</h2>
-                <label htmlFor="authorName">Author's Name:</label>
+                <label htmlFor="authorName">Author&apos;s Name:</label>
                 <input
                     type="text"
                     id="authorName"
