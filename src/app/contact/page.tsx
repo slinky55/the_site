@@ -22,14 +22,14 @@ export default function ContactPage() {
             "Content-Type": "application/json",
             },
             body: JSON.stringify({
-            msg_id: uuidv4(),
-            author_id: uuidv4(),
-            msg: msg,
-            author: name,
-            phone: phoneNumber,
-            email: email,
-            msg_subject: subject,
-            }),
+              msg_id: uuidv4(),
+              author_id: uuidv4(),
+              msg: msg,
+              author: name,
+              phone: phoneNumber,
+              email: email,
+              msg_subject: subject,
+            })
         }
 
         await fetch('/api/inquiries/createinquiry', postData);

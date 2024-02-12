@@ -4,25 +4,23 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 
 
 export async function POST(req: NextApiRequest, res: NextApiResponse) {
-    console.log("hey");
     const formData = await new Response(req.body).json();
-    const msgId = formData.msg_id;
+    const commentId = formData.comment_id;
     const authorId = formData.author_id;
-    const msg = formData.msg;
+    const postId = formData.post_id;
+    const parentId = formData.parent_comment_id;
+    const cmt = formData.cmt;
     const author = formData.author;
-    const phone = formData.phone;
-    const email = formData.email;
-    const msgSubject = formData.msg_subject;
     
     try  {
         const result = await executeQuery({
-            query: `INSERT INTO inquiries (msg_id, author_id, msg, author, phone, email, msg_subject, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
-            values: [msgId, authorId, msg, author, phone, email, msgSubject],
+            query: `INSERT INTO comments (comment_id, author_id, post_id, parent_comment_id, cmt, author, created_at, last_modified) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())`,
+            values: [commentId, authorId, postId, parentId, cmt, author],
         })
         console.log(result);
 
         if (res) {
-            return NextResponse.json({inquiries: result}, {status: 200})
+            return NextResponse.json({comments: result}, {status: 200})
         } else {
             console.error('Response object is undefined.');
         }
