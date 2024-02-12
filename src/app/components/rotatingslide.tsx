@@ -3,6 +3,7 @@ import styles from './nav.module.css';
 
 export default function RotatingSlide() {
   return (
+    <>
     <div className={styles.slideshow}>
       <div className={styles.slideContainer}>
         <div className={styles.slide}>
@@ -25,5 +26,62 @@ export default function RotatingSlide() {
         </div>
       </div>
     </div>
-  );
+    <div id={styles.functionalBody}>
+      <div id={styles.flexContentContainer}>
+        <div className={styles.article}>
+          <img className={styles.image} src="https://play-lh.googleusercontent.com/XKpIJApesGkiUv5uDoybpeq3-EAh53KYGRvxheJes7F0x0Qn_Bfqm7RI9jKoexo7UE8" />
+          <p className={styles.paragraph}>
+            <div className={styles.articleTitle}>Example Article Title Here</div>
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between", marginBottom: "1vh"}}>
+              <div>John Doe</div>
+              <div>1/11/2024</div>
+            </div>
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+          </p>
+        </div>
+        <div className={styles.article}>
+          <img className={styles.image} src="https://play-lh.googleusercontent.com/XKpIJApesGkiUv5uDoybpeq3-EAh53KYGRvxheJes7F0x0Qn_Bfqm7RI9jKoexo7UE8" />
+          <p className={styles.paragraph}>
+            <div className={styles.articleTitle}>Example Article Title Here</div>
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between", marginBottom: "1vh"}}>
+              <div>John Doe</div>
+              <div>1/11/2024</div>
+            </div>
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+          </p>
+        </div>
+        <div className={styles.article}>
+          <img className={styles.image} src="https://play-lh.googleusercontent.com/XKpIJApesGkiUv5uDoybpeq3-EAh53KYGRvxheJes7F0x0Qn_Bfqm7RI9jKoexo7UE8" />
+          <p className={styles.paragraph}>
+            <div className={styles.articleTitle}>Example Article Title Here</div>
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between", marginBottom: "1vh"}}>
+              <div>John Doe</div>
+              <div>1/11/2024</div>
+            </div>
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+          </p>
+        </div>
+        <div className={styles.article}>
+          <img className={styles.image} src="https://play-lh.googleusercontent.com/XKpIJApesGkiUv5uDoybpeq3-EAh53KYGRvxheJes7F0x0Qn_Bfqm7RI9jKoexo7UE8" />
+          <p className={styles.paragraph}>
+            <div className={styles.articleTitle}>Example Article Title Here</div>
+            <div style={{ width: "100%", display: "flex", justifyContent: "space-between", marginBottom: "1vh"}}>
+              <div>John Doe</div>
+              <div>1/11/2024</div>
+            </div>
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+            This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph. This is a sample paragraph.
+          </p>
+        </div>
+      </div>
+    </div>
+    </>
+);
 }

@@ -1,3 +1,10 @@
+#functionalBody{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+}
+
 .linkContainer {
     background-color: rgb(221, 221, 221);
     display: flex;
@@ -69,7 +76,47 @@
   .slide:nth-child(6) {
     animation-delay: 20s;
   }
-  
+
+  #flexContentContainer{
+    margin-top: 10vh;
+    border: 5px solid black;
+    width: 90vw;
+    display: flex;
+    border-radius: 50px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    overflow: scroll;
+  }
+
+  .article{
+    margin-right: 5vw;
+    margin-top: 5vh;
+    width: 30vw;
+    height: 40vh;
+    border: 5px solid black;
+    padding: 2vw;
+    border-radius: 50px;
+    display: flex;
+    overflow: scroll;
+  }
+
+  .paragraph{
+    width: 50%;
+    margin-left: 1vw;
+  }
+
+  .articleTitle{
+    font-weight: bold;
+    margin-bottom: 2vh;
+  }
+
+  .image {
+    width: 50%; 
+    height: 100%;
+    margin-right: 1vw;
+  }
+
   @keyframes moveLeft {
     0% {
       transform: translateX(100%);
