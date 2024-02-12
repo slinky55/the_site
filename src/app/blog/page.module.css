@@ -5,13 +5,13 @@
 
 .postsContainer {
     display: grid;
+    gap: 15px;
 }
 
 .postContainer {
     display: grid;
     grid-template-columns: 1fr;
     background-color: rgb(235, 235, 235);
-    margin: 15px;
     padding: 15px;
 }
 
