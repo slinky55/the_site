@@ -12,8 +12,8 @@ interface PostPageProps {
 }
 
 type Post = {
-  post_id: number,
-  author_id: number,
+  post_id: string,
+  author_id: string,
   post: string,
   author: string,
   created_at: Date,
@@ -48,6 +48,9 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
     // Displaying comments in nested structure
     const [rootComments, setRootComments] = useState<Comment[]>([])
     const [nestedComments, setNestedComments] = useState<{[parentId: string]: Comment[]}>({});
+
+    // Expand reply chatbox for responding to a post
+    const [expandReplyRoot, setExpandReplyRoot] = useState<boolean>(false);
 
     // Expand reply chatbox based on index
     const [expandReply, setExpandReply] = useState<{[commentId: string]: boolean}>({});
@@ -147,7 +150,10 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
       router.push('/blog')
     }
 
-    async function createComment(postId: string, parentId: string) {
+    async function createComment(postId: string | undefined, parentId: string | null) {
+      if(postId == undefined) {
+        setError2("Something went wrong. Creating comment with undefined postId.")
+      }
       const queryData = {
         method: "POST",
         headers: {
@@ -167,6 +173,9 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
     }
 
     function toggleReply(id: string) {
+      if(id == "root") {
+        setExpandReplyRoot(!expandReplyRoot);
+      }
       setExpandReply(prevExpandReply => {
         const newObj = { ...prevExpandReply };
         newObj[id] = !newObj[id];
@@ -256,6 +265,32 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         ) : comments && comments.length > 0 ? (
           <div className={styles.postsContainer} key={4}>
             <p className={styles.title} key={5}>Comments</p>
+            {expandReplyRoot ? (
+              <>
+                <div>
+                  <input
+                    type="text"
+                    id="authorName"
+                    value={authorName}
+                    onChange={(e) => setAuthorName(e.target.value)}
+                    required
+                  />
+                  <input 
+                    type="text" 
+                    id="content"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    required
+                  />
+                </div>
+                <button onClick={() => createComment(post?.post_id, null)}>Post</button>
+                <button onClick={() => toggleReply("root")}>Cancel</button>
+              </>
+              ) : (
+              <>
+                <button onClick={() => toggleReply("root")}>Reply</button>
+              </>
+            )}
             <div key={6}>
               {
                 renderComments(rootComments)

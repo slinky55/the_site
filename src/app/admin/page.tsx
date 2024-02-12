@@ -98,27 +98,28 @@ export default function AdminPage() {
       if(comments) {
         // Load parent comment and post for each comment
         for(let i = 0; i < comments.length; i++) {
-          if(comments[i].parent_comment_id != null) {
-            // Get parent comment from comments table
-            let queryData1 = {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                comment_id: comments[i].parent_comment_id,
-              }),
-            }
+          // Get parent comment from comments table
+          let queryData1 = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              comment_id: comments[i].parent_comment_id,
+            }),
+          }
 
-            let queryData2 = {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-              body: JSON.stringify({
-                post_id: comments[i].post_id,
-              }),
-            }
+          let queryData2 = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              post_id: comments[i].post_id,
+            }),
+          }
+
+          if(comments[i].parent_comment_id != null) {
             
             async function getParentComments() {
               const res = await fetch("/api/comments/getcomment", queryData1);
@@ -140,29 +141,28 @@ export default function AdminPage() {
   
             }
 
-            async function getParentPost() {
-              const res = await fetch("/api/posts/getpost", queryData2);
-              if (!res.ok) {
-                throw new Error(`HTTP error! Status: ${res.status}`);
-              }
-      
-              const data = await res.json();
-              
-              // Add to a map a pairing of key value 'comment_id' to mapped parent comment'
-              if(comments) {
-                setParentPost(prev => {
-                  const newObj = { ...prev };
-                  newObj[comments[i].comment_id] = data.posts[0].post;
-                  return newObj;
-                })
-              }
-            }
-
             getParentComments();
-            getParentPost();
-            console.log(parentPost)
-            console.log(parentComment)
           }
+
+          async function getParentPost() {
+            const res = await fetch("/api/posts/getpost", queryData2);
+            if (!res.ok) {
+              throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+    
+            const data = await res.json();
+            
+            // Add to a map a pairing of key value 'comment_id' to mapped parent comment'
+            if(comments) {
+              setParentPost(prev => {
+                const newObj = { ...prev };
+                newObj[comments[i].comment_id] = data.posts[0].post;
+                return newObj;
+              })
+            }
+          }
+
+          getParentPost();
         }
       }
     }, [comments]);
@@ -181,14 +181,58 @@ export default function AdminPage() {
       })
     }
 
-    function approveComment(id: string) {
-      // Create the same comment in the comments table.
+    async function deleteComment(id: string) {
+      const query2Data = {
+        method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            comment_id: id,
+          }),
+      }
 
-      // Delete the comment in the unapproved comments table
+      const res = await fetch("/api/unapprovedcomments/deleteunapprovedcomment", query2Data)
+
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      const data = await res.json();
+
     }
 
-    function rejectComment(id: string) {
+    async function approveComment(comment: Comment) {
+      // Create the same comment in the comments table.
+      const queryData = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          comment_id: comment.comment_id,
+          author_id: comment.author_id,
+          post_id: comment.post_id,
+          parent_comment_id: comment.parent_comment_id,
+          cmt: comment.cmt,
+          author: comment.author
+        }),
+      }
+
+      const res = await fetch("/api/comments/createcomment", queryData);
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      const data = await res.json();
+
       // Delete the comment in the unapproved comments table
+      deleteComment(comment.comment_id);
+    }
+
+    async function rejectComment(id: string) {
+      // Delete the comment in the unapproved comments table
+      deleteComment(id);
     }
 
   return (
@@ -270,6 +314,8 @@ export default function AdminPage() {
                       <></>
                     )}
                   </span>
+                  <button onClick={() => approveComment(comment)}>Approve</button>
+                  <button onClick={() => rejectComment(comment.comment_id)}>Reject</button>
                 </div>
               ))}
             </div>
