@@ -39,9 +39,4 @@ export const authConfig = {
     pages: {
         signIn: "/login"
     },
-    callbacks: {
-        async redirect() {
-          return "/";
-        }
-    },
 };
