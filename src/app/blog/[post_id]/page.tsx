@@ -4,6 +4,8 @@ import styles from './page.module.css';
 import { useRouter } from 'next/navigation';
 import { Header } from '@/app/components/Header';
 import { v4 as uuidv4 } from 'uuid';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash, faReply, faCancel, faCheck } from '@fortawesome/free-solid-svg-icons';
 
 interface PostPageProps {
   params: {
@@ -185,26 +187,36 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
     const renderComments = (roots: Comment[]) => (
       <>
+      <div></div>
       {
         roots.map(comment => (
-          <div key={comment.comment_id}>
-            <div className={styles.postContainer} key={comment.comment_id}>
+          <div className={styles.commentsContainer} key={comment.comment_id}>
+            <div className={styles.commentContainer} key={comment.comment_id}>
+              <div className={styles.postHeader}>
                 <p className={styles.author} key={comment.author_id}>{comment.author}</p>
-                <p className={styles.post} key={comment.comment_id}>{comment.cmt}</p>
-                <p key={comment.comment_id}>Created at: {new Date(comment.created_at).toLocaleString()}</p>
-                <p key={comment.comment_id}>Last Modified: {new Date(comment.last_modified).toLocaleString()}</p>
+                <p className={styles.date} key={comment.comment_id}>{new Date(comment.created_at).toLocaleString()}</p>
+              </div>
+              <p className={styles.post} key={comment.comment_id}>{comment.cmt}</p>
+              <div className={styles.postFooter}>
+                <p className={styles.date} key={comment.comment_id}><i>Edited on: {new Date(comment.last_modified).toLocaleString()}</i></p>
+                <span>
+                  <button onClick={() => toggleReply(comment.comment_id)}><FontAwesomeIcon className={styles.replyIcon} icon={faReply}/></button>
+                  <button><FontAwesomeIcon className={styles.trashIcon} icon={faTrash}/></button></span>
+              </div>
             </div>
             {expandReply[comment.comment_id] ? (
               <>
-                <div>
+                <div className={styles.commentForm}>
                   <input
+                    className={styles.authorInput}
                     type="text"
                     id="authorName"
                     value={authorName}
                     onChange={(e) => setAuthorName(e.target.value)}
                     required
                   />
-                  <input 
+                  <input
+                    className={styles.cmtInput}
                     type="text" 
                     id="content"
                     value={content}
@@ -212,12 +224,11 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                     required
                   />
                 </div>
-                <button onClick={() => createComment(comment.post_id, comment.comment_id)}>Post</button>
-                <button onClick={() => toggleReply(comment.comment_id)}>Cancel</button>
+                <button onClick={() => createComment(comment.post_id, comment.comment_id)}><FontAwesomeIcon className={styles.checkIcon} icon={faCheck}/></button>
+                <button onClick={() => toggleReply(comment.comment_id)}><FontAwesomeIcon className={styles.trashIcon} icon={faCancel}/></button>
               </>
               ) : (
               <>
-                <button onClick={() => toggleReply(comment.comment_id)}>Reply</button>
               </>
             )}
             {
@@ -240,23 +251,28 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         ) : error ? (
           <p>Error: {error}</p>
         ) : post ? (
-          <div className={styles.postsContainer} key={1}>
-            <p className={styles.title} key={2}>Blog</p>
-            <div className={styles.postContainer} key={post.post_id}>
-                <p className={styles.author} key={post.author_id}>{post.author}</p>
-                <p className={styles.post} key={post.post_id}>{post.post}</p>
-                <p key={post.post_id}>Created at: {new Date(post.created_at).toLocaleString()}</p>
-                <p key={post.post_id}>Last Modified: {new Date(post.last_modified).toLocaleString()}</p>
+          <div className={styles.container} key={1}>
+            <div className={styles.postHeader} key={2}>
+              <p className={styles.title} key={3}>Lorem Impsum Title Ipsum Lor</p>
+              <p className={styles.date} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</p>
             </div>
-            <button onClick={deletePost}>Delete Post</button>
+            <div className={styles.authorTile} key={post.author_id}>
+                <img className={styles.profilePic} src="https://www.digitary.net/wp-content/uploads/2021/07/Generic-Profile-Image.png"></img>
+                <p className={styles.author} key={post.author_id}>{post.author}</p>
+            </div>
+            <div className={styles.postContainer}>
+                <p className={styles.post} key={post.post_id}>{post.post}</p>
+            </div>
+            <div className={styles.postFooter}>
+                <p className={styles.date} key={post.post_id}><i>Edited on: {new Date(post.last_modified).toLocaleString()}</i></p>
+                <button onClick={deletePost}><FontAwesomeIcon className={styles.trashIcon} icon={faTrash}/></button>
+            </div>
           </div>
         ) : (
           <p>No posts available.</p>
         )}
       </div>
-      <div>
-        ---------------------------
-      </div>
+      <hr></hr>
       <div key={3}>
         {loading2 ? (
           <p>Loading...</p>
@@ -267,28 +283,32 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             <p className={styles.title} key={5}>Comments</p>
             {expandReplyRoot ? (
               <>
-                <div>
+                <div className={styles.commentForm}>
                   <input
+                    className={styles.authorInput}
                     type="text"
                     id="authorName"
                     value={authorName}
                     onChange={(e) => setAuthorName(e.target.value)}
+                    placeholder="Name"
                     required
                   />
                   <input 
+                    className={styles.cmtInput}
                     type="text" 
                     id="content"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
+                    placeholder="Comment"
                     required
                   />
                 </div>
-                <button onClick={() => createComment(post?.post_id, null)}>Post</button>
-                <button onClick={() => toggleReply("root")}>Cancel</button>
+                <button onClick={() => createComment(post?.post_id, null)}><FontAwesomeIcon className={styles.checkIcon} icon={faCheck}/></button>
+                <button onClick={() => toggleReply("root")}><FontAwesomeIcon className={styles.trashIcon} icon={faCancel}/></button>
               </>
               ) : (
               <>
-                <button onClick={() => toggleReply("root")}>Reply</button>
+                <button className={styles.postReply} onClick={() => toggleReply("root")}>New Comment</button>
               </>
             )}
             <div key={6}>
