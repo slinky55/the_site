@@ -3,6 +3,7 @@ import executeQuery from "../../../lib/db";
 
 
 export async function POST(req: NextRequest, res: NextResponse) {
+    console.log("hey")
     const formData = await new Response(req.body).json();
     const postId = formData.post_id;
     const authorId = formData.author_id;
