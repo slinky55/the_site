@@ -2,6 +2,8 @@
 import React, { useEffect, useState } from 'react'
 import { Header } from '../components/Header'
 import styles from './page.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle, faXmarkCircle } from '@fortawesome/free-solid-svg-icons'
 
 type Inquiry = {
     msg_id: string,
@@ -290,15 +292,21 @@ export default function AdminPage() {
               <p className={styles.title} key={4}>Comments Pending Approval</p>
               <hr/>
               {comments.map((comment, index) => (
-                <div className={styles.inquiryContainer} key={comment.comment_id}>
-                  <div className={styles.authorContainer}>
-                    <span className={styles.author} key={comment.author_id}>{comment.author}</span>
-                    <span className={styles.date} key={comment.comment_id}>{new Date(comment.created_at).toLocaleString()}</span>
+                <>
+                  <div className={styles.container} key={comment.comment_id}>
+                    <div className={styles.commentContainer}>
+                      <div className={styles.commentHead}>
+                        <span className={styles.commentAuthor} key={comment.author_id}>{comment.author}</span>
+                        <span className={styles.commentDate} key={comment.comment_id}>{new Date(comment.created_at).toLocaleString()}</span>
+                      </div>
+                      <span className={styles.comment}>{comment.cmt}</span>
+                    </div>
+                    <div className={styles.buttonContainer}>
+                      <button className={styles.checkmarkBtn} onClick={() => approveComment(comment)}>Approve <FontAwesomeIcon className={styles.checkmark} icon={faCheckCircle}/></button>
+                      <button className={styles.xBtn} onClick={() => rejectComment(comment.comment_id)}>Reject <FontAwesomeIcon className={styles.x} icon={faXmarkCircle}/></button>
+                    </div>
                   </div>
-                  <span className={styles.msg}>
-                    {comment.cmt}
-                  </span>
-                  <span className={styles.msg}>
+                  {/* <span className={styles.msg}>
                     {comment.comment_id && comment.comment_id in parentComment ? 
                     (
                       <span>In response to Comment: {parentComment[comment.comment_id]}</span>
@@ -313,10 +321,8 @@ export default function AdminPage() {
                     ) : (
                       <></>
                     )}
-                  </span>
-                  <button onClick={() => approveComment(comment)}>Approve</button>
-                  <button onClick={() => rejectComment(comment.comment_id)}>Reject</button>
-                </div>
+                  </span> */}
+                </>
               ))}
             </div>
           ) : (

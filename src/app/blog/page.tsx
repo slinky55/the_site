@@ -4,7 +4,7 @@ import styles from './page.module.css';
 import Link from 'next/link';
 import { Header } from '../components/Header'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faAngleLeft, faAngleRight, faUser, faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 type Post = {
   post_id: number,
@@ -72,17 +72,15 @@ export default function BlogPage() {
                 <div className={styles.cardContainer}>
                   <img className={styles.cardImg} src="https://t4.ftcdn.net/jpg/00/53/64/49/360_F_53644926_0mvUCIxCCTvIa7BAIFuUa3xsaNA9lbeb.jpg"/>
                   <span className={styles.cardTitle}>The Benefits of Digital Health in Today's Society</span>
-                  <span className={styles.cardAuthor}>John Doe</span><span className={styles.cardDate}>Feb 1, 2024</span>
-                </div>
+                  <span className={styles.cardAuthor}><FontAwesomeIcon icon={faUser}/> John Doe</span><span className={styles.cardDate}><FontAwesomeIcon icon={faCalendar}/> Feb 1, 2024</span>                </div>
                 <div className={styles.cardContainer}>
                   <img className={styles.cardImg} src="https://t4.ftcdn.net/jpg/00/53/64/49/360_F_53644926_0mvUCIxCCTvIa7BAIFuUa3xsaNA9lbeb.jpg"/>
                   <span className={styles.cardTitle}>The Benefits of Digital Health in Today's Society</span>
-                  <span className={styles.cardAuthor}>John Doe</span><span className={styles.cardDate}>Feb 1, 2024</span>
-                </div>
+                  <span className={styles.cardAuthor}><FontAwesomeIcon icon={faUser}/> John Doe</span><span className={styles.cardDate}><FontAwesomeIcon icon={faCalendar}/> Feb 1, 2024</span>                </div>
                 <div className={styles.cardContainer}>
                   <img className={styles.cardImg} src="https://t4.ftcdn.net/jpg/00/53/64/49/360_F_53644926_0mvUCIxCCTvIa7BAIFuUa3xsaNA9lbeb.jpg"/>
                   <span className={styles.cardTitle}>The Benefits of Digital Health in Today's Society</span>
-                  <span className={styles.cardAuthor}>John Doe</span><span className={styles.cardDate}>Feb 1, 2024</span>
+                  <span className={styles.cardAuthor}><FontAwesomeIcon icon={faUser}/> John Doe</span><span className={styles.cardDate}><FontAwesomeIcon icon={faCalendar}/> Feb 1, 2024</span>
                 </div>
                 <FontAwesomeIcon className={styles.arrowR} icon={faAngleRight}/>
               </div>
@@ -95,8 +93,8 @@ export default function BlogPage() {
                     <div className={styles.postContainer} key={post.post_id}>
                       <img className={styles.postImg} src="https://t4.ftcdn.net/jpg/00/53/64/49/360_F_53644926_0mvUCIxCCTvIa7BAIFuUa3xsaNA9lbeb.jpg"/>
                       <div className={styles.postTitle} key={post.post_id}>{post.post}</div>
-                      <div className={styles.postAuthor} key={post.author_id}>{post.author}</div>
-                      <div className={styles.postDate} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</div>
+                      <div className={styles.postAuthor} key={post.author_id}><FontAwesomeIcon icon={faUser}/> {post.author}</div>
+                      <div className={styles.postDate} key={post.post_id}><FontAwesomeIcon icon={faCalendar}/> {new Date(post.created_at).toLocaleString()}</div>
                       <Link key={id}href={`blog/${post.post_id}`}><div className={styles.readMore}>Read More</div></Link>
                     </div>
                   </>

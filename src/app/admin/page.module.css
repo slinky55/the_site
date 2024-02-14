@@ -7,6 +7,8 @@
 }
 
 .title {
+    margin-left: auto;
+    margin-right: auto;
     font-weight: bold;
     font-size: 20px;
 }
@@ -14,6 +16,9 @@
 .inquiryContainer {
     display: grid;
     grid-template-columns: 1fr;
+    width: 70%;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .authorContainer {
@@ -90,4 +95,94 @@
 .inquiryDivider {
     margin: 15px 0px 15px 0px;
     width: 95vw;
+}
+
+.container {
+    width: 70%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: 65% 35%;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    margin-top: 25px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.commentContainer {
+    display: grid;
+    margin: 15px;
+}
+
+.commentHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment {
+
+}
+
+.commentAuthor {
+
+}
+
+.commentDate {
+    color: rgb(48, 48, 48);
+    font-size: 12px;
+    width: fit-content;
+    text-align: right;
+}
+
+.buttonContainer {
+    display: flex;
+    grid-row: span 3;
+}
+
+.checkmarkBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-left: 7px;
+    padding-right: 7px;
+    height: 100%;
+    width: 100%;
+    color: green;
+    border: 1px solid green;
+}
+
+.checkmarkBtn:hover {
+    background-color: green;
+    color: white;
+}
+
+.xBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-left: 7px;
+    padding-right: 7px;
+    height: 100%;
+    width: 100%;
+    color: red;
+    border: 1px solid red;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.xBtn:hover {
+    background-color: red;
+    color: white;
+}
+
+.checkmark {
+    height: 30px;
+    width: 30px;
+}
+
+.x {   
+    height: 30px;
+    width: 30px;
 }
