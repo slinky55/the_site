@@ -97,6 +97,7 @@
 }
 
 .postContainer {
+    position: relative;
     display: grid;
     grid-template-columns: 30% 70%;
     border-radius: 15px;
@@ -110,7 +111,7 @@
 }
 
 .postImg {
-    grid-row: span 3;
+    grid-row: span 4;
     width: 100%;
     height: auto;
     display: block;
@@ -131,6 +132,25 @@
 .postDate {
     padding-left: 15px;
     font-size: 15px;
+}
+
+.readMore {
+    position: absolute;
+    right: 35px;
+    bottom: 15px;
+    background-color: rgb(226, 0, 0);
+    color: white;
+    font-size: 16px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    width: fit-content;
+    height: fit-content;
+}
+
+.readMore:hover {
+    background-color: rgb(183, 0, 0);
 }
 
 /* Searchbar */

@@ -91,14 +91,15 @@ export default function BlogPage() {
             <div className={styles.container}>
               <div className={styles.postsContainer}>
                 {posts.map((post, id) => (
-                  <Link key={id}href={`blog/${post.post_id}`}>
+                  <>
                     <div className={styles.postContainer} key={post.post_id}>
                       <img className={styles.postImg} src="https://t4.ftcdn.net/jpg/00/53/64/49/360_F_53644926_0mvUCIxCCTvIa7BAIFuUa3xsaNA9lbeb.jpg"/>
                       <div className={styles.postTitle} key={post.post_id}>{post.post}</div>
                       <div className={styles.postAuthor} key={post.author_id}>{post.author}</div>
                       <div className={styles.postDate} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</div>
+                      <Link key={id}href={`blog/${post.post_id}`}><div className={styles.readMore}>Read More</div></Link>
                     </div>
-                  </Link>
+                  </>
                 ))}
               </div>
               <div className={styles.searchContainer}>

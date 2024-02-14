@@ -318,7 +318,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             </div>
           </div>
         ) : (
-          <p>No posts available.</p>
+          <p>No comments yet. Click the "Reply" button to be the first to share your thoughts!</p>
         )}
       </div>
     </>
