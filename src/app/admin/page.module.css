@@ -101,13 +101,18 @@
     width: 70%;
     height: fit-content;
     display: grid;
-    grid-template-columns: 65% 35%;
+    grid-template-columns: 60% 40%;
     border-radius: 15px;
     overflow: hidden;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     margin-top: 25px;
     margin-left: auto;
     margin-right: auto;
+}
+
+.container:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
 .commentContainer {
@@ -185,4 +190,89 @@
 .x {   
     height: 30px;
     width: 30px;
+}
+
+/* Comment Approval Modal */
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 15px 0px 15px;
+}
+
+.modalTitle {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.closeModal {
+    color: black;
+}
+
+.closeModal:hover {
+    color: grey;
+}
+
+.xModal {
+    margin: 5px;
+}
+
+.contextPost {
+    border: solid 2px black;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.contextComment {
+    margin: 15px;
+    display: flex;
+}
+
+.modalComment {
+    display: flex;
+    margin-top: -5px;
+    margin-left: 20px;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 15px;
+}
+
+.approveModal {
+    display: flex;
+    align-items: center;
+    color: green;
+    background-color: white;
+    border: solid 2px green;
+} 
+
+.approveModal:hover {
+    color: white;
+    background-color: green;
+    border: solid 2px green;
+}
+
+.rejectModal {
+    display: flex;
+    align-items: center;
+    color: red;
+    background-color: white;
+    border: solid 2px red;
+}
+
+.rejectModal:hover {
+    color: white;
+    background-color: red;
+    border: solid 2px red;
+}
+
+.gap {
+    width: 20px;
 }
