@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
 
-
 export async function POST(req: NextRequest, res: NextResponse) {
     const formData = await new Response(req.body).json();
     const msgId = formData.msg_id;
