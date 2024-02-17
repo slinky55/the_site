@@ -2,6 +2,10 @@
 import React, { useEffect, useState } from 'react'
 import { Header } from '../components/Header'
 import styles from './page.module.css'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheckCircle, faXmarkCircle, faX, faReply } from '@fortawesome/free-solid-svg-icons'
+import { Modal, Button, ModalBody } from 'reactstrap'
+import 'bootstrap/dist/css/bootstrap.css';
 
 type Inquiry = {
     msg_id: string,
@@ -49,6 +53,8 @@ export default function AdminPage() {
     const [parentComment, setParentComment] = useState<{[commentId: string]: string}>({});
     // And get their parent Post
     const [parentPost, setParentPost] = useState<{[commentId: string]: string}>({});
+    // Modal for Comment approval
+    const [modal, setModal] = useState<boolean[]>([]);
 
   
     useEffect(() => {
@@ -235,6 +241,14 @@ export default function AdminPage() {
       deleteComment(id);
     }
 
+    function openModal(index: number) {
+      setModal((prevArray) => {
+        const newArray = [...prevArray];
+        newArray[index] = !newArray[index];
+        return newArray;
+        })
+    }
+
   return (
     <>
         <Header/>
@@ -290,33 +304,74 @@ export default function AdminPage() {
               <p className={styles.title} key={4}>Comments Pending Approval</p>
               <hr/>
               {comments.map((comment, index) => (
-                <div className={styles.inquiryContainer} key={comment.comment_id}>
-                  <div className={styles.authorContainer}>
-                    <span className={styles.author} key={comment.author_id}>{comment.author}</span>
-                    <span className={styles.date} key={comment.comment_id}>{new Date(comment.created_at).toLocaleString()}</span>
+                <>
+                  <div className={styles.container} key={comment.comment_id} onClick={() => openModal(index)}>
+                    <div className={styles.commentContainer}>
+                      <div className={styles.commentHead}>
+                        <span className={styles.commentAuthor} key={comment.author_id}>{comment.author}</span>
+                        <span className={styles.commentDate} key={comment.comment_id}>{new Date(comment.created_at).toLocaleString()}</span>
+                      </div>
+                      <span className={styles.comment}>{comment.cmt}</span>
+                    </div>
+                    <div className={styles.buttonContainer}>
+                      <button className={styles.checkmarkBtn} onClick={() => approveComment(comment)}>Approve <FontAwesomeIcon className={styles.checkmark} icon={faCheckCircle}/></button>
+                      <button className={styles.xBtn} onClick={() => rejectComment(comment.comment_id)}>Reject <FontAwesomeIcon className={styles.x} icon={faXmarkCircle}/></button>
+                    </div>
                   </div>
-                  <span className={styles.msg}>
-                    {comment.cmt}
-                  </span>
-                  <span className={styles.msg}>
-                    {comment.comment_id && comment.comment_id in parentComment ? 
-                    (
-                      <span>In response to Comment: {parentComment[comment.comment_id]}</span>
-                    ) : (
-                      <></>
-                    )}
-                  </span>
-                  <span className={styles.msg}>
-                    {comment.comment_id && comment.comment_id in parentPost ? 
-                    (
-                      <span>In response to Post: {parentPost[comment.comment_id]}</span>
-                    ) : (
-                      <></>
-                    )}
-                  </span>
-                  <button onClick={() => approveComment(comment)}>Approve</button>
-                  <button onClick={() => rejectComment(comment.comment_id)}>Reject</button>
-                </div>
+                  <Modal
+                    toggle={() => openModal(index)} 
+                    isOpen={modal[index]}>
+                    <div className={styles.modalHeader}>
+                      <h5 className={styles.modalTitle}>
+                        Comment Details
+                      </h5>
+                      <button
+                        aria-label="Close"
+                        className={styles.closeModal}
+                        type="button"
+                        onClick={() => openModal(index)}
+                      >
+                        <FontAwesomeIcon className={styles.xModal} icon={faX}/>
+                      </button>
+                    </div>
+                    <ModalBody>
+                      {comment.comment_id && comment.comment_id in parentPost ? 
+                      ( <>
+                          <p><b>Blog Post</b></p>
+                          <div className={styles.contextPost}>{parentPost[comment.comment_id]}</div>
+                        </>
+                      ) : (
+                        <></>
+                      )}
+                      {comment.comment_id && comment.comment_id in parentComment ? 
+                      (
+                        <div className={styles.contextComment}><FontAwesomeIcon icon={faReply}/><span className={styles.gap}></span>{parentComment[comment.comment_id]}</div>
+                      ) : (
+                        <></>
+                      )}
+                      <hr></hr>
+                      <p><b>Comment pending approval</b></p>
+                      <div className={styles.modalComment}>
+                        {comment.cmt}
+                      </div>
+                    </ModalBody>
+                    <div className={styles.modalFooter}>
+                      <Button
+                        type="button"
+                        onClick={() => approveComment(comment)}
+                        className={styles.approveModal}
+                      >
+                        Approve<span className={styles.gap}></span><FontAwesomeIcon className={styles.checkmark} icon={faCheckCircle}/>
+                      </Button>
+                      <Button 
+                        type="button"
+                        onClick={() => rejectComment(comment.comment_id)}
+                        className={styles.rejectModal}>
+                        Reject<span className={styles.gap}></span><FontAwesomeIcon className={styles.x} icon={faXmarkCircle}/>
+                      </Button>
+                    </div>
+                  </Modal>
+                </>
               ))}
             </div>
           ) : (

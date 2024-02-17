@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import Link from 'next/link';
 import { Header } from '../components/Header'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faAngleLeft, faAngleRight, faUser, faCalendar } from '@fortawesome/free-solid-svg-icons';
 
 type Post = {
   post_id: number,
@@ -51,29 +53,69 @@ export default function BlogPage() {
     }
   }, [posts]);
 
+  const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health"]
+
   return (
     <>
-    <Header />
-      <Link href="blog/new-post">Create Post</Link>
+      <Header/>
       <div>
         {loading ? (
           <p>Loading...</p>
         ) : error ? (
           <p>Error: {error}</p>
         ) : posts && posts.length > 0 ? (
-          <div className={styles.postsContainer} key={1}>
-            <p className={styles.title} key={2}>Blog</p>
-            {posts.map((post, id) => (
-              <Link key={id}href={`blog/${post.post_id}`}>
-                <div className={styles.postContainer} key={post.post_id}>
-                  <p className={styles.author} key={post.author_id}>{post.author}</p>
-                  <p className={styles.post} key={post.post_id}>{post.post}</p>
-                  <p key={post.post_id}>Created at: {new Date(post.created_at).toLocaleString()}</p>
-                  <p key={post.post_id}>Last Modified: {new Date(post.last_modified).toLocaleString()}</p>
+          <>
+            <div className={styles.featured}>
+              <span className={styles.featuredText}>Featured Posts</span>
+              <div className={styles.slideshowContainer}>
+                <FontAwesomeIcon className={styles.arrowL} icon={faAngleLeft}/>
+                <div className={styles.cardContainer}>
+                  <img className={styles.cardImg} src="https://t4.ftcdn.net/jpg/00/53/64/49/360_F_53644926_0mvUCIxCCTvIa7BAIFuUa3xsaNA9lbeb.jpg"/>
+                  <span className={styles.cardTitle}>The Benefits of Digital Health in Today's Society</span>
+                  <span className={styles.cardAuthor}><FontAwesomeIcon icon={faUser}/> John Doe</span><span className={styles.cardDate}><FontAwesomeIcon icon={faCalendar}/> Feb 1, 2024</span>                </div>
+                <div className={styles.cardContainer}>
+                  <img className={styles.cardImg} src="https://t4.ftcdn.net/jpg/00/53/64/49/360_F_53644926_0mvUCIxCCTvIa7BAIFuUa3xsaNA9lbeb.jpg"/>
+                  <span className={styles.cardTitle}>The Benefits of Digital Health in Today's Society</span>
+                  <span className={styles.cardAuthor}><FontAwesomeIcon icon={faUser}/> John Doe</span><span className={styles.cardDate}><FontAwesomeIcon icon={faCalendar}/> Feb 1, 2024</span>                </div>
+                <div className={styles.cardContainer}>
+                  <img className={styles.cardImg} src="https://t4.ftcdn.net/jpg/00/53/64/49/360_F_53644926_0mvUCIxCCTvIa7BAIFuUa3xsaNA9lbeb.jpg"/>
+                  <span className={styles.cardTitle}>The Benefits of Digital Health in Today's Society</span>
+                  <span className={styles.cardAuthor}><FontAwesomeIcon icon={faUser}/> John Doe</span><span className={styles.cardDate}><FontAwesomeIcon icon={faCalendar}/> Feb 1, 2024</span>
                 </div>
-              </Link>
-            ))}
-          </div>
+                <FontAwesomeIcon className={styles.arrowR} icon={faAngleRight}/>
+              </div>
+            </div>
+            <p className={styles.title} key={2}>Recent Posts</p>
+            <div className={styles.container}>
+              <div className={styles.postsContainer}>
+                {posts.map((post, id) => (
+                  <>
+                    <div className={styles.postContainer} key={post.post_id}>
+                      <img className={styles.postImg} src="https://t4.ftcdn.net/jpg/00/53/64/49/360_F_53644926_0mvUCIxCCTvIa7BAIFuUa3xsaNA9lbeb.jpg"/>
+                      <div className={styles.postTitle} key={post.post_id}>{post.post}</div>
+                      <div className={styles.postAuthor} key={post.author_id}><FontAwesomeIcon icon={faUser}/> {post.author}</div>
+                      <div className={styles.postDate} key={post.post_id}><FontAwesomeIcon icon={faCalendar}/> {new Date(post.created_at).toLocaleString()}</div>
+                      <Link key={id}href={`blog/${post.post_id}`}><div className={styles.readMore}>Read More</div></Link>
+                    </div>
+                  </>
+                ))}
+              </div>
+              <div className={styles.searchContainer}>
+                <textarea className={styles.searchbar} placeholder='Search...'></textarea>
+                <button className={styles.searchBtn}>Search</button>
+              </div>
+              <div className={styles.topicContainer}>
+                <div className={styles.topicsTitle}>Topics</div>
+                <hr></hr>
+                {topics.map((topic) => (
+                  <>
+                    <div className={styles.topic}>{topic}</div>
+                    <hr></hr>
+                  </>
+                ))}
+              </div>
+            </div>
+          </>
         ) : (
           <p>No posts available.</p>
         )}

@@ -1,0 +1,150 @@
+.container {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    margin: 15px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.postHeader {
+    display: flex;
+    justify-content: space-between;
+    grid-column: span 2;
+}
+
+.title {
+    font-size: 20px;
+    font-weight: bold;
+    width: fit-content;
+    margin-left: 15px;
+}
+
+.authorTile {
+    margin: 15px;
+    display: grid;
+    grid-template-columns: auto;
+    justify-content: center;
+    align-content: center;
+}
+
+.author {
+
+}
+
+.profilePic {
+    height: 50px;
+    width: 50px;
+    border-radius: 5px;
+}
+
+.postContainer {
+
+}
+
+.post {
+
+}
+
+.postFooter {
+    display: flex;
+    justify-content: space-between;
+    grid-column: span 2;
+}
+
+.date {
+    color: rgb(48, 48, 48);
+    font-size: 12px;
+    text-align: right;
+}
+
+/* Comment Section */
+
+.leftShift {
+    /* margin-left: -45px; */
+}
+
+.commentsContainer {
+    margin-left: 45px;
+}
+
+.commentContainer {
+    display: grid;
+    grid-template-columns: 25% 75%;
+    margin: 15px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.postReply {
+    border: 1px black solid;
+    margin: 7px;
+    padding: 5px;
+}
+
+.postReply:hover {
+    background-color: rgb(246, 246, 246);
+}
+
+/* Input Boxes */
+.commentForm {
+    display: grid;
+    grid-template-columns: auto auto;
+    justify-content: center;
+}
+
+.authorInput {
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.cmtInput {
+    padding: 10px;
+    margin-left: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.authorInput:hover,
+.cmtInput:hover {
+  border-color: #999;
+}
+
+/* Icons */
+.checkIcon {
+    color: green;
+    height: 15px;
+    width: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.checkIcon:hover {
+    color: rgb(20, 204, 20);
+}
+
+.trashIcon {
+    color: rgb(233, 38, 38);
+    height: 15px;
+    width: 15px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.trashIcon:hover {
+    color:rgb(241, 80, 80);
+}
+
+.replyIcon {
+    height: 15px;
+    width: 15px;
+    margin-left:5px;
+    margin-right: 5px;
+}
+
+.replyIcon:hover {
+    color: rgb(49, 48, 48);
+}
