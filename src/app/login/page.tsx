@@ -1,8 +1,8 @@
 import { type Metadata } from 'next'
-import { getServerSession } from 'next-auth'
+
+import { getAuthSession } from '../lib/actions';
 import ClientContent from './client';
-import { RedirectType, redirect } from 'next/navigation';
-import { authConfig } from '../lib/auth';
+import { redirect } from 'next/navigation';
 
 export const metadata: Metadata = {
     title: 'Sign In',
@@ -10,13 +10,14 @@ export const metadata: Metadata = {
 
 export default async function Login() {
     try {
-        const session = await getServerSession(authConfig);
+        const session = await getAuthSession();
         if (session == null) {
             return <ClientContent />
         }
     } catch (err) {
         console.log(err);
+        return <ClientContent />
     }
 
-    redirect("/", RedirectType.replace)
+    redirect("/");
 }

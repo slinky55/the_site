@@ -1,55 +1,83 @@
 "use client"
 
-import { signIn } from "next-auth/react";
-import { SlimLayout } from "../components/SlimLayout";
-import Link from "next/link";
-import { TextField } from "../components/Fields";
-import { Button } from "../components/Button";
-import { useFormState } from "react-dom";
-import { login } from "../lib/actions";
+import Link from 'next/link'
+import { Button } from '@/app/components/Button'
+import { TextField } from '@/app/components/Fields'
+import { SlimLayout } from '@/app/components/SlimLayout'
+import { register } from '../lib/actions'
+import { useFormState } from 'react-dom'
 
 const initialFormState = {
+    success: false,
     message: "",
-};
+}
 
 export default function ClientContent() {
-    const [formState, formAction] = useFormState(login, initialFormState);
+    const [formState, formAction] = useFormState(register, initialFormState);
 
     return (
         <SlimLayout>
             <h2 className="mt-20 text-lg font-semibold text-gray-900">
-                Sign in to your account
+                Get started for free
             </h2>
+
             <p className="mt-2 text-sm text-gray-700">
-                Don’t have an account?{' '}
+                Already registered?{' '}
                 <Link
-                    href="/register"
+                    href="/login"
                     className="font-medium text-blue-600 hover:underline"
                 >
-                    Sign up
+                    Sign in
                 </Link>{' '}
-                today.
+                to your account.
             </p>
-            <form action={formAction} className="mt-10 grid grid-cols-1 gap-y-8">
+
+            <form
+                action={formAction}
+                className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-2"
+            >
                 <TextField
+                    label="First name"
+                    name="first_name"
+                    type="text"
+                    autoComplete="given-name"
+                    placeholder="John"
+                    required
+                />
+                <TextField
+                    label="Last name"
+                    name="last_name"
+                    type="text"
+                    autoComplete="family-name"
+                    placeholder="Doe"
+                    required
+                />
+                <TextField
+                    className="col-span-full"
                     label="Email address"
                     name="email"
                     type="email"
+                    autoComplete="text"
+                    placeholder="abc@example.com"
                     required
                 />
                 <TextField
+                    className="col-span-full"
                     label="Password"
                     name="password"
                     type="password"
+                    autoComplete="new-password"
                     required
                 />
-                <p>
-                    {formState?.message}
-                </p>
                 <div>
+                    <p aria-live="polite">
+                        {formState?.message}
+                    </p>
+                </div>
+                <div className="col-span-full">
                     <Button className="w-full">
                         <span>
-                            Sign in <span aria-hidden="true">&rarr;</span>
+                            Sign up <span aria-hidden="true">&rarr;</span>
                         </span>
                     </Button>
                 </div>
@@ -84,7 +112,6 @@ export default function ClientContent() {
                     GitHub Login
                 </Button>
             </div> */}
-            
         </SlimLayout>
     )
 }
