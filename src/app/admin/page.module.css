@@ -1,3 +1,41 @@
+/* Layout Styling */
+.layoutContainer {
+    display: flex;
+}
+
+.layoutSidebar {
+    background-color: red;
+    border-radius: 10px;
+    margin: 10px;
+    height: 500px;
+    min-width: 200px;
+    width: 200px;
+}
+
+.layoutSidebarBtn {
+    border-top: solid 2px rgb(155, 0, 0);
+    border-bottom: solid 2px rgb(155, 0, 0);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.layoutSidebarBtn:hover {
+    cursor: pointer;
+    background-color: rgb(155, 0, 0);
+}
+
+.layoutContent {
+    flex: 1;
+}
+
+
+/* Feedback Styling */
 .inquiriesContainer {
     display: grid;
     grid-template-columns: 1fr;
@@ -7,6 +45,8 @@
 }
 
 .title {
+    margin-left: auto;
+    margin-right: auto;
     font-weight: bold;
     font-size: 20px;
 }
@@ -14,6 +54,7 @@
 .inquiryContainer {
     display: grid;
     grid-template-columns: 1fr;
+    width: 100%;
 }
 
 .authorContainer {
@@ -90,4 +131,217 @@
 .inquiryDivider {
     margin: 15px 0px 15px 0px;
     width: 95vw;
+}
+
+/* Comments Approval Styling */
+
+.container {
+    width: 100%;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: 60% 40%;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
+    margin-top: 25px;
+}
+
+.container:hover {
+    cursor: pointer;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.commentContainer {
+    display: grid;
+    margin: 15px;
+}
+
+.commentHead {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.comment {
+
+}
+
+.commentAuthor {
+
+}
+
+.commentDate {
+    color: rgb(48, 48, 48);
+    font-size: 12px;
+    width: fit-content;
+    text-align: right;
+}
+
+.buttonContainer {
+    display: flex;
+    grid-row: span 3;
+}
+
+.checkmarkBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-left: 7px;
+    padding-right: 7px;
+    height: 100%;
+    width: 100%;
+    color: green;
+    border: 1px solid green;
+}
+
+.checkmarkBtn:hover {
+    background-color: green;
+    color: white;
+}
+
+.xBtn {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    padding-left: 7px;
+    padding-right: 7px;
+    height: 100%;
+    width: 100%;
+    color: red;
+    border: 1px solid red;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.xBtn:hover {
+    background-color: red;
+    color: white;
+}
+
+.checkmark {
+    height: 30px;
+    width: 30px;
+}
+
+.x {   
+    height: 30px;
+    width: 30px;
+}
+
+/* Comment Approval Modal */
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 15px 0px 15px;
+}
+
+.modalTitle {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.closeModal {
+    color: black;
+}
+
+.closeModal:hover {
+    color: grey;
+}
+
+.xModal {
+    margin: 5px;
+}
+
+.contextPost {
+    border: solid 2px black;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+}
+
+.contextComment {
+    margin: 15px;
+    display: flex;
+}
+
+.modalComment {
+    display: flex;
+    margin-top: -5px;
+    margin-left: 20px;
+}
+
+.modalFooter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin: 15px;
+}
+
+.approveModal {
+    display: flex;
+    align-items: center;
+    color: green;
+    background-color: white;
+    border: solid 2px green;
+} 
+
+.approveModal:hover {
+    color: white;
+    background-color: green;
+    border: solid 2px green;
+}
+
+.rejectModal {
+    display: flex;
+    align-items: center;
+    color: red;
+    background-color: white;
+    border: solid 2px red;
+}
+
+.rejectModal:hover {
+    color: white;
+    background-color: red;
+    border: solid 2px red;
+}
+
+.gap {
+    width: 20px;
+}
+
+/* New blog post Styling */
+
+.newPostContainer {
+    display: grid;
+    gap: 10px;
+}
+
+.newPostAuthorInput {
+    border-radius: 10px;
+    height: 40px;
+    width: 300px;
+    font-size: 12px;
+    vertical-align: top;
+}
+
+.newPostInput {
+    border-radius: 10px;
+    height: 40px;
+    width: 300px;
+    font-size: 12px;
+    vertical-align: top;
+}
+
+.newPostBtn {  
+    border-radius: 10px;
+    height: 40px;
+    vertical-align: center;
+    width: 100px;
+    background-color:red;
+    color: white;
+
 }
