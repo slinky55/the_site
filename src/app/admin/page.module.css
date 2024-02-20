@@ -1,3 +1,41 @@
+/* Layout Styling */
+.layoutContainer {
+    display: flex;
+}
+
+.layoutSidebar {
+    background-color: red;
+    border-radius: 10px;
+    margin: 10px;
+    height: 500px;
+    min-width: 200px;
+    width: 200px;
+}
+
+.layoutSidebarBtn {
+    border-top: solid 2px rgb(155, 0, 0);
+    border-bottom: solid 2px rgb(155, 0, 0);
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.layoutSidebarBtn:hover {
+    cursor: pointer;
+    background-color: rgb(155, 0, 0);
+}
+
+.layoutContent {
+    flex: 1;
+}
+
+
+/* Feedback Styling */
 .inquiriesContainer {
     display: grid;
     grid-template-columns: 1fr;
@@ -16,9 +54,7 @@
 .inquiryContainer {
     display: grid;
     grid-template-columns: 1fr;
-    width: 70%;
-    margin-left: auto;
-    margin-right: auto;
+    width: 100%;
 }
 
 .authorContainer {
@@ -97,8 +133,10 @@
     width: 95vw;
 }
 
+/* Comments Approval Styling */
+
 .container {
-    width: 70%;
+    width: 100%;
     height: fit-content;
     display: grid;
     grid-template-columns: 60% 40%;
@@ -106,8 +144,6 @@
     overflow: hidden;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     margin-top: 25px;
-    margin-left: auto;
-    margin-right: auto;
 }
 
 .container:hover {
@@ -275,4 +311,37 @@
 
 .gap {
     width: 20px;
+}
+
+/* New blog post Styling */
+
+.newPostContainer {
+    display: grid;
+    gap: 10px;
+}
+
+.newPostAuthorInput {
+    border-radius: 10px;
+    height: 40px;
+    width: 300px;
+    font-size: 12px;
+    vertical-align: top;
+}
+
+.newPostInput {
+    border-radius: 10px;
+    height: 40px;
+    width: 300px;
+    font-size: 12px;
+    vertical-align: top;
+}
+
+.newPostBtn {  
+    border-radius: 10px;
+    height: 40px;
+    vertical-align: center;
+    width: 100px;
+    background-color:red;
+    color: white;
+
 }

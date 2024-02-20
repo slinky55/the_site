@@ -1,10 +1,10 @@
 'use client'
-import { Header } from '@/app/components/Header';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import styles from '../page.module.css'
 
-export default function NewPostPage() {
+export default function Page() {
     const router = useRouter();
     const [authorName, setAuthorName] = useState('');
     const [postContent, setPostContent] = useState('');
@@ -24,32 +24,35 @@ export default function NewPostPage() {
         }
 
         await fetch('/api/posts/createpost', postData);
-
-        router.push('/blog');
     }
 
     return (
         <>
-            <Header />
-            <form>
-                <h2>Create a New Post</h2>
-                <label htmlFor="authorName">Author&apos;s Name:</label>
+          <form>
+            <div className={styles.title}>Create a New Post</div>
+            <hr/>
+            <div className={styles.newPostContainer}>
                 <input
+                    className={styles.newPostAuthorInput}
+                    placeholder="Author Name"
                     type="text"
                     id="authorName"
                     value={authorName}
                     onChange={(e) => setAuthorName(e.target.value)}
                     required
                 />
-                <label htmlFor="postContent">Post:</label>
-                <textarea
+                <input
+                    className={styles.newPostInput}
+                    placeholder="Type your post here..."
+                    type="text"
                     id="postContent"
                     value={postContent}
                     onChange={(e) => setPostContent(e.target.value)}
                     required
-                ></textarea>
-                <button onClick={createPost}>Create Post</button>
-            </form>
+                />
+                <button className={styles.newPostBtn} onClick={createPost}>Create Post</button>
+            </div>
+          </form>
         </>
     )
 }
