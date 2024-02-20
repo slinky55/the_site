@@ -26,9 +26,13 @@ const lexend = Lexend({
 })
 
 export default function RootLayout({
-                                     children,
-                                   }: {
-  children: React.ReactNode
+  children,
+  feedback,
+  comments,
+}: {
+  children: React.ReactNode;
+  feedback: React.ReactNode;
+  comments: React.ReactNode;
 }) {
   return (
       <html
@@ -39,7 +43,9 @@ export default function RootLayout({
               lexend.variable,
           )}
       >
-      <body className="flex h-full flex-col">{children}</body>
+      <body className="flex h-full flex-col">
+        {children}{feedback}{comments}  
+      </body>
       </html>
   )
 }
