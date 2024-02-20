@@ -14,7 +14,7 @@ const people = [
         name: 'Example Name 2 ',
         role: 'Example Role 2 ',
         imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5x2P0JbAzDSMpuAhxUuA6J2TMuaqryqB5ew&usqp=CAU',
+        'https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
         bio: 'Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio.',
     },
     {
