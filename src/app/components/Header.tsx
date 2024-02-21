@@ -33,7 +33,6 @@ function MobileNavIcon({ open }: { open: boolean }) {
             strokeLinecap="round"
         >
             <path
-                d="M0 1H14M0 7H14M0 13H14"
                 className={clsx(
                     'origin-center transition',
                     open && 'scale-90 opacity-0',
@@ -82,7 +81,7 @@ function MobileNavigation() {
                 >
                     <Popover.Panel
                         as="div"
-                        className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-white p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
+                        className="absolute inset-x-0 top-full mt-4 flex origin-top flex-col rounded-2xl bg-slate-500 p-4 text-lg tracking-tight text-slate-900 shadow-xl ring-1 ring-slate-900/5"
                     >
                         <MobileNavLink href="/about-us">About Us</MobileNavLink>
                         <MobileNavLink href="/research-library">Research Library</MobileNavLink>
@@ -100,11 +99,12 @@ function MobileNavigation() {
 
 export function Header() {
     return (
-        <header className="py-10">
-            <Container>
-                <nav className="relative z-50 flex justify-between">
+        <header>
+            <Container className="">
+                <nav className="relative z-50 flex justify-between bg-black col-span-12 px-32">
                     <div className="flex items-center md:gap-x-12">
                         <div className="hidden md:flex md:gap-x-6">
+                            <NavLink href="/">Home</NavLink>
                             <NavLink href="/about-us">About Us</NavLink>
                             <NavLink href="/research-library">Research Library</NavLink>
                             <NavLink href="/news-and-events">News and Events</NavLink>
@@ -117,8 +117,8 @@ export function Header() {
                     <div className="flex items-center gap-x-5 md:gap-x-8">
                         <div className="hidden md:block">
                         </div>
-                        <Button href="/login" color="blue">
-              <span>Sign In</span>
+                        <Button href="/login" color="red">
+                <span>Sign In</span>
                         </Button>
                         <div className="-mr-1 md:hidden">
                             <MobileNavigation />
