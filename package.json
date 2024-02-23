@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cypress:open": "cypress open"
   },
   "dependencies": {
     "@auth/sequelize-adapter": "^1.4.0",
@@ -41,6 +42,7 @@
     "@types/react": "^18.2.51",
     "@types/react-dom": "^18.2.18",
     "@types/uuid": "^9.0.8",
+    "cypress": "^13.6.6",
     "eslint": "^8.56.0",
     "eslint-config-next": "14.0.4",
     "typescript": "^5.3.3"
