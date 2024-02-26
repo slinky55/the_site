@@ -2,16 +2,7 @@ import { Inter, Lexend } from 'next/font/google'
 import clsx from 'clsx'
 import { Header } from '@/app/components/Header'
 import '@/styles/tailwind.css'
-import { type Metadata } from 'next'
-
-export const metadata: Metadata = {
-  title: {
-    template: '%s - UF Work Group',
-    default: 'Work Group',
-  },
-  description:
-      'Work Group',
-}
+import React from 'react'
 
 const inter = Inter({
   subsets: ['latin'],
