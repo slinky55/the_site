@@ -1,6 +1,6 @@
 import { Inter, Lexend } from 'next/font/google'
 import clsx from 'clsx'
-
+import { Header } from '@/app/components/Header'
 import '@/styles/tailwind.css'
 import { type Metadata } from 'next'
 
@@ -44,7 +44,8 @@ export default function RootLayout({
           )}
       >
       <body className="flex h-full flex-col">
-        {children}{feedback}{comments}  
+      <Header />
+        {children}{feedback}{comments}
       </body>
       </html>
   )

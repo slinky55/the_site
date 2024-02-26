@@ -4,7 +4,6 @@ import styles from './page.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { Header } from '../components/Header';
 import Link from 'next/link';
 
 
@@ -37,7 +36,6 @@ export default function ContactPage() {
 
   return (
     <>
-      <Header />
       <div className={styles.container}>
         <h1 className={styles.title}>Contact Us</h1>
         <div className={styles.instruction}>Use the form below to directly contact a group administrator. We'll respond as soon as we can!</div>
@@ -47,9 +45,9 @@ export default function ContactPage() {
               <div className={styles.inputRow}>
                 <div className={styles.inputGroup}>
                   <label className={styles.label}>Name</label>
-                  <input 
-                  className={styles.input} 
-                  type="text" 
+                  <input
+                  className={styles.input}
+                  type="text"
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
@@ -59,9 +57,9 @@ export default function ContactPage() {
 
                 <div className={styles.inputGroup}>
                   <label className={styles.label}>Phone Number</label>
-                  <input 
-                  className={styles.input} 
-                  type="text" 
+                  <input
+                  className={styles.input}
+                  type="text"
                   id="phoneNumber"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
@@ -73,9 +71,9 @@ export default function ContactPage() {
               <div className={styles.inputRow}>
                 <div className={styles.inputGroup}>
                   <label className={styles.label}>Email</label>
-                  <input 
-                  className={styles.input} 
-                  type="email" 
+                  <input
+                  className={styles.input}
+                  type="email"
                   id="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
@@ -85,8 +83,8 @@ export default function ContactPage() {
 
                 <div className={styles.inputGroup}>
                   <label className={styles.label}>Subject</label>
-                  <input 
-                  className={styles.input} 
+                  <input
+                  className={styles.input}
                   type="text"
                   id="subject"
                   value={subject}
@@ -97,7 +95,7 @@ export default function ContactPage() {
               </div>
 
               <label className={styles.label}>Message</label>
-              <textarea 
+              <textarea
               className={styles.messageTextArea}
               id="msg"
               value={msg}

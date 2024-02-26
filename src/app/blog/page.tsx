@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import Link from 'next/link';
-import { Header } from '../components/Header'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight, faUser, faCalendar } from '@fortawesome/free-solid-svg-icons';
 
@@ -57,7 +56,6 @@ export default function BlogPage() {
 
   return (
     <>
-      <Header/>
       <div>
         {loading ? (
           <p>Loading...</p>

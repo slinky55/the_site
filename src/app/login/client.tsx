@@ -36,7 +36,7 @@ export default function ClientContent() {
             console.log(err);
         }
     }
-    
+
     return (
         <SlimLayout>
             <h2 className="mt-20 text-lg font-semibold text-gray-900">
