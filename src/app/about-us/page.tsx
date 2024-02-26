@@ -1,4 +1,3 @@
-import { Header } from '@/app/components/Header'
 import { Container } from '@/app/components/Container'
 
 // PLACE HOLDER FOR TESTING
@@ -50,7 +49,6 @@ const people = [
 export default function AboutUs() {
     return (
         <main>
-            <Header/>
             <Container>
                 <div className="mx-auto max-w-2xl sm:text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Team</h2>

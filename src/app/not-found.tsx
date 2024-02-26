@@ -11,7 +11,7 @@ export default function NotFound() {
         Page not found
       </h1>
       <p className="mt-3 text-sm text-gray-700">
-        Sorry, I think you're lost.
+        Sorry, I think you&apos;re lost.
       </p>
       <Button href="/" className="mt-10">
         Go back home
