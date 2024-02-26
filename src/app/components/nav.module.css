@@ -1,128 +1,160 @@
-#functionalBody{
+#functionalBody {
   width: 100vw;
   height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}
+
+#toolbar {
+display: flex;
+justify-content: left;
+align-items: center;
+  background-color: black;
+  padding: 20px;
+  text-align: left;
+}
+
+.logo{
+  margin-right: 20px; 
+  font-weight: bold;
+}
+
+#section1 {
+  height: 40vh;
+  width: 100%;
+  position: relative;
+  background-image: url("people.jpg");
+  background-size: 100%;
+  background-repeat: no-repeat;
   display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+#bottomLeftButton {
+  position: absolute;
+  bottom: 0;
+  margin-left: 20px;
+  left: 0;
+  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+#submitButton {
+  margin-bottom: 10px;
+}
+
+#inputContainer {
+  display: flex;
+  flex-direction: wrap;
+  align-items: flex-start;
+}
+
+#inputContainer input {
+  margin-right: 20px;
+  margin-bottom: 10px;
+}
+
+
+#section2 {
+  height: 50vh;
+  width: 100%;
+  display: flex;
+}
+
+#imageContainer {
+  width: 50%;
+  overflow: hidden;
+}
+
+#imageContainer img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+#textContainer {
+  width: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
 }
 
-.linkContainer {
-    background-color: rgb(221, 221, 221);
-    display: flex;
-    padding: 10px;
-    width: 100%;
-    box-sizing: border-box;
-  }
-  
-  .link {
-    text-decoration: none;
-    color: black;
-    padding: 5px;
-    margin: 0 10px;
-  }
-  
-  .link:hover {
-    color: rgb(75, 75, 75);
-  }
-  
-  .slideshow {
-    width: 100%;
-    height: 200px;
-    position: relative;
-    overflow: hidden;
-    margin-top: 15vh;
-    margin-bottom: 15vh;
-  }
-  
-  .slideContainer {
-    display: flex;
-    width: 100%; 
-    animation: moveLeft 24s linear infinite;
-  }
-  
-  .slide {
-    flex: 1;
-    height: 100%;
-    box-sizing: border-box;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border-radius: 50%;
-    width: 200px;
-    height: 300px;
-    margin-right: 10vw;
-    opacity: 1; 
-  }
-  
-  .slide:nth-child(1) {
-    animation-delay: 0s;
-  }
-  
-  .slide:nth-child(2) {
-    animation-delay: 4s;
-  }
-  
-  .slide:nth-child(3) {
-    animation-delay: 8s;
-  }
-  
-  .slide:nth-child(4) {
-    animation-delay: 12s;
-  }
-  
-  .slide:nth-child(5) {
-    animation-delay: 16s;
-  }
-  
-  .slide:nth-child(6) {
-    animation-delay: 20s;
-  }
+#section2 p {
+  color: red;
+  font-weight: bold;
+  font-size: 2vw;
+  margin: 0; /* Remove default margin */
+}
 
-  #flexContentContainer{
-    margin-top: 10vh;
-    border: 5px solid black;
-    width: 90vw;
-    display: flex;
-    border-radius: 50px;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    overflow: scroll;
-  }
+#workgroupDescription {
+  margin-top: 50px;
+  color: black;
+  font-weight: bold;
+  font-size: 1vw;
+  margin: 0; /* Remove default margin */
+}
 
-  .article{
-    margin-right: 5vw;
-    margin-top: 5vh;
-    width: 30vw;
-    height: 40vh;
-    border: 5px solid black;
-    padding: 2vw;
-    border-radius: 50px;
-    display: flex;
-    overflow: scroll;
-  }
+.buttonBox{
+background-color: red;
+color: white;
+text-align: center;
+font-weight: bold;
+margin-bottom: 20px;
+margin-top: 20px;
+padding: 5px;
+}
 
-  .paragraph{
-    width: 50%;
-    margin-left: 1vw;
-  }
+#button9 {
+position: absolute;
+right: 0;
+background-color: red;
+color: white;
+padding: 5px;
+  font-weight: bold;
+margin-top: 0;
+border-radius: 50px;
+}
 
-  .articleTitle{
-    font-weight: bold;
-    margin-bottom: 2vh;
-  }
+#section3 {
+  background-color: red;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .image {
-    width: 50%; 
-    height: 100%;
-    margin-right: 1vw;
-  }
+.navLink{
+  margin-right: 50px; 
+  color: white;
+  text-decoration: none;
+}
 
-  @keyframes moveLeft {
-    0% {
-      transform: translateX(100%);
-    }
-    100% {
-      transform: translateX(-100%); 
-    }
-  }
-  
+#spotlightTitle {
+  margin-top: 20px;
+  margin-bottom: 40px;
+  color: white;
+  width: 100%;
+  font-size: 40px;
+  font-weight: bold;
+  text-align: center;
+}
+
+#imageRow {
+  display: flex;
+  justify-content: space-around;
+  width: 100%;
+}
+
+#imageRow img {
+  width: 30%; /* Adjust as needed */
+  height: auto;
+  display: block;
+}
+

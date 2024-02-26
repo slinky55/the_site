@@ -24,7 +24,7 @@
             height: 40vh;
             width: 100%;
             position: relative;
-            background-image: url("people.png");
+            background-image: url("people.jpg");
             display: flex;
             flex-direction: column;
             justify-content: flex-end;
