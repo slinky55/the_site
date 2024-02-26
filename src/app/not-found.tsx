@@ -1,7 +1,6 @@
-import Link from 'next/link'
-
 import { Button } from '@/app/components/Button'
 import { SlimLayout } from '@/app/components/SlimLayout'
+import { Header } from '@/app/components/Header'
 
 export default function NotFound() {
   return (
