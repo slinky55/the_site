@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "image-size": "^1.1.1",
     "next": "^14.0.4",
     "node": "^21.2.0",
     "react": "^18",

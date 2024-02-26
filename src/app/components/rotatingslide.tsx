@@ -1,13 +1,24 @@
 import React from 'react';
 import styles from './nav.module.css';
 import Image from 'next/image';
+import fs from 'fs';
+import path from 'path';
+import sizeOf from 'image-size';
 
+const getImageDimensions = (imagePath) => {
+  const dimensions = sizeOf(imagePath);
+  return dimensions;
+};
 export default function RotatingSlide() {
+  // Get the dimensions for each image
+  const computerdeviceDimensions = getImageDimensions(path.resolve('./public/computerdevice.jpg'));
+  const bodyDimensions = getImageDimensions(path.resolve('./public/body.jpg'));
+  const doctorDimensions = getImageDimensions(path.resolve('./public/doctor.jpg'));
+
   return (
     <>
       <div className={styles.functionalBody}>
         <div id={styles.toolbar}>
-          <a href="#link1" className={styles.navLink}>Home</a>
           <a href="#link2" className={styles.navLink}>About Us</a>
           <a href="#link3" className={styles.navLink}>Research Library</a>
           <a href="#link2" className={styles.navLink}>News and Events</a>
@@ -29,7 +40,7 @@ export default function RotatingSlide() {
         </div>
         <div id={styles.section2}>
           <div id={styles.imageContainer}>
-            <Image src="/computerdevice.jpg" width={100} height={100} alt="Science Image" />
+            <Image src="/computerdevice.jpg" width={computerdeviceDimensions.width} height={computerdeviceDimensions.height} alt="Science Image" />
           </div>
           <div id={styles.textContainer}>
             <p style={{ color: 'red', marginBottom: '30px' }}>The Technology Health and Equity Workgroup</p>
@@ -40,9 +51,9 @@ export default function RotatingSlide() {
         <div id={styles.section3}>
           <div id={styles.spotlightTitle}>T.H.E. Spotlight</div>
           <div id={styles.imageRow}>
-            <Image src="/body.jpg" width={100} height={100} alt="Image" />
-            <Image src="/doctor.jpg" width={100} height={100} alt="Image" />
-            <Image src="/computerdevice.jpg" width={100} height={100} alt="Image"  />
+            <Image src="/body.jpg" width={bodyDimensions.width} height={bodyDimensions.height} alt="Image" />
+            <Image src="/doctor.jpg" width={doctorDimensions.width} height={doctorDimensions.height} alt="Image" />
+            <Image src="/computerdevice.jpg" width={computerdeviceDimensions.width} height={computerdeviceDimensions.height} alt="Image" />
           </div>
         </div>
         <div id={`${styles.toolbar}`} style={{ justifyContent: 'center', color: 'white' }}>
