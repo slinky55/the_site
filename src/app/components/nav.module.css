@@ -26,7 +26,7 @@ align-items: center;
   width: 100%;
   position: relative;
   background-image: url("people.jpg");
-  background-size: 100%;
+  background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
@@ -94,6 +94,7 @@ align-items: center;
 
 #workgroupDescription {
   margin-top: 50px;
+  width: 90%;
   color: black;
   font-weight: bold;
   font-size: 1vw;

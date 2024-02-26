@@ -1,10 +1,6 @@
 import React from 'react';
 import styles from './nav.module.css';
-import doctor from './doctor.jpg';
-import people from './people.jpg';
-import body from './body.jpg';
-import computerdevice from './computerdevice.jpg';
-import Image from 'next/image'
+import Image from 'next/image';
 
 export default function RotatingSlide() {
   return (
@@ -33,7 +29,7 @@ export default function RotatingSlide() {
         </div>
         <div id={styles.section2}>
           <div id={styles.imageContainer}>
-            <img src="science.png" alt="Science Image" />
+            <Image src="/computerdevice.jpg" width={100} height={100} alt="Science Image" />
           </div>
           <div id={styles.textContainer}>
             <p style={{ color: 'red', marginBottom: '30px' }}>The Technology Health and Equity Workgroup</p>
