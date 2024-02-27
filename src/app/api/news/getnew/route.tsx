@@ -3,16 +3,16 @@ import executeQuery from "../../../lib/db";
 
 export async function POST(req: NextRequest, res: NextResponse) {
     const formData = await new Response(req.body).json();
-    const id = formData.inquiry_id;
+    const id = formData.event_id;
     try  {
         const result = await executeQuery({
-            query: `SELECT * FROM Inquiry WHERE inquiry_id = ?`,
+            query: `SELECT * FROM News WHERE news_id = ?`,
             values: [id],
         })
         console.log(result);
 
         if (res) {
-            return NextResponse.json({inquiries: result}, {status: 200})
+            return NextResponse.json({news: result}, {status: 200})
         } else {
             console.error('Response object is undefined.');
         }
