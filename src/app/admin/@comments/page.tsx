@@ -5,17 +5,7 @@ import { Button } from "reactstrap";
 import { faCheckCircle, faReply, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
 import { Dialog, Description, Transition } from '@headlessui/react'
 import styles from '../page.module.css'
-
-  type Comment = {
-    comment_id: string,
-    author_id: string,
-    post_id: string,
-    parent_comment_id: string,
-    cmt: string,
-    author: string,
-    created_at: Date,
-    last_modified: Date,
-  }
+import { Comment } from '../../types/comment'
 
 export default function Page() {
     // Get Unapproved Comments
@@ -167,11 +157,10 @@ export default function Page() {
         },
         body: JSON.stringify({
           comment_id: comment.comment_id,
-          author_id: comment.author_id,
+          user_id: comment.user_id,
           post_id: comment.post_id,
           parent_comment_id: comment.parent_comment_id,
-          cmt: comment.cmt,
-          author: comment.author
+          content: comment.content
         }),
       }
 
@@ -215,10 +204,10 @@ export default function Page() {
                   <div className={styles.container} key={comment.comment_id} onClick={() => openModal(index)}>
                     <div className={styles.commentContainer}>
                       <div className={styles.commentHead}>
-                        <span className={styles.commentAuthor} key={comment.author_id}>{comment.author}</span>
+                        <span className={styles.commentAuthor} key={comment.user_id}>{comment.user_id}</span>
                         <span className={styles.commentDate} key={comment.comment_id}>{new Date(comment.created_at).toLocaleString()}</span>
                       </div>
-                      <span className={styles.comment}>{comment.cmt}</span>
+                      <span className={styles.comment}>{comment.content}</span>
                     </div>
                     <div className={styles.buttonContainer}>
                       <button className={styles.checkmarkBtn} onClick={() => approveComment(comment)}>Approve <FontAwesomeIcon className={styles.checkmark} icon={faCheckCircle}/></button>
@@ -277,7 +266,7 @@ export default function Page() {
                                   <hr></hr>
                                   <p><b>Comment pending approval</b></p>
                                   <div className={styles.modalComment}>
-                                    {comment.cmt}
+                                    {comment.content}
                                   </div>
                                 </Description>
                                 <div className={styles.modalFooter}>

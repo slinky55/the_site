@@ -6,31 +6,13 @@ import { Header } from '@/app/components/Header';
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faReply, faCancel, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { Post } from '../../types/post'
+import { Comment } from '../../types/comment'
 
 interface PostPageProps {
   params: {
     post_id: string;
   };
-}
-
-type Post = {
-  post_id: string,
-  author_id: string,
-  post: string,
-  author: string,
-  created_at: Date,
-  last_modified: Date
-}
-
-type Comment = {
-  comment_id: string,
-  author_id: string,
-  post_id: string,
-  parent_comment_id: string,
-  cmt: string,
-  author: string,
-  created_at: Date,
-  last_modified: Date,
 }
 
 const PostPage: React.FC<PostPageProps> = ({ params }) => {
@@ -193,10 +175,10 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
           <div className={styles.commentsContainer} key={comment.comment_id}>
             <div className={styles.commentContainer} key={comment.comment_id}>
               <div className={styles.postHeader}>
-                <p className={styles.author} key={comment.author_id}>{comment.author}</p>
+                <p className={styles.author} key={comment.user_id}>{comment.user_id}</p>
                 <p className={styles.date} key={comment.comment_id}>{new Date(comment.created_at).toLocaleString()}</p>
               </div>
-              <p className={styles.post} key={comment.comment_id}>{comment.cmt}</p>
+              <p className={styles.post} key={comment.comment_id}>{comment.content}</p>
               <div className={styles.postFooter}>
                 <p className={styles.date} key={comment.comment_id}><i>Edited on: {new Date(comment.last_modified).toLocaleString()}</i></p>
                 <span>
@@ -256,12 +238,12 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
               <p className={styles.title} key={3}>Lorem Impsum Title Ipsum Lor</p>
               <p className={styles.date} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</p>
             </div>
-            <div className={styles.authorTile} key={post.author_id}>
-                <img className={styles.profilePic} src="https://www.digitary.net/wp-content/uploads/2021/07/Generic-Profile-Image.png"></img>
-                <p className={styles.author} key={post.author_id}>{post.author}</p>
+            <div className={styles.authorTile} key={post.user_id}>
+                <img className={styles.profilePic} src={post.image_src}></img>
+                <p className={styles.author} key={post.user_id}>{post.user_id}</p>
             </div>
             <div className={styles.postContainer}>
-                <p className={styles.post} key={post.post_id}>{post.post}</p>
+                <p className={styles.post} key={post.post_id}>{post.content}</p>
             </div>
             <div className={styles.postFooter}>
                 <p className={styles.date} key={post.post_id}><i>Edited on: {new Date(post.last_modified).toLocaleString()}</i></p>

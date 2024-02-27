@@ -5,15 +5,7 @@ import Link from 'next/link';
 import { Header } from '../components/Header'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faAngleLeft, faAngleRight, faUser, faCalendar } from '@fortawesome/free-solid-svg-icons';
-
-type Post = {
-  post_id: number,
-  author_id: number,
-  post: string,
-  author: string,
-  created_at: Date,
-  last_modified: Date
-}
+import { Post } from '../types/post';
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[] | null>(null);
@@ -92,8 +84,8 @@ export default function BlogPage() {
                   <>
                     <div className={styles.postContainer} key={post.post_id}>
                       <img className={styles.postImg} src="https://t4.ftcdn.net/jpg/00/53/64/49/360_F_53644926_0mvUCIxCCTvIa7BAIFuUa3xsaNA9lbeb.jpg"/>
-                      <div className={styles.postTitle} key={post.post_id}>{post.post}</div>
-                      <div className={styles.postAuthor} key={post.author_id}><FontAwesomeIcon icon={faUser}/> {post.author}</div>
+                      <div className={styles.postTitle} key={post.post_id}>{post.content}</div>
+                      <div className={styles.postAuthor} key={post.user_id}><FontAwesomeIcon icon={faUser}/> {post.user_id}</div>
                       <div className={styles.postDate} key={post.post_id}><FontAwesomeIcon icon={faCalendar}/> {new Date(post.created_at).toLocaleString()}</div>
                       <Link key={id}href={`blog/${post.post_id}`}><div className={styles.readMore}>Read More</div></Link>
                     </div>

@@ -22,13 +22,11 @@ export default function ContactPage() {
             "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              msg_id: uuidv4(),
-              author_id: uuidv4(),
-              msg: msg,
-              author: name,
-              phone: phoneNumber,
+              inquiry_id: uuidv4(),
+              user_id: uuidv4(), // Larry please fix this to be the id of the currently signed in user
+              subject: subject,
               email: email,
-              msg_subject: subject,
+              content: msg
             })
         }
 

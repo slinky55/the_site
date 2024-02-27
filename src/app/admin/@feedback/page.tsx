@@ -1,17 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import styles from '../page.module.css'
-
-type Inquiry = {
-    msg_id: string,
-    author_id: string,
-    msg: string,
-    author: string,
-    phone: string,
-    email: string,
-    msg_subject: string,
-    created_at: Date,
-  }
+import { Inquiry } from '../../types/inquiry'
 
 export default function Page() {
     // Get Inquiries
@@ -76,25 +66,24 @@ export default function Page() {
               <p className={styles.title} key={2}>Contact Us Forms</p>
               <hr/>
               {inquiries.map((inquiry, index) => (
-                <div className={styles.inquiryContainer} key={inquiry.msg_id}>
+                <div className={styles.inquiryContainer} key={inquiry.inquiry_id}>
                   <div className={styles.authorContainer} onClick={() => expand(index)}>
-                    <span className={styles.author} key={inquiry.author_id}>{inquiry.author}</span>
+                    <span className={styles.author} key={inquiry.user_id}>{inquiry.user_id}</span>
                     {expandInquiry[index] ? (
                       <>
-                        <span className={styles.email} key={inquiry.msg_id}>{inquiry.email}</span>
-                        <span className={styles.phone} key={inquiry.msg_id}>{inquiry.phone}</span>
+                        <span className={styles.email} key={inquiry.inquiry_id}>{inquiry.email}</span>
                       </>
                     ) : (
                       <>
-                        <span className={styles.subj1} key={inquiry.msg_id}>Subject: {inquiry.msg_subject}</span>
+                        <span className={styles.subj1} key={inquiry.inquiry_id}>Subject: {inquiry.subject}</span>
                       </>
                     )}
-                    <span className={styles.date} key={inquiry.msg_id}>{new Date(inquiry.created_at).toLocaleString()}</span>
+                    <span className={styles.date} key={inquiry.inquiry_id}>{new Date(inquiry.created_at).toLocaleString()}</span>
                   </div>
                   {expandInquiry[index] ? (
                     <>
-                      <span className={styles.subjContainer}><span className={styles.subjTitle}>Subject:</span><span className={styles.subj} key={inquiry.msg_id}>{inquiry.msg_subject}</span></span>
-                      <span className={styles.msg} key={inquiry.msg_id}>{inquiry.msg}</span>
+                      <span className={styles.subjContainer}><span className={styles.subjTitle}>Subject:</span><span className={styles.subj} key={inquiry.inquiry_id}>{inquiry.subject}</span></span>
+                      <span className={styles.msg} key={inquiry.inquiry_id}>{inquiry.content}</span>
                       <hr className={styles.inquiryDivider}/>
                     </>
                   ) : (
