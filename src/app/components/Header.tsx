@@ -99,7 +99,7 @@ function MobileNavigation() {
 export function Header() {
     return (
         <header>
-                <nav className="relative z-50 flex justify-between bg-black col-span-12 px-32">
+                <nav className="relative z-50 flex justify-between bg-black col-span-12 px-32 h-14">
                     <div className="flex items-center md:gap-x-12">
                         <div className="hidden md:flex md:gap-x-6">
                             <NavLink href="/">Home</NavLink>
