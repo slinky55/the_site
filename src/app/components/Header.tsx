@@ -6,13 +6,12 @@ import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { Button } from '@/app/components/Button'
-import { Container } from '@/app/components/Container'
 import { NavLink } from '@/app/components/NavLink'
 
 function MobileNavLink({
-                           href,
-                           children,
-                       }: {
+href,
+children,
+}: {
     href: string
     children: React.ReactNode
 }) {
@@ -100,7 +99,6 @@ function MobileNavigation() {
 export function Header() {
     return (
         <header>
-            <Container >
                 <nav className="relative z-50 flex justify-between bg-black col-span-12 px-32">
                     <div className="flex items-center md:gap-x-12">
                         <div className="hidden md:flex md:gap-x-6">
@@ -125,7 +123,6 @@ export function Header() {
                         </div>
                     </div>
                 </nav>
-            </Container>
         </header>
     )
 }
