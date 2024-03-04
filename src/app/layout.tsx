@@ -1,6 +1,7 @@
 import { Inter, Lexend } from 'next/font/google'
 import clsx from 'clsx'
 import { Header } from '@/app/components/Header'
+import { Footer } from '@/app/components/Footer'
 import '@/styles/tailwind.css'
 import React from 'react'
 
@@ -37,6 +38,7 @@ export default function RootLayout({
       <body className="flex h-full flex-col">
       <Header />
         {children}{feedback}{comments}
+      <Footer/>
       </body>
       </html>
   )
