@@ -1,4 +1,3 @@
-import { Header } from '@/app/components/Header'
 import { Container } from '@/app/components/Container'
 
 // PLACE HOLDER FOR TESTING
@@ -14,7 +13,7 @@ const people = [
         name: 'Example Name 2 ',
         role: 'Example Role 2 ',
         imageUrl:
-        'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5x2P0JbAzDSMpuAhxUuA6J2TMuaqryqB5ew&usqp=CAU',
+        'https://images.pexels.com/photos/1525041/pexels-photo-1525041.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2',
         bio: 'Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio Example Bio.',
     },
     {
@@ -50,7 +49,6 @@ const people = [
 export default function AboutUs() {
     return (
         <main>
-            <Header/>
             <Container>
                 <div className="mx-auto max-w-2xl sm:text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Our Team</h2>

@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
-import type { NextApiRequest, NextApiResponse } from 'next';
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-    console.log("hey");
+export async function POST(req: NextRequest, res: NextResponse) {
     const formData = await new Response(req.body).json();
     const inquiryId = formData.inquiry_id;
     const userId = formData.user_id;

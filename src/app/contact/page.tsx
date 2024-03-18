@@ -4,8 +4,8 @@ import styles from './page.module.css';
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
-import { Header } from '../components/Header';
 import Link from 'next/link';
+import { Header } from '../components/Header';
 
 
 export default function ContactPage() {
