@@ -1,15 +1,19 @@
 .container{
-    width: 80%;
+    width: 100%;
+    background-color: rgba(241, 243, 245, 1);
+    height: 1000px;
 }
 
 .title {
     margin-left: 60px;
     font-size: 22px;
+    color: #D92020;
+    font-weight: bold;
 }
 
 .instruction {
     margin-top: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     margin-left: 60px;
     font-size: 14px;
 }
@@ -17,15 +21,20 @@
 .contactBox{
     background: #fff;
     display: flex;
+    width: 80.05%;
+    margin-top: 30px;
+    margin-left: 152px;
+    margin-right: 50px;
+    height: 600px;
 }
 .contactLeft{
-    flex-basis: 60%;
+    width: 60%;
     padding: 40px 60px;
 }
 .contactRight{
-    flex-basis: 15%;
+    width: 40%;
     padding: 40px;
-    background: #1c00b5;
+    background: #D92020;
     color: white;
 }
 .container p{
@@ -62,21 +71,42 @@
 .messageTextArea:focus {
     border: 1.5px solid #777777;
 }
+
 .label{
     margin-bottom: 6px;
     display: block;
+}
+
+.submitButton{
+    background-color: #D92020; /* Red background color */
+    border: none; /* Remove default button border */
+    color: white; /* Text color */
+    padding: 5px 30px; /* Padding */
+    text-align: center; /* Center text */
+    text-decoration: none; /* Remove underline */
+    display: inline-block; /* Display as inline-block */
+    font-size: 16px; /* Font size */
+    margin-top: 20px;
+    cursor: pointer; /* Cursor pointer */
+    border-radius: 12px; /* Rounded corners */
 }
 
 .contactRightBody {
     font-size: 16px;
 }
 
+.customHR {
+    border-style: solid; /* Ensure the border style is solid */
+    width: 1000px;
+    border-color: white; /* Change the color of the border to white */
+}
+
 .socialsLinks {
     display: flex;
-    grid-template-columns: auto auto;
-    justify-content: space-between;
-    gap: 25px;
-    margin-top: 130%;
+    align-items: center;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 100%;
 }
 .socialsLink {
     height: 25px;
@@ -86,4 +116,21 @@
 .socialsSpan {
     text-align: right;
     font-size: 20px;
+}
+
+.flexContainer{
+display: flex;
+}
+
+.contactLeftSide {
+    display: flex;
+    width: 50%;
+    flex-direction: column;
+}
+
+.contactRightSide {
+    display: flex;
+    background-color: #D92020;
+    height: 700px;
+    width: 50%;
 }
