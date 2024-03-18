@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react";
-import { Header } from "../components/Header";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import styles from './page.module.css'
@@ -23,7 +22,6 @@ export default function AdminLayout({
 
   return (
     <>
-      <Header/>
       <div className={styles.layoutContainer}>
         {open ? (
           <div className={styles.layoutSidebar}>

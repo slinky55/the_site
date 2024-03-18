@@ -5,7 +5,6 @@ import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import Link from 'next/link';
-import { Header } from '../components/Header';
 
 
 export default function ContactPage() {
@@ -22,12 +21,13 @@ export default function ContactPage() {
             "Content-Type": "application/json",
             },
             body: JSON.stringify({
-              msg_id: uuidv4(),
-              author_id: uuidv4(),
-              msg: msg,
-              author: name,
+              inquiry_id: uuidv4(),
+              user_id: uuidv4(),
+              content: msg,
+              first_name: firstName,
+              last_name: lastName,
               email: email,
-              msg_subject: subject,
+              subj: subject,
             })
         }
 
@@ -36,7 +36,6 @@ export default function ContactPage() {
 
     return (
       <>
-        <Header />
         <div className={styles.container}>
           <div className={styles.contactBox}>
             <div className={styles.contactLeft}>
