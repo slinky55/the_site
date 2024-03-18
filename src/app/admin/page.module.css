@@ -5,9 +5,7 @@
 
 .layoutSidebar {
     background-color: red;
-    border-radius: 10px;
-    margin: 10px;
-    height: 500px;
+    height: 100vh;
     min-width: 200px;
     width: 200px;
 }
@@ -57,6 +55,12 @@
     
 }
 
+.minimized {
+    width: 30px;
+    background-color: red;
+    height: 100vh;
+}
+
 
 
 /* Feedback Styling */
@@ -69,8 +73,7 @@
 }
 
 .title {
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 15px;
     font-weight: bold;
     font-size: 20px;
 }
@@ -342,30 +345,26 @@
 .newPostContainer {
     display: grid;
     gap: 10px;
+    margin: 10px;
 }
 
-.newPostAuthorInput {
-    border-radius: 10px;
+.newPostTitleInput {
     height: 40px;
-    width: 300px;
     font-size: 12px;
     vertical-align: top;
 }
 
-.newPostInput {
-    border-radius: 10px;
-    height: 40px;
-    width: 300px;
-    font-size: 12px;
-    vertical-align: top;
+.newPostContentInput {
+    height: 200px;
+    margin-bottom: 50px;
+
 }
 
 .newPostBtn {  
-    border-radius: 10px;
-    height: 40px;
+    height: 30px;
+    font-size: 12px;
     vertical-align: center;
     width: 100px;
     background-color:red;
     color: white;
-
 }

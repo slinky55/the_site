@@ -2,12 +2,20 @@
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
+import ReactQuill from 'react-quill';
+import { useEdgeStore } from '../../lib/edgestore';
+
+import 'react-quill/dist/quill.snow.css';
 import styles from '../page.module.css'
+
 
 export default function Page() {
     const router = useRouter();
-    const [authorName, setAuthorName] = useState('');
+    const [title, setTitle] = useState('');
     const [postContent, setPostContent] = useState('');
+    const { edgestore } = useEdgeStore();
+    const [file, setFile] = useState<File>();
+    const [img, setImg] = useState<string>('')
 
     async function createPost() {
         const postData = {
@@ -17,9 +25,11 @@ export default function Page() {
             },
             body: JSON.stringify({
                 post_id: uuidv4(),
-                author_id: uuidv4(),
-                post: postContent,
-                author: authorName
+                user_id: uuidv4(),
+                title: title,
+                topics: "",
+                image_src: img,
+                content: postContent
             }),
         }
 
@@ -28,28 +38,54 @@ export default function Page() {
 
     return (
         <>
+        
           <form>
             <div className={styles.title}>Create a New Post</div>
             <hr/>
             <div className={styles.newPostContainer}>
                 <input
-                    className={styles.newPostAuthorInput}
-                    placeholder="Author Name"
+                    className={styles.newPostTitleInput}
+                    placeholder="Title"
                     type="text"
-                    id="authorName"
-                    value={authorName}
-                    onChange={(e) => setAuthorName(e.target.value)}
+                    id="title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)}
                     required
                 />
-                <input
-                    className={styles.newPostInput}
-                    placeholder="Type your post here..."
-                    type="text"
-                    id="postContent"
-                    value={postContent}
-                    onChange={(e) => setPostContent(e.target.value)}
-                    required
+                <ReactQuill 
+                    theme="snow"
+                    className={styles.newPostContentInput}
+                    id="postContent" 
+                    value={postContent} 
+                    onChange={setPostContent}
                 />
+                <div>
+                    <input
+                        type="file"
+                        onChange={(e) => {
+                        setFile(e.target.files?.[0]);
+                        }}
+                    />
+                    <button
+                        onClick={async () => {
+                        if (file) {
+                            const res = await edgestore.publicFiles.upload({
+                            file,
+                            onProgressChange: (progress) => {
+                                // you can use this to show a progress bar
+                            },
+                            });
+                            // you can run some server action or api here
+                            // to add the necessary data to your database
+                            console.log(res);
+                            setImg(res.url);
+                            console.log(img);
+                        }
+                        }}
+                    >
+                        Upload
+                    </button>
+                    </div>
                 <button className={styles.newPostBtn} onClick={createPost}>Create Post</button>
             </div>
           </form>

@@ -39,8 +39,10 @@ export default function AdminLayout({
             </div>
           </div>
         ) : (
-          <div className={styles.menuBtn} onClick={()=> setOpen(!open)}>
-            <FontAwesomeIcon className={styles.menuIcon} icon={faBars}/>
+          <div className={`${open && styles.layoutSidebar} ${!open && styles.minimized}`}>
+            <div className={styles.menuBtn} onClick={()=> setOpen(!open)}>
+              <FontAwesomeIcon className={styles.menuIcon} icon={faBars}/>
+            </div>
           </div>
         )
         }

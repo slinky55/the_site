@@ -4,6 +4,7 @@ import { Header } from '@/app/components/Header'
 import { Footer } from '@/app/components/Footer'
 import '@/styles/tailwind.css'
 import React from 'react'
+import { EdgeStoreProvider } from './lib/edgestore';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -19,12 +20,8 @@ const lexend = Lexend({
 
 export default function RootLayout({
   children,
-  feedback,
-  comments,
 }: {
   children: React.ReactNode;
-  feedback: React.ReactNode;
-  comments: React.ReactNode;
 }) {
   return (
       <html
@@ -37,7 +34,7 @@ export default function RootLayout({
       >
       <body className="flex h-full flex-col">
       <Header />
-        {children}{feedback}{comments}
+        <EdgeStoreProvider>{children}</EdgeStoreProvider>
       <Footer/>
       </body>
       </html>

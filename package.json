@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@auth/sequelize-adapter": "^1.4.0",
+    "@edgestore/react": "^0.1.6",
+    "@edgestore/server": "^0.1.6",
     "@fortawesome/free-brands-svg-icons": "^6.5.1",
     "@fortawesome/free-solid-svg-icons": "^6.5.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
@@ -27,6 +29,7 @@
     "prettier": "^3.2.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-quill": "^2.0.0",
     "reactstrap": "^9.2.2",
     "sequelize": "^6.37.1",
     "serverless-mysql": "^1.5.5",
