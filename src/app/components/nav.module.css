@@ -41,10 +41,9 @@ align-items: center;
   background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
-  text-align: center;
   color: white;
   font-size: 4vw;
-  justify-content: center;
+  text-align: center;
   align-items: center;
 }
 
@@ -79,6 +78,13 @@ align-items: center;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
+#centerDisplayText{
+  width: 55vw; 
+  height: 5vh;
+  text-align: left;
+  font-size: max(1.5vw, 20px);
+  margin-top: 5vh;
+}
 
 #bottomLeftButton {
   position: absolute;

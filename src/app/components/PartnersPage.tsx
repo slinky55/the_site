@@ -17,8 +17,8 @@ export default function PartnersPage() {
           <a href="#link9" className={`${styles.navLink} ${styles.signInButton}`}>Sign In</a>
         </div>
         <div id={styles.redgraientsection}>
-            <span style={{width: "100vw"}}>Our Partners</span>
-            <span style={{width: "45vw", fontSize: "1.5vw", textAlign: "left", marginTop: "5vh"}}>Introducting our partenrs who share our commitment to promoting health equity through technology and community engagement. Together, we strive to address disparities and empower underserved communities for a healthier tomorrow. Feel free to check them out below.</span>
+            <span style={{width: "100vw", marginTop: "7.5vh"}}>Our Partners</span>
+            <div id={styles.centerDisplayText}><span>Introducting our partenrs who share our commitment to promoting health equity through technology and community engagement. Together, we strive to address disparities and empower underserved communities for a healthier tomorrow. Feel free to check them out below.</span></div>
         </div>
         <div id={styles.partnerblock}>
             <div id={styles.threeboxes}>

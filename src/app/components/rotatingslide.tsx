@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import sizeOf from 'image-size';
 
-const getImageDimensions = (imagePath) => {
+const getImageDimensions = (imagePath: string | Uint8Array) => {
   const dimensions = sizeOf(imagePath);
   return dimensions;
 };
