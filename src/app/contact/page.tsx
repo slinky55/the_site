@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import styles from './page.module.css';
+import ReCAPTCHA from "react-google-recaptcha";
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
@@ -13,6 +14,7 @@ export default function ContactPage() {
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [msg, setMsg] = useState('');
+  const [captcha, setCaptcha] = useState(null);
 
   async function createInquiry() {
         const postData = {
@@ -22,7 +24,6 @@ export default function ContactPage() {
             },
             body: JSON.stringify({
               inquiry_id: uuidv4(),
-              user_id: uuidv4(),
               content: msg,
               first_name: firstName,
               last_name: lastName,
@@ -32,6 +33,10 @@ export default function ContactPage() {
         }
 
         await fetch('/api/inquiries/createinquiry', postData);
+    }
+
+    function onChange() {
+      
     }
 
     return (
@@ -103,7 +108,18 @@ export default function ContactPage() {
                 onChange={(e) => setMsg(e.target.value)}
                 placeholder='Max number of characters: 250'
                 required></textarea>
-                <center><button className={styles.submitButton} onClick={createInquiry}>Submit</button> </center>
+                <center>
+                  <ReCAPTCHA
+                    className={styles.captcha}
+                    sitekey="6Lelfp4pAAAAAFxiaaIe0QtZEOxOtk_OJJ77Jujw"
+                    onChange={(val: any) => setCaptcha(val)}
+                  />
+                  <button 
+                    className={styles.submitButton} 
+                    onClick={createInquiry}
+                    disabled={!captcha}
+                  >Submit</button> 
+                </center>
               </form>
             </div>
             <div className={styles.contactRight}>
