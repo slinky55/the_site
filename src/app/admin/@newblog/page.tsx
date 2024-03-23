@@ -1,6 +1,6 @@
 'use client'
 import { useRouter } from 'next/navigation';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import ReactQuill from 'react-quill';
 import { useEdgeStore } from '../../lib/edgestore';
@@ -10,12 +10,17 @@ import styles from '../page.module.css'
 
 
 export default function Page() {
-    const router = useRouter();
-    const [title, setTitle] = useState('');
-    const [postContent, setPostContent] = useState('');
-    const { edgestore } = useEdgeStore();
-    const [file, setFile] = useState<File>();
+    const router = useRouter()
+    const [title, setTitle] = useState('')
+    const [postContent, setPostContent] = useState('')
+    const { edgestore } = useEdgeStore()
+    const [file, setFile] = useState<File>()
     const [img, setImg] = useState<string>('')
+    const [uploaded, setUploaded] = useState<Boolean>(false)
+
+    useEffect(()=> {
+        uploadImg()
+    }, [file])
 
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -49,7 +54,7 @@ export default function Page() {
             },
             body: JSON.stringify({
                 post_id: uuidv4(),
-                user_id: uuidv4(),
+                user_id: '3ab70c34-984f-457e-9a0d-0387bb0f2771',
                 title: title,
                 topics: "",
                 image_src: img,
@@ -70,9 +75,8 @@ export default function Page() {
             });
             // you can run some server action or api here
             // to add the necessary data to your database
-            console.log(res);
             setImg(res.url);
-            console.log(img);
+            setUploaded(true);
         }
     }
 
@@ -101,8 +105,7 @@ export default function Page() {
                     modules={{
                             toolbar: {
                                 container: toolbarOptions
-                            },
-                            table: true
+                            }
                         }
                     }
                     placeholder="Write your blog content here!"  
@@ -114,13 +117,14 @@ export default function Page() {
                         setFile(e.target.files?.[0]);
                         }}
                     />
-                    <button
-                        onClick={uploadImg}
-                    >
-                        Upload
-                    </button>
                     </div>
-                <button className={styles.newPostBtn} onClick={createPost}>Create Post</button>
+                <button 
+                    className={styles.newPostBtn} 
+                    onClick={createPost}
+                    disabled={!uploaded}
+                >
+                    Create Post
+                </button>
             </div>
           </div>
         </>

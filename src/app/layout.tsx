@@ -33,9 +33,13 @@ export default function RootLayout({
           )}
       >
       <body className="flex h-full flex-col">
-      <Header />
-        <EdgeStoreProvider>{children}</EdgeStoreProvider>
-      <Footer/>
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1">
+            <EdgeStoreProvider>{children}</EdgeStoreProvider>
+          </main>
+          <Footer/>
+        </div>
       </body>
       </html>
   )

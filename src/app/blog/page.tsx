@@ -53,7 +53,8 @@ export default function BlogPage() {
           <p>Loading...</p>
         ) : error ? (
           <p>Error: {error}</p>
-        ) : posts && posts.length > 0 ? (
+        ) : posts && posts.length > 0 ?
+         (
           <>
             <div className={styles.featured}>
               <span className={styles.featuredText}>Featured Posts</span>
@@ -78,11 +79,11 @@ export default function BlogPage() {
             <p className={styles.title} key={2}>Recent Posts</p>
             <div className={styles.container}>
               <div className={styles.postsContainer}>
-                {posts.map((post, id) => (
+                {posts?.map((post, id) => (
                   <>
                     <div className={styles.postContainer} key={post.post_id}>
-                      <img className={styles.postImg} src="https://t4.ftcdn.net/jpg/00/53/64/49/360_F_53644926_0mvUCIxCCTvIa7BAIFuUa3xsaNA9lbeb.jpg"/>
-                      <div className={styles.postTitle} key={post.post_id}>{post.content}</div>
+                      <img className={styles.postImg} src={post.image_src}/>
+                      <div className={styles.postTitle} key={post.post_id}>{post.title}</div>
                       <div className={styles.postAuthor} key={post.user_id}><FontAwesomeIcon icon={faUser}/> {post.user_id}</div>
                       <div className={styles.postDate} key={post.post_id}><FontAwesomeIcon icon={faCalendar}/> {new Date(post.created_at).toLocaleString()}</div>
                       <Link key={id}href={`blog/${post.post_id}`}><div className={styles.readMore}>Read More</div></Link>

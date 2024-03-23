@@ -226,7 +226,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
   return (
 <>
-  <Header />
       <div>
         {loading ? (
           <p>Loading...</p>
@@ -239,11 +238,14 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
               <p className={styles.date} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</p>
             </div>
             <div className={styles.authorTile} key={post.user_id}>
-                <img className={styles.profilePic} src={post.image_src}></img>
+                <img src={post.image_src}></img>
                 <p className={styles.author} key={post.user_id}>{post.user_id}</p>
             </div>
             <div className={styles.postContainer}>
-                <p className={styles.post} key={post.post_id}>{post.content}</p>
+              <div 
+                className={styles.post} 
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              ></div>
             </div>
             <div className={styles.postFooter}>
                 <p className={styles.date} key={post.post_id}><i>Edited on: {new Date(post.last_modified).toLocaleString()}</i></p>
