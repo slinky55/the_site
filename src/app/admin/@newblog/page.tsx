@@ -13,7 +13,7 @@ export default function Page() {
     const router = useRouter()
     const [title, setTitle] = useState('')
     const [postContent, setPostContent] = useState('')
-    const { edgestore } = useEdgeStore()
+    // const { edgestore } = useEdgeStore()
     const [file, setFile] = useState<File>()
     const [img, setImg] = useState<string>('')
     const [uploaded, setUploaded] = useState<Boolean>(false)
@@ -66,18 +66,18 @@ export default function Page() {
     }
 
     async function uploadImg() {
-        if (file) {
-            const res = await edgestore.publicFiles.upload({
-            file,
-            onProgressChange: (progress) => {
-                // you can use this to show a progress bar
-            },
-            });
-            // you can run some server action or api here
-            // to add the necessary data to your database
-            setImg(res.url);
-            setUploaded(true);
-        }
+        // if (file) {
+        //     const res = await edgestore.publicFiles.upload({
+        //     file,
+        //     onProgressChange: (progress) => {
+        //         // you can use this to show a progress bar
+        //     },
+        //     });
+        //     // you can run some server action or api here
+        //     // to add the necessary data to your database
+        //     setImg(res.url);
+        //     setUploaded(true);
+        // }
     }
 
     return (
@@ -96,7 +96,7 @@ export default function Page() {
                     onChange={(e) => setTitle(e.target.value)}
                     required
                 />
-                <ReactQuill
+                {/* <ReactQuill
                     theme="snow"
                     className={styles.newPostContentInput}
                     id="postContent" 
@@ -109,7 +109,7 @@ export default function Page() {
                         }
                     }
                     placeholder="Write your blog content here!"  
-                />
+                /> */}
                 <div>
                     <input
                         type="file"

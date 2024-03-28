@@ -1,0 +1,47 @@
+.title {
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin: 15px;
+}
+
+.nameInput {
+
+}
+
+.contentInput {
+    grid-column: span 2;
+    height: 200px;
+    resize: none;
+}
+
+.urlInput {
+
+}
+
+.eventLabel {
+    font-size: 12px;
+    font-weight: bold;
+    color: rgb(69, 69, 69);
+    margin-left: 5px;
+    margin-bottom: -10px;
+}
+
+.btn {  
+    height: 30px;
+    font-size: 12px;
+    vertical-align: center;
+    width: 100px;
+    background-color:red;
+    color: white;
+}
+
+.btn:hover {
+    background-color: rgb(205, 0, 0);
+}

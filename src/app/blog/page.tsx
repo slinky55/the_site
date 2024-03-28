@@ -1,5 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react';
+import { motion } from "framer-motion";
 import styles from './page.module.css';
 import Link from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -52,14 +53,10 @@ export default function BlogPage() {
     if((ssEnd) == posts!.length) {
       setSsStart(0);
       setSsEnd(3);
-      console.log("next, if, Posts Length: " + posts!.length)
-      console.log("Start:" + ssStart + " End: " + ssEnd)
     }
     else {
       setSsStart(ssStart + 1);
       setSsEnd(ssEnd + 1);
-      console.log("next, else, Posts Length: " + posts!.length)
-      console.log("Start:" + ssStart + " End: " + ssEnd)
     }
   }
 
@@ -67,14 +64,10 @@ export default function BlogPage() {
     if((ssStart - 1) < 0) {
       setSsStart(posts!.length - 3);
       setSsEnd(posts!.length);
-      console.log("prev, if, Posts Length: " + posts!.length)
-      console.log("Start:" + ssStart + " End: " + ssEnd)
     }
     else {
       setSsStart(ssStart - 1);
       setSsEnd(ssEnd - 1);
-      console.log("prev, else, Posts Length: " + posts!.length)
-      console.log("Start:" + ssStart + " End: " + ssEnd)
     }
   }
 
@@ -95,11 +88,15 @@ export default function BlogPage() {
                 <div className={styles.slideshowSubContainer}>
                 {posts?.slice(ssStart,ssEnd).map((post, index) => (
                   <>
-                    <div className={`${styles.cardContainer} ${index === 1 ? styles.firstCard : index === 2 ? styles.secondCard : styles.thirdCard}`} key={post.post_id}>
+                    <motion.div 
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }}
+                    className={`${styles.cardContainer} ${index === 1 ? styles.firstCard : index === 2 ? styles.secondCard : styles.thirdCard}`} 
+                    key={post.post_id}>
                       <img className={styles.cardImg} src={post.image_src} key={post.post_id}/>
                       <span className={styles.cardTitle} key={post.post_id}>{post.title}</span>
                       <span className={styles.cardAuthor} key={post.post_id}><FontAwesomeIcon icon={faUser}/>{post.user_id}</span><span className={styles.cardDate}><FontAwesomeIcon icon={faCalendar}/>{new Date(post.created_at).toLocaleString()}</span>
-                    </div>
+                    </motion.div>
                   </>
                 ))}
                 </div>
@@ -111,29 +108,35 @@ export default function BlogPage() {
               <div className={styles.postsContainer}>
                 {posts?.map((post, id) => (
                   <>
-                    <div className={styles.postContainer} key={post.post_id}>
+                    <motion.div 
+                    initial={{ opacity: 0 }}
+                    whileInView={{ opacity: 1 }} 
+                    className={styles.postContainer} 
+                    key={post.post_id}>
                       <img className={styles.postImg} src={post.image_src} key={post.post_id}/>
                       <div className={styles.postTitle} key={post.post_id}>{post.title}</div>
                       <div className={styles.postAuthor} key={post.post_id}><FontAwesomeIcon icon={faUser}/> {post.user_id}</div>
                       <div className={styles.postDate} key={post.post_id}><FontAwesomeIcon icon={faCalendar}/>{new Date(post.created_at).toLocaleString()}</div>
                       <Link key={post.post_id} href={`blog/${post.post_id}`}><div className={styles.readMore}>Read More</div></Link>
-                    </div>
+                    </motion.div>
                   </>
                 ))}
               </div>
-              <div className={styles.searchContainer}>
-                <textarea className={styles.searchbar} placeholder='Search...'></textarea>
-                <button className={styles.searchBtn}>Search</button>
-              </div>
-              <div className={styles.topicContainer}>
-                <div className={styles.topicsTitle}>Topics</div>
-                <hr></hr>
-                {topics.map((topic) => (
-                  <>
-                    <div className={styles.topic}>{topic}</div>
+                <div className={styles.rightContainer}>
+                  <div className={styles.searchContainer}>
+                    <textarea className={styles.searchbar} placeholder='Search...'></textarea>
+                    <button className={styles.searchBtn}>Search</button>
+                  </div>
+                  <div className={styles.topicContainer}>
+                    <div className={styles.topicsTitle}>Topics</div>
                     <hr></hr>
-                  </>
-                ))}
+                    {topics.map((topic) => (
+                      <>
+                        <div className={styles.topic}>{topic}</div>
+                        <hr></hr>
+                      </>
+                    ))}
+                </div>
               </div>
             </div>
           </>

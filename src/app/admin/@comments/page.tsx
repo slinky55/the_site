@@ -110,7 +110,7 @@ export default function Page() {
             if(comments) {
               setParentPost(prev => {
                 const newObj = { ...prev };
-                newObj[comments[i].comment_id] = data.posts[0].post;
+                newObj[comments[i].comment_id] = data.posts[0].content;
                 return newObj;
               })
             }
@@ -253,7 +253,8 @@ export default function Page() {
                                   {comment.comment_id && comment.comment_id in parentPost ? 
                                   ( <>
                                       <p><b>Blog Post</b></p>
-                                      <div className={styles.contextPost}>{parentPost[comment.comment_id]}</div>
+                                      <div className={styles.contextPost}
+                                      dangerouslySetInnerHTML={{ __html: parentPost[comment.comment_id] }}></div>
                                     </>
                                   ) : (
                                     <></>

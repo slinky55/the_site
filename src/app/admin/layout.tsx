@@ -7,11 +7,15 @@ import styles from './page.module.css'
 
 export default function AdminLayout({
   children,
+  events,
+  projects,
   feedback,
   comments,
   newblog
 }: {
   children: React.ReactNode;
+  events: React.ReactNode;
+  projects: React.ReactNode;
   feedback: React.ReactNode;
   comments: React.ReactNode;
   newblog: React.ReactNode;
@@ -29,12 +33,18 @@ export default function AdminLayout({
               <FontAwesomeIcon className={styles.menuIcon} icon={faBars}/>
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(0)}>
-              Feedback
+              Events
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(1)}>
-              Comments
+              Projects
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(2)}>
+              Feedback
+            </div>
+            <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(3)}>
+              Comments
+            </div>
+            <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(4)}>
               New Blog Post
             </div>
           </div>
@@ -49,9 +59,11 @@ export default function AdminLayout({
 
         <div className={styles.layoutContent}>
           {children}
-          {(display == 0) && feedback}
-          {(display == 1) && comments}
-          {(display == 2) && newblog} 
+          {(display == 0) && events}
+          {(display == 1) && projects}
+          {(display == 2) && feedback}
+          {(display == 3) && comments}
+          {/* {(display == 4) && newblog}  */}
         </div>
       </div>
     </>

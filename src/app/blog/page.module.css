@@ -39,6 +39,7 @@
     background-color: white;
     color: black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    transition: transform 0.5s ease;
 }
 
 .thirdCard {
@@ -98,10 +99,20 @@
     align-self: center;
 }
 
+.arrowL:hover {
+    cursor: pointer;
+    color: rgb(232, 232, 232);
+}
+
 .arrowR {
     height: 100px;
     width: 100px;
     align-self: center;
+}
+
+.arrowR:hover {
+    cursor: pointer;
+    color: rgb(232, 232, 232);
 }
 
 /* Layout */
@@ -130,7 +141,7 @@
     grid-template-columns: 30% 70%;
     border-radius: 15px;
     width: 95%;
-    height: auto;
+    height: 150px;
     overflow: hidden;
     background-color: white;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -191,12 +202,12 @@
 .searchContainer {
     display: flex;
     align-items: center;
-    background-color: rgb(226, 0, 0);
     border-radius: 10px;
     color: black;
     margin-left: 15px;
     margin-right: 15px;
     height: fit-content;
+    margin-bottom: 25px;
 }
 
 .searchbar {
@@ -217,6 +228,7 @@
 
 .searchBtn {
     border: solid 1px rgb(255, 255, 255);
+    background-color: red;
     border-radius: 10px;
     color: white;
     font-weight: bold;

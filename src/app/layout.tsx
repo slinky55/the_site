@@ -1,3 +1,4 @@
+'use client'
 import { Inter, Lexend } from 'next/font/google'
 import clsx from 'clsx'
 import { Header } from '@/app/components/Header'
@@ -5,6 +6,8 @@ import { Footer } from '@/app/components/Footer'
 import '@/styles/tailwind.css'
 import React from 'react'
 import { EdgeStoreProvider } from './lib/edgestore';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -36,7 +39,11 @@ export default function RootLayout({
         <div className="min-h-screen flex flex-col">
           <Header />
           <main className="flex-1">
-            <EdgeStoreProvider>{children}</EdgeStoreProvider>
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+            <EdgeStoreProvider>
+              {children}
+            </EdgeStoreProvider>
+          </LocalizationProvider>
           </main>
           <Footer/>
         </div>
