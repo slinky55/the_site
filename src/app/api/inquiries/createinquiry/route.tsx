@@ -10,7 +10,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const phone = formData.phone;
     const email = formData.email;
     const msgSubject = formData.msg_subject;
-    
+
     try  {
         const result = await executeQuery({
             query: `INSERT INTO inquiries (msg_id, author_id, msg, author, phone, email, msg_subject, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
