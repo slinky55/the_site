@@ -5,7 +5,6 @@ import { Header } from '@/app/components/Header'
 import { Footer } from '@/app/components/Footer'
 import '@/styles/tailwind.css'
 import React from 'react'
-import { EdgeStoreProvider } from './lib/edgestore';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 
@@ -40,9 +39,7 @@ export default function RootLayout({
           <Header />
           <main className="flex-1">
           <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <EdgeStoreProvider>
               {children}
-            </EdgeStoreProvider>
           </LocalizationProvider>
           </main>
           <Footer/>

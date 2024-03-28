@@ -9,12 +9,12 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     const title = formData.title;
     const projectLead = formData.project_lead;
     const primaryImageSrc = formData.primary_image_src;
-    const gallery = formData.gallery;
+    const gallery = JSON.stringify(formData.gallery);
     const content = formData.content;
     
     try  {
         const result = await executeQuery({
-            query: `INSERT INTO Event (project_id, title, project_lead, primary_image_src, gallery, content) VALUES (?, ?, ?, ?, ?, ?)`,
+            query: `INSERT INTO Project (project_id, title, project_lead, primary_image_src, gallery, content) VALUES (?, ?, ?, ?, ?, ?)`,
             values: [projectId, title, projectLead, primaryImageSrc, gallery, content],
         })
         console.log(result);

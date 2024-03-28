@@ -3,24 +3,19 @@ import { useRouter } from 'next/navigation';
 import React, { useEffect, useState } from 'react'
 import { v4 as uuidv4 } from 'uuid';
 import ReactQuill from 'react-quill';
-import { useEdgeStore } from '../../lib/edgestore';
-
 import 'react-quill/dist/quill.snow.css';
-import styles from '../page.module.css'
+import styles from '../page.module.css';
+// @ts-ignore
+import DropboxChooser from 'react-dropbox-chooser';
 
 
 export default function Page() {
-    const router = useRouter()
     const [title, setTitle] = useState('')
     const [postContent, setPostContent] = useState('')
-    // const { edgestore } = useEdgeStore()
-    const [file, setFile] = useState<File>()
     const [img, setImg] = useState<string>('')
     const [uploaded, setUploaded] = useState<Boolean>(false)
+    const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
 
-    useEffect(()=> {
-        uploadImg()
-    }, [file])
 
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -45,7 +40,6 @@ export default function Page() {
 
     const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health"]
       
-
     async function createPost() {
         const postData = {
             method: "POST",
@@ -65,19 +59,9 @@ export default function Page() {
         await fetch('/api/posts/createpost', postData);
     }
 
-    async function uploadImg() {
-        // if (file) {
-        //     const res = await edgestore.publicFiles.upload({
-        //     file,
-        //     onProgressChange: (progress) => {
-        //         // you can use this to show a progress bar
-        //     },
-        //     });
-        //     // you can run some server action or api here
-        //     // to add the necessary data to your database
-        //     setImg(res.url);
-        //     setUploaded(true);
-        // }
+    function uploadImg(files: any) {
+        setImg(files[0].link.replace('dl=0', 'raw=1'));
+        setUploaded(true);
     }
 
     return (
@@ -96,7 +80,7 @@ export default function Page() {
                     onChange={(e) => setTitle(e.target.value)}
                     required
                 />
-                {/* <ReactQuill
+                <ReactQuill
                     theme="snow"
                     className={styles.newPostContentInput}
                     id="postContent" 
@@ -109,15 +93,16 @@ export default function Page() {
                         }
                     }
                     placeholder="Write your blog content here!"  
-                /> */}
-                <div>
-                    <input
-                        type="file"
-                        onChange={(e) => {
-                        setFile(e.target.files?.[0]);
-                        }}
-                    />
-                    </div>
+                />
+                <DropboxChooser
+                    appKey={appKey}
+                    success={(files: any) => uploadImg(files)}
+                    cancel={() => console.log('Canceled')}
+                    multiselect={false}
+                    extensions={['.jpeg', '.jpg', '.png', 'svg', 'webp', 'wbmp']}
+                >
+                    <button className={styles.dropboxUpload}>Upload Post Thumbnail</button>
+                </DropboxChooser>
                 <button 
                     className={styles.newPostBtn} 
                     onClick={createPost}

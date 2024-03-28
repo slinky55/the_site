@@ -63,7 +63,7 @@ export default function AdminLayout({
           {(display == 1) && projects}
           {(display == 2) && feedback}
           {(display == 3) && comments}
-          {/* {(display == 4) && newblog}  */}
+          {(display == 4) && newblog} 
         </div>
       </div>
     </>
