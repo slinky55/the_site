@@ -2,19 +2,19 @@ import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
 
 export async function POST(req: NextRequest, res: NextResponse) {
+    console.log("hi")
     const formData = await new Response(req.body).json();
-    const msgId = formData.msg_id;
-    const authorId = formData.author_id;
-    const msg = formData.msg;
-    const author = formData.author;
-    const phone = formData.phone;
+    const inquiryId = formData.inquiry_id;
+    const firstName = formData.first_name;
+    const lastName = formData.last_name;
+    const subj = formData.subj;
     const email = formData.email;
-    const msgSubject = formData.msg_subject;
-
+    const content = formData.content;
+    
     try  {
         const result = await executeQuery({
-            query: `INSERT INTO inquiries (msg_id, author_id, msg, author, phone, email, msg_subject, created_at) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
-            values: [msgId, authorId, msg, author, phone, email, msgSubject],
+            query: `INSERT INTO Inquiry (inquiry_id, first_name, last_name, subj, email, content, created_at) VALUES (?, ?, ?, ?, ?, ?, NOW())`,
+            values: [inquiryId, firstName, lastName, subj, email, content],
         })
         console.log(result);
 

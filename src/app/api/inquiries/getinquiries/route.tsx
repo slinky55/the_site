@@ -6,7 +6,7 @@ export async function GET(req: NextRequest, res: NextResponse) {
     
     try  {
         const result = await executeQuery({
-            query: 'SELECT * FROM inquiries',
+            query: 'SELECT * FROM Inquiry',
             values: '',
         })
         console.log(result);

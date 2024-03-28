@@ -5,9 +5,7 @@
 
 .layoutSidebar {
     background-color: red;
-    border-radius: 10px;
-    margin: 10px;
-    height: 500px;
+    height: 100vh;
     min-width: 200px;
     width: 200px;
 }
@@ -34,6 +32,36 @@
     flex: 1;
 }
 
+.menuBtn {
+    border-radius: 50%;
+    background-color: red;
+    height: 30px;
+    width: 30px;
+    min-height: 30px;
+    min-width: 30px;
+}
+.menuBtn:hover {
+    background-color: rgb(253, 87, 87);
+    box-shadow: 0 0 6px rgba(253, 87, 87, 0.3);
+    cursor: pointer;
+}
+
+.menuIcon {
+    color: white;
+    text-align: center;
+    line-height: 15px; /* Set line height equal to the height of the div */
+    height: 15px; /* Set height equal to the height of the div */
+    width: 30px; /* Set width equal to the height of the div */
+    
+}
+
+.minimized {
+    width: 30px;
+    background-color: red;
+    height: 100vh;
+}
+
+
 
 /* Feedback Styling */
 .inquiriesContainer {
@@ -45,8 +73,7 @@
 }
 
 .title {
-    margin-left: auto;
-    margin-right: auto;
+    margin-left: 15px;
     font-weight: bold;
     font-size: 20px;
 }
@@ -318,30 +345,30 @@
 .newPostContainer {
     display: grid;
     gap: 10px;
+    margin: 10px;
 }
 
-.newPostAuthorInput {
-    border-radius: 10px;
+.newPostTitleInput {
     height: 40px;
-    width: 300px;
     font-size: 12px;
     vertical-align: top;
 }
 
-.newPostInput {
-    border-radius: 10px;
-    height: 40px;
-    width: 300px;
-    font-size: 12px;
-    vertical-align: top;
+.newPostContentInput {
+    height: 200px;
+    margin-bottom: 70px;
+
 }
 
 .newPostBtn {  
-    border-radius: 10px;
-    height: 40px;
+    height: 30px;
+    font-size: 12px;
     vertical-align: center;
     width: 100px;
     background-color:red;
     color: white;
+}
 
+.newPostBtn:hover {
+    background-color: rgb(205, 0, 0);
 }

@@ -6,16 +6,15 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 export async function POST(req: NextApiRequest, res: NextApiResponse) {
     const formData = await new Response(req.body).json();
     const commentId = formData.comment_id;
-    const authorId = formData.author_id;
+    const userId = formData.user_id;
     const postId = formData.post_id;
     const parentId = formData.parent_comment_id;
-    const cmt = formData.cmt;
-    const author = formData.author;
+    const content = formData.content;
     
     try  {
         const result = await executeQuery({
-            query: `INSERT INTO comments (comment_id, author_id, post_id, parent_comment_id, cmt, author, created_at, last_modified) VALUES (?, ?, ?, ?, ?, ?, NOW(), NOW())`,
-            values: [commentId, authorId, postId, parentId, cmt, author],
+            query: `INSERT INTO comments (comment_id, user_id, post_id, parent_comment_id, content, created_at, last_modified) VALUES (?, ?, ?, ?, ?, NOW(), NOW())`,
+            values: [commentId, userId, postId, parentId, content],
         })
         console.log(result);
 

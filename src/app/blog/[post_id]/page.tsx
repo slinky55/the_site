@@ -6,31 +6,13 @@ import { Header } from '@/app/components/Header';
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faReply, faCancel, faCheck } from '@fortawesome/free-solid-svg-icons';
+import { Post } from '../../types/post'
+import { Comment } from '../../types/comment'
 
 interface PostPageProps {
   params: {
     post_id: string;
   };
-}
-
-type Post = {
-  post_id: string,
-  author_id: string,
-  post: string,
-  author: string,
-  created_at: Date,
-  last_modified: Date
-}
-
-type Comment = {
-  comment_id: string,
-  author_id: string,
-  post_id: string,
-  parent_comment_id: string,
-  cmt: string,
-  author: string,
-  created_at: Date,
-  last_modified: Date,
 }
 
 const PostPage: React.FC<PostPageProps> = ({ params }) => {
@@ -58,7 +40,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
     const [expandReply, setExpandReply] = useState<{[commentId: string]: boolean}>({});
 
     // Making a comment
-    const [authorName, setAuthorName] = useState('');
     const [content, setContent] = useState('');
 
     useEffect(() => {
@@ -163,11 +144,10 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         },
         body: JSON.stringify({
           comment_id: uuidv4(),
-          author_id: uuidv4(),
+          user_id: '3ab70c34-984f-457e-9a0d-0387bb0f2771',
           post_id: postId,
           parent_comment_id: parentId,
-          cmt: content,
-          author: authorName
+          content: content
         })
       }
 
@@ -193,10 +173,10 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
           <div className={styles.commentsContainer} key={comment.comment_id}>
             <div className={styles.commentContainer} key={comment.comment_id}>
               <div className={styles.postHeader}>
-                <p className={styles.author} key={comment.author_id}>{comment.author}</p>
+                <p className={styles.author} key={comment.user_id}>{comment.user_id}</p>
                 <p className={styles.date} key={comment.comment_id}>{new Date(comment.created_at).toLocaleString()}</p>
               </div>
-              <p className={styles.post} key={comment.comment_id}>{comment.cmt}</p>
+              <p className={styles.post} key={comment.comment_id}>{comment.content}</p>
               <div className={styles.postFooter}>
                 <p className={styles.date} key={comment.comment_id}><i>Edited on: {new Date(comment.last_modified).toLocaleString()}</i></p>
                 <span>
@@ -207,14 +187,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             {expandReply[comment.comment_id] ? (
               <>
                 <div className={styles.commentForm}>
-                  <input
-                    className={styles.authorInput}
-                    type="text"
-                    id="authorName"
-                    value={authorName}
-                    onChange={(e) => setAuthorName(e.target.value)}
-                    required
-                  />
                   <input
                     className={styles.cmtInput}
                     type="text" 
@@ -244,7 +216,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
   return (
 <>
-  <Header />
       <div>
         {loading ? (
           <p>Loading...</p>
@@ -253,15 +224,18 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         ) : post ? (
           <div className={styles.container} key={1}>
             <div className={styles.postHeader} key={2}>
-              <p className={styles.title} key={3}>Lorem Impsum Title Ipsum Lor</p>
+              <p className={styles.title} key={3}>{post.title}</p>
               <p className={styles.date} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</p>
             </div>
-            <div className={styles.authorTile} key={post.author_id}>
-                <img className={styles.profilePic} src="https://www.digitary.net/wp-content/uploads/2021/07/Generic-Profile-Image.png"></img>
-                <p className={styles.author} key={post.author_id}>{post.author}</p>
+            <div className={styles.authorTile} key={post.user_id}>
+                <img src={post.image_src}></img>
+                <p className={styles.author} key={post.user_id}>{post.user_id}</p>
             </div>
             <div className={styles.postContainer}>
-                <p className={styles.post} key={post.post_id}>{post.post}</p>
+              <div 
+                className={styles.post} 
+                dangerouslySetInnerHTML={{ __html: post.content }}
+              ></div>
             </div>
             <div className={styles.postFooter}>
                 <p className={styles.date} key={post.post_id}><i>Edited on: {new Date(post.last_modified).toLocaleString()}</i></p>
@@ -284,15 +258,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             {expandReplyRoot ? (
               <>
                 <div className={styles.commentForm}>
-                  <input
-                    className={styles.authorInput}
-                    type="text"
-                    id="authorName"
-                    value={authorName}
-                    onChange={(e) => setAuthorName(e.target.value)}
-                    placeholder="Name"
-                    required
-                  />
                   <input 
                     className={styles.cmtInput}
                     type="text" 
@@ -318,7 +283,30 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             </div>
           </div>
         ) : (
+          <>
           <p>No comments yet. Click the "Reply" button to be the first to share your thoughts!</p>
+          {expandReplyRoot ? (
+              <>
+                <div className={styles.commentForm}>
+                  <input 
+                    className={styles.cmtInput}
+                    type="text" 
+                    id="content"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Comment"
+                    required
+                  />
+                </div>
+                <button onClick={() => createComment(post?.post_id, null)}><FontAwesomeIcon className={styles.checkIcon} icon={faCheck}/></button>
+                <button onClick={() => toggleReply("root")}><FontAwesomeIcon className={styles.trashIcon} icon={faCancel}/></button>
+              </>
+              ) : (
+              <>
+                <button className={styles.postReply} onClick={() => toggleReply("root")}>New Comment</button>
+              </>
+            )}
+          </>
         )}
       </div>
     </>

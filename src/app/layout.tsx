@@ -1,9 +1,12 @@
+'use client'
 import { Inter, Lexend } from 'next/font/google'
 import clsx from 'clsx'
 import { Header } from '@/app/components/Header'
 import { Footer } from '@/app/components/Footer'
 import '@/styles/tailwind.css'
 import React from 'react'
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFnsV3'
 
 const inter = Inter({
   subsets: ['latin'],
@@ -19,12 +22,8 @@ const lexend = Lexend({
 
 export default function RootLayout({
   children,
-  feedback,
-  comments,
 }: {
   children: React.ReactNode;
-  feedback: React.ReactNode;
-  comments: React.ReactNode;
 }) {
   return (
       <html
@@ -36,9 +35,15 @@ export default function RootLayout({
           )}
       >
       <body className="flex h-full flex-col">
-      <Header />
-        {children}{feedback}{comments}
-      <Footer/>
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1">
+          <LocalizationProvider dateAdapter={AdapterDateFns}>
+              {children}
+          </LocalizationProvider>
+          </main>
+          <Footer/>
+        </div>
       </body>
       </html>
   )

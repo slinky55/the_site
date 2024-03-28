@@ -1,30 +1,11 @@
 'use client'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useEffect, useState } from "react";
-import { Button, Modal, ModalBody } from "reactstrap";
+import { Fragment, useEffect, useState } from "react";
+import { Button } from "reactstrap";
+import { faCheckCircle, faReply, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
+import { Dialog, Description, Transition } from '@headlessui/react'
 import styles from '../page.module.css'
-import { faCheckCircle, faReply, faX, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
-import 'bootstrap/dist/css/bootstrap.css';
-
-type Post = {
-    post_id: number,
-    author_id: number,
-    post: string,
-    author: string,
-    created_at: Date,
-    last_modified: Date
-  }
-
-  type Comment = {
-    comment_id: string,
-    author_id: string,
-    post_id: string,
-    parent_comment_id: string,
-    cmt: string,
-    author: string,
-    created_at: Date,
-    last_modified: Date,
-  }
+import { Comment } from '../../types/comment'
 
 export default function Page() {
     // Get Unapproved Comments
@@ -129,7 +110,7 @@ export default function Page() {
             if(comments) {
               setParentPost(prev => {
                 const newObj = { ...prev };
-                newObj[comments[i].comment_id] = data.posts[0].post;
+                newObj[comments[i].comment_id] = data.posts[0].content;
                 return newObj;
               })
             }
@@ -138,6 +119,7 @@ export default function Page() {
           getParentPost();
         }
       }
+      setLoading2(false);
     }, [comments]);
 
     useEffect(() => {
@@ -176,11 +158,10 @@ export default function Page() {
         },
         body: JSON.stringify({
           comment_id: comment.comment_id,
-          author_id: comment.author_id,
+          user_id: comment.user_id,
           post_id: comment.post_id,
           parent_comment_id: comment.parent_comment_id,
-          cmt: comment.cmt,
-          author: comment.author
+          content: comment.content
         }),
       }
 
@@ -224,69 +205,93 @@ export default function Page() {
                   <div className={styles.container} key={comment.comment_id} onClick={() => openModal(index)}>
                     <div className={styles.commentContainer}>
                       <div className={styles.commentHead}>
-                        <span className={styles.commentAuthor} key={comment.author_id}>{comment.author}</span>
+                        <span className={styles.commentAuthor} key={comment.user_id}>{comment.user_id}</span>
                         <span className={styles.commentDate} key={comment.comment_id}>{new Date(comment.created_at).toLocaleString()}</span>
                       </div>
-                      <span className={styles.comment}>{comment.cmt}</span>
+                      <span className={styles.comment}>{comment.content}</span>
                     </div>
                     <div className={styles.buttonContainer}>
                       <button className={styles.checkmarkBtn} onClick={() => approveComment(comment)}>Approve <FontAwesomeIcon className={styles.checkmark} icon={faCheckCircle}/></button>
                       <button className={styles.xBtn} onClick={() => rejectComment(comment.comment_id)}>Reject <FontAwesomeIcon className={styles.x} icon={faXmarkCircle}/></button>
                     </div>
                   </div>
-                  <Modal
-                    toggle={() => openModal(index)} 
-                    isOpen={modal[index]}>
-                    <div className={styles.modalHeader}>
-                      <h5 className={styles.modalTitle}>
-                        Comment Details
-                      </h5>
-                      <button
-                        aria-label="Close"
-                        className={styles.closeModal}
-                        type="button"
-                        onClick={() => openModal(index)}
-                      >
-                        <FontAwesomeIcon className={styles.xModal} icon={faX}/>
-                      </button>
-                    </div>
-                    <ModalBody>
-                      {comment.comment_id && comment.comment_id in parentPost ? 
-                      ( <>
-                          <p><b>Blog Post</b></p>
-                          <div className={styles.contextPost}>{parentPost[comment.comment_id]}</div>
-                        </>
-                      ) : (
-                        <></>
-                      )}
-                      {comment.comment_id && comment.comment_id in parentComment ? 
-                      (
-                        <div className={styles.contextComment}><FontAwesomeIcon icon={faReply}/><span className={styles.gap}></span>{parentComment[comment.comment_id]}</div>
-                      ) : (
-                        <></>
-                      )}
-                      <hr></hr>
-                      <p><b>Comment pending approval</b></p>
-                      <div className={styles.modalComment}>
-                        {comment.cmt}
-                      </div>
-                    </ModalBody>
-                    <div className={styles.modalFooter}>
-                      <Button
-                        type="button"
-                        onClick={() => approveComment(comment)}
-                        className={styles.approveModal}
-                      >
-                        Approve<span className={styles.gap}></span><FontAwesomeIcon className={styles.checkmark} icon={faCheckCircle}/>
-                      </Button>
-                      <Button 
-                        type="button"
-                        onClick={() => rejectComment(comment.comment_id)}
-                        className={styles.rejectModal}>
-                        Reject<span className={styles.gap}></span><FontAwesomeIcon className={styles.x} icon={faXmarkCircle}/>
-                      </Button>
-                    </div>
-                  </Modal>
+                  <Transition appear show={modal[index] ?? false} as={Fragment}>
+                    <Dialog
+                      as="div" className="relative z-10"
+                      onClose={() => openModal(index)} 
+                      open={modal[index] ?? false}>
+                        <Transition.Child
+                          as={Fragment}
+                          enter="ease-out duration-300"
+                          enterFrom="opacity-0"
+                          enterTo="opacity-100"
+                          leave="ease-in duration-200"
+                          leaveFrom="opacity-100"
+                          leaveTo="opacity-0"
+                        >
+                          <div className="fixed inset-0 bg-black/25" />
+                      </Transition.Child>
+                      <div className="fixed inset-0 overflow-y-auto">
+                        <div className="flex min-h-full items-center justify-center p-4 text-center">
+                          <Transition.Child
+                            as={Fragment}
+                            enter="ease-out duration-300"
+                            enterFrom="opacity-0 scale-95"
+                            enterTo="opacity-100 scale-100"
+                            leave="ease-in duration-200"
+                            leaveFrom="opacity-100 scale-100"
+                            leaveTo="opacity-0 scale-95"
+                          >
+                            <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
+                                <Dialog.Title
+                                  as="h3"
+                                  className="text-lg font-medium leading-6 text-gray-900"
+                                >
+                                  Comment Details
+                                </Dialog.Title>
+                                <Description>
+                                  {comment.comment_id && comment.comment_id in parentPost ? 
+                                  ( <>
+                                      <p><b>Blog Post</b></p>
+                                      <div className={styles.contextPost}
+                                      dangerouslySetInnerHTML={{ __html: parentPost[comment.comment_id] }}></div>
+                                    </>
+                                  ) : (
+                                    <></>
+                                  )}
+                                  {comment.comment_id && comment.comment_id in parentComment ? 
+                                  (
+                                    <div className={styles.contextComment}><FontAwesomeIcon icon={faReply}/><span className={styles.gap}></span>{parentComment[comment.comment_id]}</div>
+                                  ) : (
+                                    <></>
+                                  )}
+                                  <hr></hr>
+                                  <p><b>Comment pending approval</b></p>
+                                  <div className={styles.modalComment}>
+                                    {comment.content}
+                                  </div>
+                                </Description>
+                                <div className={styles.modalFooter}>
+                                  <Button
+                                    type="button"
+                                    onClick={() => approveComment(comment)}
+                                    className={styles.approveModal}
+                                  >
+                                    Approve<span className={styles.gap}></span><FontAwesomeIcon className={styles.checkmark} icon={faCheckCircle}/>
+                                  </Button>
+                                  <Button 
+                                    type="button"
+                                    onClick={() => rejectComment(comment.comment_id)}
+                                    className={styles.rejectModal}>
+                                    Reject<span className={styles.gap}></span><FontAwesomeIcon className={styles.x} icon={faXmarkCircle}/>
+                                  </Button>
+                                </div>
+                              </Dialog.Panel>
+                            </Transition.Child>
+                          </div>
+                        </div>
+                    </Dialog>
+                  </Transition>
                 </>
               ))}
             </div>

@@ -3,10 +3,10 @@ import executeQuery from "../../../lib/db";
 
 export async function DELETE(req: NextRequest, res: NextResponse) {
     const formData = await new Response(req.body).json();
-    const id = formData.msg_id;
+    const id = formData.inquiry_id;
     try  {
         const result = await executeQuery({
-            query: `DELETE FROM inquiries WHERE msg_id = ?`,
+            query: `DELETE FROM Inquiry WHERE inquiry_id = ?`,
             values: [id],
         })
         console.log(result);
