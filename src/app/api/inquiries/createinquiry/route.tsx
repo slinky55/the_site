@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
 
 export async function POST(req: NextRequest, res: NextResponse) {
+    console.log("hi")
     const formData = await new Response(req.body).json();
     const inquiryId = formData.inquiry_id;
     const firstName = formData.first_name;

@@ -19,49 +19,77 @@
 
 .slideshowContainer {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
+    
+}
+
+.slideshowSubContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .cardContainer {
     margin: 15px;
     display: grid;
     grid-template-columns: auto auto;
+    grid-template-rows: 50% 25% 25%;
     border-radius: 15px;
-    width: 250px;
-    height: 300px;
     overflow: hidden;
     background-color: white;
     color: black;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
+.thirdCard {
+    height: 200px;
+    width: 200px;
+}
+
+.secondCard {
+    height: 200px;
+    width: 200px;
+}
+
+.firstCard {
+    height: 250px;
+    width: 250px;
+}
+
+
 .cardTitle {
-    font-size: 18px;
+    font-size: 12px;
     grid-column: span 2;
     font-weight: bold;
     padding-top: 4px;
     padding-left: 12px;
     padding-right: 12px;
-    height: fit-content;
+    height: fit-content
 }
 
 .cardImg {
     width: 100%;
-    height: auto;
+    height: 100%;
     grid-column: span 2;
     display: block;
+    object-fit: cover;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 .cardAuthor {
     height: fit-content;
     padding-left: 12px;
     padding-right: 3px;
+    font-size: 10px;
 }
 
 .cardDate {
     height: fit-content;
     padding-left: 3px;
     padding-right: 12px;
+    font-size: 10px;
 }
 
 .arrowL {
@@ -111,25 +139,30 @@
 }
 
 .postImg {
-    grid-row: span 4;
     width: 100%;
-    height: auto;
+    height: 100%;
+    grid-row: span 4;
     display: block;
+    object-fit: cover;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 .postAuthor {
     padding-left: 15px;
-    font-size: 15px;
+    font-size: 12px;
 }
 
 .postTitle {
     font-weight: bold;
-    font-size: 18px;
+    font-size: 16px;
     padding: 10px;
     padding-left: 15px;
 }
 
 .postDate {
+    font-size: 12px;
     padding-left: 15px;
     font-size: 15px;
 }

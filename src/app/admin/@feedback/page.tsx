@@ -68,21 +68,21 @@ export default function Page() {
               {inquiries.map((inquiry, index) => (
                 <div className={styles.inquiryContainer} key={inquiry.inquiry_id}>
                   <div className={styles.authorContainer} onClick={() => expand(index)}>
-                    <span className={styles.author} key={inquiry.user_id}>{inquiry.user_id}</span>
+                    <span className={styles.author} key={inquiry.inquiry_id}>{inquiry.first_name} {inquiry.last_name}</span>
                     {expandInquiry[index] ? (
                       <>
                         <span className={styles.email} key={inquiry.inquiry_id}>{inquiry.email}</span>
                       </>
                     ) : (
                       <>
-                        <span className={styles.subj1} key={inquiry.inquiry_id}>Subject: {inquiry.subject}</span>
+                        <span className={styles.subj1} key={inquiry.inquiry_id}>Subject: {inquiry.subj}</span>
                       </>
                     )}
                     <span className={styles.date} key={inquiry.inquiry_id}>{new Date(inquiry.created_at).toLocaleString()}</span>
                   </div>
                   {expandInquiry[index] ? (
                     <>
-                      <span className={styles.subjContainer}><span className={styles.subjTitle}>Subject:</span><span className={styles.subj} key={inquiry.inquiry_id}>{inquiry.subject}</span></span>
+                      <span className={styles.subjContainer}><span className={styles.subjTitle}>Subject:</span><span className={styles.subj} key={inquiry.inquiry_id}>{inquiry.subj}</span></span>
                       <span className={styles.msg} key={inquiry.inquiry_id}>{inquiry.content}</span>
                       <hr className={styles.inquiryDivider}/>
                     </>

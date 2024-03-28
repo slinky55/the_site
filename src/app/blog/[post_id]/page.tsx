@@ -40,7 +40,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
     const [expandReply, setExpandReply] = useState<{[commentId: string]: boolean}>({});
 
     // Making a comment
-    const [authorName, setAuthorName] = useState('');
     const [content, setContent] = useState('');
 
     useEffect(() => {
@@ -145,11 +144,10 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         },
         body: JSON.stringify({
           comment_id: uuidv4(),
-          author_id: uuidv4(),
+          user_id: '3ab70c34-984f-457e-9a0d-0387bb0f2771',
           post_id: postId,
           parent_comment_id: parentId,
-          cmt: content,
-          author: authorName
+          content: content
         })
       }
 
@@ -190,14 +188,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
               <>
                 <div className={styles.commentForm}>
                   <input
-                    className={styles.authorInput}
-                    type="text"
-                    id="authorName"
-                    value={authorName}
-                    onChange={(e) => setAuthorName(e.target.value)}
-                    required
-                  />
-                  <input
                     className={styles.cmtInput}
                     type="text" 
                     id="content"
@@ -234,7 +224,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         ) : post ? (
           <div className={styles.container} key={1}>
             <div className={styles.postHeader} key={2}>
-              <p className={styles.title} key={3}>Lorem Impsum Title Ipsum Lor</p>
+              <p className={styles.title} key={3}>{post.title}</p>
               <p className={styles.date} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</p>
             </div>
             <div className={styles.authorTile} key={post.user_id}>
@@ -268,15 +258,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             {expandReplyRoot ? (
               <>
                 <div className={styles.commentForm}>
-                  <input
-                    className={styles.authorInput}
-                    type="text"
-                    id="authorName"
-                    value={authorName}
-                    onChange={(e) => setAuthorName(e.target.value)}
-                    placeholder="Name"
-                    required
-                  />
                   <input 
                     className={styles.cmtInput}
                     type="text" 
@@ -302,7 +283,30 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             </div>
           </div>
         ) : (
+          <>
           <p>No comments yet. Click the "Reply" button to be the first to share your thoughts!</p>
+          {expandReplyRoot ? (
+              <>
+                <div className={styles.commentForm}>
+                  <input 
+                    className={styles.cmtInput}
+                    type="text" 
+                    id="content"
+                    value={content}
+                    onChange={(e) => setContent(e.target.value)}
+                    placeholder="Comment"
+                    required
+                  />
+                </div>
+                <button onClick={() => createComment(post?.post_id, null)}><FontAwesomeIcon className={styles.checkIcon} icon={faCheck}/></button>
+                <button onClick={() => toggleReply("root")}><FontAwesomeIcon className={styles.trashIcon} icon={faCancel}/></button>
+              </>
+              ) : (
+              <>
+                <button className={styles.postReply} onClick={() => toggleReply("root")}>New Comment</button>
+              </>
+            )}
+          </>
         )}
       </div>
     </>

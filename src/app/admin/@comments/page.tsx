@@ -119,6 +119,7 @@ export default function Page() {
           getParentPost();
         }
       }
+      setLoading2(false);
     }, [comments]);
 
     useEffect(() => {
