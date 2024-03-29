@@ -6,16 +6,21 @@ export default function PartnersPage() {
 
   return (
     <>
-        <div id={styles.toolbar}>
-          <a href="#link2" className={styles.navLink}>About Us</a>
-          <a href="#link3" className={styles.navLink}>Research Library</a>
-          <a href="#link2" className={styles.navLink}>News and Events</a>
-          <a href="#link3" className={styles.navLink}>Partners</a>
-          <a href="#link2" className={styles.navLink}>Projects</a>
+      <div id={styles.toolbar}>
+        <div>
+          <a href="#link2" className={styles.navLink}>Home</a>
+          <a href="#link3" className={styles.navLink}>About Us</a>
+          <a href="#link2" className={styles.navLink}>Research Library</a>
+          <a href="#link3" className={styles.navLink}>News and Events</a>
+          <a href="#link2" className={styles.navLink}>Partners</a>
+          <a href="#link3" className={styles.navLink}>Projects</a>
           <a href="#link3" className={styles.navLink}>Blog</a>
           <a href="#link3" className={styles.navLink}>Contact Us</a>
+        </div>
+        <div>
           <a href="#link9" className={`${styles.navLink} ${styles.signInButton}`}>Sign In</a>
         </div>
+      </div>
         <div id={styles.redgraientsection}>
             <span style={{width: "100vw", marginTop: "7.5vh"}}>Our Partners</span>
             <div id={styles.centerDisplayText}><span>Introducting our partenrs who share our commitment to promoting health equity through technology and community engagement. Together, we strive to address disparities and empower underserved communities for a healthier tomorrow. Feel free to check them out below.</span></div>

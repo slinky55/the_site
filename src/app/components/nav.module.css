@@ -8,12 +8,20 @@
 }
 
 #toolbar {
-display: flex;
-justify-content: left;
-align-items: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: black;
   padding: 20px;
   text-align: left;
+}
+
+#toolbar > div:first-child {
+  display: flex;
+}
+
+#toolbar > div:last-child {
+  text-align: right;
 }
 
 .logo{
@@ -63,7 +71,7 @@ align-items: center;
 #partnerblock > div {
   flex: 1; 
   box-sizing: border-box; 
-  width: 33.33%;
+  width: max(33.33%, 350px);
   padding: 0 10px; 
 }
 
@@ -183,6 +191,14 @@ border-radius: 50px;
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.signInButton{
+  background-color: red;
+  padding: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  border-radius: 50px;
 }
 
 .navLink{
