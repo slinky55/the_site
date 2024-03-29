@@ -16,30 +16,30 @@ export default function PartnersPage() {
           <a href="#link3" className={styles.navLink}>Projects</a>
           <a href="#link3" className={styles.navLink}>Blog</a>
           <a href="#link3" className={styles.navLink}>Contact Us</a>
-        </div>
-        <div>
-          <a href="#link9" className={`${styles.navLink} ${styles.signInButton}`}>Sign In</a>
-        </div>
+          </div>
+      <div>
+        <a href="#link9" className={`${styles.signInButton}`}>Sign In</a>
+      </div>
       </div>
         <div id={styles.redgraientsection}>
-            <span style={{width: "100vw", marginTop: "7.5vh"}}>Our Partners</span>
+            <span style={{width: "100vw"}}>Our Partners</span>
             <div id={styles.centerDisplayText}><span>Introducting our partenrs who share our commitment to promoting health equity through technology and community engagement. Together, we strive to address disparities and empower underserved communities for a healthier tomorrow. Feel free to check them out below.</span></div>
         </div>
         <div id={styles.partnerblock}>
             <div id={styles.threeboxes}>
                 <Image src="/uflogo.png" width={"300"} height={"200"} alt="Image" />
-                <span style={{fontSize: "1.5vw", width: "100%"}}>University of Florida</span>
-                <span style={{fontSize: "0.85vw", width: "100%"}}>The University of Florida is a renowned public research university located in Gainesville, Florida, offering a wide array of undergraduate, graduate, and professional degree programs in diverse fields.</span>
+                <span className={styles.paragraphHeader}>University of Florida</span>
+                <span className={styles.paragraphContents}>The University of Florida is a renowned public research university located in Gainesville, Florida, offering a wide array of undergraduate, graduate, and professional degree programs in diverse fields.</span>
             </div>
             <div id={styles.threeboxes}>
                 <Image src="/uflogo.png" width={"300"} height={"200"} alt="Image" />
-                <span style={{fontSize: "1.5vw", marginBottom: "0.5vh", width: "100%"}}>University of Florida</span>
-                <span style={{fontSize: "0.85vw", width: "100%"}}>The University of Florida is a renowned public research university located in Gainesville, Florida, offering a wide array of undergraduate, graduate, and professional degree programs in diverse fields.</span>
+                <span className={styles.paragraphHeader}>University of Florida</span>
+                <span className={styles.paragraphContents}>The University of Florida is a renowned public research university located in Gainesville, Florida, offering a wide array of undergraduate, graduate, and professional degree programs in diverse fields.</span>
             </div>
             <div id={styles.threeboxes}>
                 <Image src="/uflogo.png" width={"300"} height={"200"} alt="Image" />
-                <span style={{fontSize: "1.5vw", marginBottom: "0.5vh", width: "100%"}}>University of Florida</span>
-                <span style={{fontSize: "0.85vw", width: "100%"}}>The University of Florida is a renowned public research university located in Gainesville, Florida, offering a wide array of undergraduate, graduate, and professional degree programs in diverse fields.</span>
+                <span className={styles.paragraphHeader}>University of Florida</span>
+                <span className={styles.paragraphContents}>The University of Florida is a renowned public research university located in Gainesville, Florida, offering a wide array of undergraduate, graduate, and professional degree programs in diverse fields.</span>
             </div>
         </div>
         <div id={`${styles.toolbar}`} style={{ justifyContent: 'center', color: 'white' }}>

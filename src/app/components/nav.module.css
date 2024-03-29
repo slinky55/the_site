@@ -9,11 +9,39 @@
 
 #toolbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-between; 
   align-items: center;
   background-color: black;
-  padding: 20px;
+  padding: max(2vw, 5px);
+  height: 5vh;
+  width: 100vw;
   text-align: left;
+}
+
+#toolbar > div:first-child {
+  display: flex;
+}
+
+#toolbar > div:last-child {
+  display: flex;
+  justify-content: flex-end; 
+  align-items: center; 
+  flex: 1; 
+}
+
+.paragraphHeader{
+  font-size: max(1.5vw, 20px);
+  width: 100%;
+  height: 0px;
+  margin-bottom: max(0.05vw, 40px);
+  margin-left: 1.75vw;
+}
+
+.paragraphContents{
+  width: 100%;
+  font-size: max(0.75vw, 12.5px);
+  margin-left: 1.75vw;
+  margin-bottom: max(0.1vh, 50px);
 }
 
 #toolbar > div:first-child {
@@ -41,9 +69,8 @@
 }
 
 #redgraientsection{
-  height: 50vh;
+  height: max(50vh, 200px);
   width: 100%;
-  position: relative;
   background-image: url("redgradient.jpg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
@@ -52,16 +79,18 @@
   color: white;
   font-size: 4vw;
   text-align: center;
+  justify-content: center;
   align-items: center;
 }
 
 #partnerblock {
   height: 90vh;
-  width: 100%;
+  width: 100vw;
   position: relative;
   background-size: 100% 100%;
   background-repeat: no-repeat;
   display: flex;
+  flex-wrap: wrap;
   text-align: center;
   color: black;
   font-size: 4vw;
@@ -71,8 +100,7 @@
 #partnerblock > div {
   flex: 1; 
   box-sizing: border-box; 
-  width: max(33.33%, 350px);
-  padding: 0 10px; 
+  width: max(33.33vw, 220px);
 }
 
 #threeboxes{
@@ -80,17 +108,18 @@
   justify-content: center;
   flex-wrap: wrap;
   text-align: left;
-  height: 60vh;
-  margin-left: 50px;
+  height: max(60vh, 350px);
+  margin-left: 20px;
+  margin-right: 20px;
+  margin-top: 40px;
   border-radius: 15px; 
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 #centerDisplayText{
   width: 55vw; 
-  height: 5vh;
   text-align: left;
-  font-size: max(1.5vw, 20px);
+  font-size: max(1.25vw, 15px);
   margin-top: 5vh;
 }
 
@@ -195,14 +224,19 @@ border-radius: 50px;
 
 .signInButton{
   background-color: red;
-  padding: 10px;
-  padding-left: 20px;
-  padding-right: 20px;
-  border-radius: 50px;
+  padding: max(0.85vw, 5px);
+  padding-left: max(1.5vw, 20px);
+  padding-right: max(1.5vw, 20px);
+  margin-right: max(5vw, 50px);
+  font-size: max(1vw, 7.5px);
+  color: white;
+  text-decoration: none;
+  border-radius: max(50px, 1.5vw);
 }
 
 .navLink{
-  margin-right: 50px; 
+  margin-right: max(1.5vw, 5px); 
+  font-size: max(1vw, 7px);
   color: white;
   text-decoration: none;
 }
