@@ -60,7 +60,7 @@ export default function AdminLayout({
               <FontAwesomeIcon className={styles.menuIcon} icon={faBars}/>
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(0)}>
-              Team Members
+              <div className={`${styles.headerItem} ${submenu === 0 && styles.selected}`}>Team Members</div>
               {submenu == 0 && (
                 <div className={styles.submenu}>
                   <div className={styles.submenuItem} onClick={() => setDisplay(0)}>Create Team Members</div>
@@ -69,7 +69,7 @@ export default function AdminLayout({
               )}
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(1)}>
-              Partners
+              <div className={`${styles.headerItem} ${submenu === 1 && styles.selected}`}>Partners</div>
               {submenu == 1 && (
                 <div className={styles.submenu}>
                   <div className={styles.submenuItem} onClick={() => setDisplay(2)}>Create Partners</div>
@@ -78,7 +78,7 @@ export default function AdminLayout({
               )}
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(2)}>
-              Events
+              <div className={`${styles.headerItem} ${submenu === 2 && styles.selected}`}>Events</div>
               {submenu == 2 && (
                 <div className={styles.submenu}>
                   <div className={styles.submenuItem} onClick={() => setDisplay(4)}>Create Event</div>
@@ -87,7 +87,7 @@ export default function AdminLayout({
               )}
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(3)}>
-              Projects
+              <div className={`${styles.headerItem} ${submenu === 3 && styles.selected}`}>Projects</div>
               {submenu == 3 && (
                 <div className={styles.submenu}>
                   <div className={styles.submenuItem} onClick={() => setDisplay(6)}>Create Project</div>
@@ -96,7 +96,7 @@ export default function AdminLayout({
               )}
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(4)}>
-              Blog Posts
+              <div className={`${styles.headerItem} ${submenu === 4 && styles.selected}`}>Blog Posts</div>
               {submenu == 4 && (
                 <div className={styles.submenu}>
                   <div className={styles.submenuItem} onClick={() => setDisplay(8)}>Create Post</div>
@@ -105,7 +105,7 @@ export default function AdminLayout({
               )}
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(5)}>
-              Comments
+              <div className={`${styles.headerItem} ${submenu === 5 && styles.selected}`}>Comments</div>
               {submenu == 5 && (
                 <div className={styles.submenu}>
                   <div className={styles.submenuItem} onClick={() => setDisplay(10)}>Comment Approval</div>
@@ -114,7 +114,7 @@ export default function AdminLayout({
               )}
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(12)}>
-              Feedback
+              <div className={styles.headerItem}>Feedback</div>
             </div>
           </div>
         ) : (

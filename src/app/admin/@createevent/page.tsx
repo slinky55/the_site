@@ -31,13 +31,6 @@ export default function Page() {
 
       await fetch('/api/events/createevent', postData);
   }
-
-  function handleStartDate() {
-  }
-
-  function handleEndDate() {
-
-  }
   
     return (
       <>

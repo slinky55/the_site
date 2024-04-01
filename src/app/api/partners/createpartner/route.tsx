@@ -14,7 +14,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     
     try  {
         const result = await executeQuery({
-            query: `INSERT INTO Partner (partner_id, name, logo, website_logo, description, partnership_formed) VALUES (?, ?, ?, ?, ?, ?)`,
+            query: `INSERT INTO Partner (partner_id, name, logo, website_link, description, partnership_formed) VALUES (?, ?, ?, ?, ?, ?)`,
             values: [partnerId, name, logo, websiteLink, description, partnershipFormed],
         })
         console.log(result);
