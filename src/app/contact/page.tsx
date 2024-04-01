@@ -35,10 +35,6 @@ export default function ContactPage() {
         await fetch('/api/inquiries/createinquiry', postData);
     }
 
-    function onChange() {
-      
-    }
-
     return (
       <>
         <div className={styles.container}>

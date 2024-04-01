@@ -10,37 +10,44 @@
 }
 
 .whoWeAre {
-  position: absolute;
-  right: 100px;
+  position: relative;
+  margin-left: auto;
+  margin-right: auto;
   font-family: 'Roboto', sans-serif;
   background-color: white;
   width: 600px;
-  height: 350px;
-  margin: 10px;
+  height: 420px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   font-size: small;
   border-radius: 10px;
 }
 
 .aboutUsHeading {
   position: absolute;
-  left: 230px;
+  margin-top: 20px;
+  font-size: 20px;
+  font-weight: bold;
+  left: 40%;
 }
 
 .aboutUs {
+  margin-top: 12px;
   max-width: 500px;
   position: absolute;
   top: 50px;
   left: 50px;
 }
 
-.container2 {
+.container3 {
   display: flex;
   flex-direction: column;
   background-color: white;
-  height: 500px;
+  height: fit-content;
   position: relative;
   align-items: center;
-  margin-top: 50px;
+  margin-top: 20px;
+  margin-bottom: 40px;
 }
 
 .person {
@@ -62,6 +69,8 @@
   border-radius: 50%;
   top: 25px;
   left: 10px;
+  overflow: hidden;
+  object-fit: cover;
 }
 
 .personText {
@@ -73,4 +82,25 @@
 
 .position {
   color: #d92020;
+}
+
+.container2 {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.line {
+  height: 2px;
+  width: 120px;
+  background-color: black;
+  margin-bottom: 5px;
+  margin-left: -570px;
+}
+
+.teamHeader {
+  color: #d92020;
+  font-size: 28px;
+  margin-left: -500px;
 }
