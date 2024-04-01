@@ -8,7 +8,6 @@ import redBackground from "./istockphoto-1267149438-612x612.jpg";
 export default function Home() {
   return (
     <main>
-      
        <div className={styles.carousel}>
         <div className={styles.carouselTrackContainer}>
           <ul className={styles.carouselTrack}>
@@ -25,10 +24,10 @@ export default function Home() {
         </div>
 
         <button className={`${styles.carouselButton} ${styles.carouselButtonLeft}`}>
-			    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-arrow-left-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 8 12 12 16"></polyline><line x1="16" y1="12" x2="8" y2="12"></line></svg>
+			    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-arrow-left-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 8 8 12 12 16"></polyline><line x1="16" y1="12" x2="8" y2="12"></line></svg>
 		    </button>
 		    <button className={`${styles.carouselButton} ${styles.carouselButtonRight}`}>
-			    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" className="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
+			    <svg xmlns="http://www.w3.org/2000/svg" width="35" height="35" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="feather feather-arrow-right-circle"><circle cx="12" cy="12" r="10"></circle><polyline points="12 16 16 12 12 8"></polyline><line x1="8" y1="12" x2="16" y2="12"></line></svg>
 		    </button>
 
         <div className={styles.carouselNav}>
@@ -64,19 +63,6 @@ export default function Home() {
               </div>
             </div>
           </div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
-          <div className={styles.spotlightItem}></div>
           <div className={styles.spotlightItem}></div>
           <div className={styles.spotlightItem}></div>
         </div>

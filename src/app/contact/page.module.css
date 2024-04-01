@@ -25,13 +25,15 @@
     margin-top: 30px;
     margin-left: 152px;
     margin-right: 50px;
-    height: 600px;
+    height: 680px;
 }
 .contactLeft{
+    position: relative;
     width: 60%;
     padding: 40px 60px;
 }
 .contactRight{
+    position: relative;
     width: 40%;
     padding: 40px;
     background: #D92020;
@@ -78,17 +80,26 @@
 }
 
 .submitButton{
-    background-color: #D92020; /* Red background color */
-    border: none; /* Remove default button border */
-    color: white; /* Text color */
-    padding: 5px 30px; /* Padding */
-    text-align: center; /* Center text */
-    text-decoration: none; /* Remove underline */
-    display: inline-block; /* Display as inline-block */
-    font-size: 16px; /* Font size */
-    margin-top: 20px;
-    cursor: pointer; /* Cursor pointer */
-    border-radius: 12px; /* Rounded corners */
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    bottom: 20px; 
+    background-color: #D92020;
+    border: none;
+    color: white; 
+    padding: 5px 30px;
+    text-align: center; 
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 12px; 
+}
+
+@media only screen and (min-width: 1000px) {
+    .submitButton {
+        bottom: 40px;
+    }
 }
 
 .contactRightBody {
@@ -102,12 +113,17 @@
 }
 
 .socialsLinks {
+    position: absolute;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 30px;
-    margin-top: 100%;
+    bottom: 40px;
+    width: 90%;
+    left: 50%;
+    transform: translateX(-50%);
 }
+
 .socialsLink {
     height: 25px;
     width: 25px;
@@ -133,4 +149,11 @@ display: flex;
     background-color: #D92020;
     height: 700px;
     width: 50%;
+}
+
+.captcha {
+    position: absolute;
+    margin-top: 10px;
+    left: 50%; /* Place the item 50% from the left */
+  transform: translateX(-50%);
 }

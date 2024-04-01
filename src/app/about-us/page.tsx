@@ -13,6 +13,10 @@ export default function AboutUs() {
           </div>
         </div>
         <div className={styles.container2}>
+          <div className={styles.line}></div>
+          <div className={styles.teamHeader}>Meet the Team</div>
+        </div>
+        <div className={styles.container3}>
           <div className={styles.person}>
             <img src={femaleStock.src} className={styles.imgPerson} alt="Maria Lopez" />
             <div className={styles.personText}>
