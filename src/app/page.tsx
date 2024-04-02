@@ -5,6 +5,7 @@ import workGroup6 from "./Workgroup6.jpg";
 import groupOfDoctors from "./istockphoto-1347476924-612x612.jpg";
 import aiMedicalStock from "./ai-medical-background-concept-155234616-ezgif.com-webp-to-jpg-converter.jpg";
 import redBackground from "./istockphoto-1267149438-612x612.jpg";
+
 export default function Home() {
   return (
     <main>
