@@ -11,7 +11,7 @@ export default function AdminLayout({
   createteam,
   manageteam,
   createpartner,
-  managepartner,
+  managepartners,
   createevent,
   manageevents,
   createproject,
@@ -26,7 +26,7 @@ export default function AdminLayout({
   createteam: React.ReactNode;
   manageteam: React.ReactNode;
   createpartner: React.ReactNode;
-  managepartner: React.ReactNode;
+  managepartners: React.ReactNode;
   createevent: React.ReactNode;
   manageevents: React.ReactNode;
   createproject: React.ReactNode;
@@ -131,7 +131,7 @@ export default function AdminLayout({
           {(display == 0) && createteam}
           {(display == 1) && manageteam}
           {(display == 2) && createpartner}
-          {(display == 3) && managepartner}
+          {(display == 3) && managepartners}
           {(display == 4) && createevent}
           {(display == 5) && manageevents}
           {(display == 6) && createproject}
