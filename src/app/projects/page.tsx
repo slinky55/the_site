@@ -1,15 +1,8 @@
 'use client'
 
 import { useEffect, useState } from "react";
+import { Project } from "../types/project";
 
-interface Project {
-    project_id: number;
-    title: string;
-    project_lead: string;
-    primary_image_source: string;
-    gallery: string;
-    content: string;
-}
 
 export default function Projects() {
     const [projects, setProjects] = useState<Project[]>([]);
@@ -54,13 +47,13 @@ export default function Projects() {
                     {projects.map((project) => (
                         <article key={project.title} className="flex flex-col items-start justify-between">
                             <div className="relative w-full">
-                                <img src={project.primary_image_source} alt="" className="object-cover w-full h-48 rounded-2xl" />
+                                <img src={project.primary_image_src} alt="" className="object-cover w-full h-48 rounded-2xl" />
                                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
                             </div>
                             <div className="max-w-xl">
                                 <div className="group relative">
                                     <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                                        <a href={project.gallery}>
+                                        <a href={`projects/${project.project_id}`}>
                                             <span className="absolute inset-0" />
                                             {project.title}
                                         </a>
