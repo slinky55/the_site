@@ -1,0 +1,59 @@
+.header {
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.subContainer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 14px;
+    align-items: center;
+    justify-content: space-between;
+}
+.name {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.reg_link {
+    width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.date {
+    width: 200px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.btn {
+    background-color: red;
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.btn:hover {
+    background-color: rgb(185, 0, 0);
+}
