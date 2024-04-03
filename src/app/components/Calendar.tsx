@@ -45,6 +45,7 @@ export default function Calendar() {
                 plugins={[ dayGridPlugin ]}
                 initialView="dayGridMonth"
                 events={events}
+                //@ts-ignore
                 eventClick={handleEventClick}
             />
         </Container>
