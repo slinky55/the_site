@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import workGroup1 from "./Workgroup1.jpg";
 import workGroup2 from "./Workgroup2.jpg";
@@ -7,12 +10,92 @@ import aiMedicalStock from "./ai-medical-background-concept-155234616-ezgif.com-
 import redBackground from "./istockphoto-1267149438-612x612.jpg";
 
 export default function Home() {
+  const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
+
+  useEffect(() => {
+    const track = document.querySelector<HTMLElement>(`.${styles.carouselTrack}`);
+    const nextButton = document.querySelector(`.${styles.carouselButtonRight}`);
+    const prevButton = document.querySelector(`.${styles.carouselButtonLeft}`);
+    const rectNav = document.querySelector(`.${styles.carouselNav}`); 
+
+    if (!track || !nextButton || !prevButton || !rectNav) {
+      return;
+    }
+    
+    const slides = Array.from(track!.children);
+    const rectangles = Array.from(rectNav!.children);
+    const slideWidth = slides[0]?.getBoundingClientRect().width;
+
+
+
+    const setSlidePosition = (slide: HTMLElement, index: number) => {
+        slide.style.left = (slideWidth * index) + 'px';
+    };
+
+    slides.forEach((slide, index) => setSlidePosition(slide as HTMLElement, index));
+
+    const moveToSlide = (targetIndex: number) => {
+        const currentSlide = track.querySelector(`.${styles.currentSlide}`);
+        const targetSlide = slides[targetIndex] as HTMLElement;
+        if (!currentSlide || !targetSlide) {
+            return;
+        }
+        track.style.transform = 'translateX(-' + targetSlide.style.left + ')';
+        currentSlide.classList.remove(styles.currentSlide);
+        targetSlide.classList.add(styles.currentSlide);
+        setCurrentSlideIndex(targetIndex);
+    };
+
+    const updateRectangles = (targetIndex: number) => {
+        const currentRect = rectNav.querySelector(`.${styles.currentSlide}`);
+        const targetRect = rectangles[targetIndex] as HTMLElement;
+        if (!currentRect || !targetRect) {
+            return;
+        }
+        currentRect.classList.remove(styles.currentSlide);
+        targetRect.classList.add(styles.currentSlide);
+    };
+
+    const automaticSlider = () => {
+        let nextIndex = currentSlideIndex + 1;
+        if (nextIndex === slides.length) nextIndex = 0;
+        moveToSlide(nextIndex);
+        updateRectangles(nextIndex);
+    };
+
+    const intervalId = setInterval(automaticSlider, 3000);
+
+    prevButton.addEventListener('click', () => {
+        let prevIndex = currentSlideIndex - 1;
+        if (prevIndex < 0) prevIndex = slides.length - 1;
+        moveToSlide(prevIndex);
+        updateRectangles(prevIndex);
+    });
+
+    nextButton.addEventListener('click', () => {
+        let nextIndex = currentSlideIndex + 1;
+        if (nextIndex === slides.length) nextIndex = 0;
+        moveToSlide(nextIndex);
+        updateRectangles(nextIndex);
+    });
+
+    rectNav.addEventListener('click', (e) => {
+        const targetIndex = rectangles.findIndex(rectangle => rectangle === e.target);
+        if (targetIndex !== -1) {
+            moveToSlide(targetIndex);
+            updateRectangles(targetIndex);
+        }
+    });
+
+    return () => clearInterval(intervalId); // Clear interval on unmount
+}, [currentSlideIndex]);
+
   return (
     <main>
        <div className={styles.carousel}>
         <div className={styles.carouselTrackContainer}>
           <ul className={styles.carouselTrack}>
-            <li className={`${styles.carouselSlide} ${styles.currentSlide}`}>
+            <li className={`${styles.carouselSlide} ${currentSlideIndex === 0 && styles.currentSlide}`}>
               <img className={styles.carouselImages} src={workGroup6.src} alt="" />
             </li>
             <li className={styles.carouselSlide}>
@@ -32,9 +115,9 @@ export default function Home() {
 		    </button>
 
         <div className={styles.carouselNav}>
-          <button className={`${styles.carouselIndicator} ${styles.carouselIndicatorLeft} ${styles.currentSlide}`}></button>
-          <button className={`${styles.carouselIndicator} ${styles.carouselIndicatorMiddle}`}></button>
-          <button className={`${styles.carouselIndicator} ${styles.carouselIndicatorRight}`}></button>
+          <button className={`${styles.carouselIndicator} ${styles.carouselIndicatorLeft} ${currentSlideIndex === 0 && styles.currentSlide}`}></button>
+          <button className={`${styles.carouselIndicator} ${styles.carouselIndicatorMiddle} ${currentSlideIndex === 1 && styles.currentSlide}`}></button>
+          <button className={`${styles.carouselIndicator} ${styles.carouselIndicatorRight} ${currentSlideIndex === 2 && styles.currentSlide}`}></button>
         </div>
       </div>
 
