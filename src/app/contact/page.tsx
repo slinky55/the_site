@@ -107,7 +107,7 @@ export default function ContactPage() {
                   value={msg}
                   onChange={(e) => setMsg(e.target.value)}
                   placeholder='Max number of characters: 250'
-                required
+                  required
                 />
               </div>
             </div>
@@ -124,7 +124,7 @@ export default function ContactPage() {
           <div className="mt-10">
             <button
                 type="submit"
-                className="block w-full rounded-md bg-z-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
+                className="block w-full rounded-md bg-red-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
             >
               Send Message
             </button>
