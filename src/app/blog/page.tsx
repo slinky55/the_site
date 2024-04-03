@@ -72,78 +72,83 @@ export default function BlogPage() {
   }
 
   return (
-    <>
-      <div>
-        {loading ? (
-          <p>Loading...</p>
-        ) : error ? (
-          <p>Error: {error}</p>
-        ) : posts && posts.length > 0 ?
-         (
-          <>
-            <div className={styles.featured}>
-              <span className={styles.featuredText}>Featured Posts</span>
-              <div className={styles.slideshowContainer}>
-                <FontAwesomeIcon className={styles.arrowL} icon={faAngleLeft} onClick={prevPost}/>
-                <div className={styles.slideshowSubContainer}>
-                {posts?.slice(ssStart,ssEnd).map((post, index) => (
-                  <>
-                    <motion.div 
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    className={`${styles.cardContainer} ${index === 1 ? styles.firstCard : index === 2 ? styles.secondCard : styles.thirdCard}`} 
-                    key={post.post_id}>
-                      <img className={styles.cardImg} src={post.image_src} key={post.post_id}/>
-                      <span className={styles.cardTitle} key={post.post_id}>{post.title}</span>
-                      <span className={styles.cardAuthor} key={post.post_id}><FontAwesomeIcon icon={faUser}/>{post.user_id}</span><span className={styles.cardDate}><FontAwesomeIcon icon={faCalendar}/>{new Date(post.created_at).toLocaleString()}</span>
-                    </motion.div>
-                  </>
-                ))}
-                </div>
-                <FontAwesomeIcon className={styles.arrowR} icon={faAngleRight} onClick={nextPost}/>
-              </div>
-            </div>
-            <p className={styles.title} key={2}>Recent Posts</p>
-            <div className={styles.container}>
-              <div className={styles.postsContainer}>
-                {posts?.map((post, id) => (
-                  <>
-                    <motion.div 
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }} 
-                    className={styles.postContainer} 
-                    key={post.post_id}>
-                      <img className={styles.postImg} src={post.image_src} key={post.post_id}/>
-                      <div className={styles.postTitle} key={post.post_id}>{post.title}</div>
-                      <div className={styles.postAuthor} key={post.post_id}><FontAwesomeIcon icon={faUser}/> {post.user_id}</div>
-                      <div className={styles.postDate} key={post.post_id}><FontAwesomeIcon icon={faCalendar}/>{new Date(post.created_at).toLocaleString()}</div>
-                      <Link key={post.post_id} href={`blog/${post.post_id}`}><div className={styles.readMore}>Read More</div></Link>
-                    </motion.div>
-                  </>
-                ))}
-              </div>
-                <div className={styles.rightContainer}>
-                  <div className={styles.searchContainer}>
-                    <textarea className={styles.searchbar} placeholder='Search...'></textarea>
-                    <button className={styles.searchBtn}>Search</button>
+      <>
+        <div>
+          {loading ? (
+              <p>Loading...</p>
+          ) : error ? (
+              <p>Error: {error}</p>
+          ) : posts && posts.length > 0 ?
+              (
+                  <div className="bg-white py-24 sm:py-32">
+                    <div className="mx-auto max-w-7xl px-6 lg:px-8">
+                      <div className="mx-auto max-w-2xl lg:max-w-4xl">
+                        <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the blog</h2>
+                        <p className="mt-2 text-lg leading-8 text-gray-600">
+                          Learn about the latest trends and news in the world of technology, health, and entertainment.
+                        </p>
+                        <div className="mt-16 space-y-20 lg:mt-20 lg:space-y-20">
+                          {posts.map((post) => (
+                              <article key={post.post_id} className="relative isolate flex flex-col gap-8 lg:flex-row">
+                                <div
+                                    className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
+                                  <img
+                                      src={post.image_src}
+                                      alt=""
+                                      className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
+                                  />
+                                  <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"/>
+                                </div>
+                                <div>
+                                  <div className="flex items-center gap-x-4 text-xs">
+                                    <time dateTime={post.created_at} className="text-gray-500">
+                                      {post.created_at}
+                                    </time>
+                                    <a
+                                        href={post.topics}
+                                        className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                                    >
+                                      {post.topics}
+                                    </a>
+                                  </div>
+                                  <div className="group relative max-w-xl">
+                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                                      <a href={"www.google.come"}>
+                                        <span className="absolute inset-0"/>
+                                        {post.title}
+                                      </a>
+                                    </h3>
+                                    <p className="mt-5 text-sm leading-6 text-gray-600">{post.content}</p>
+                                  </div>
+                                  <div className="mt-6 flex border-t border-gray-900/5 pt-6">
+                                    <div className="relative flex items-center gap-x-4">
+                                      <img src={post.image_src} alt=""
+                                           className="h-10 w-10 rounded-full bg-gray-50"/>
+                                      <div className="text-sm leading-6">
+                                        <p className="font-semibold text-gray-900">
+                                          <a href={post.user_id}>
+                                            <span className="absolute inset-0"/>
+                                            {post.user_id}
+                                          </a>
+                                        </p>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </article>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                  <div className={styles.topicContainer}>
-                    <div className={styles.topicsTitle}>Topics</div>
-                    <hr></hr>
-                    {topics.map((topic) => (
-                      <>
-                        <div className={styles.topic}>{topic}</div>
-                        <hr></hr>
-                      </>
-                    ))}
-                </div>
-              </div>
-            </div>
-          </>
-        ) : (
-          <p>No posts available.</p>
-        )}
-      </div>
-    </>
-  );
+              )
+              :
+              (
+                  <p>No posts available.</p>
+              )
+          }
+        </div>
+      </>
+  )
+      ;
 }

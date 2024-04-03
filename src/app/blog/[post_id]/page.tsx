@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { useRouter } from 'next/navigation';
-import { Header } from '@/app/components/Header';
 import { v4 as uuidv4 } from 'uuid';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faReply, faCancel, faCheck } from '@fortawesome/free-solid-svg-icons';
@@ -85,7 +84,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
         getPost();
         getComments();
-    }, []);
+    }, [params.post_id]);
 
     useEffect(() => {
         if(post) {
@@ -114,7 +113,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         setExpandReply(init);
         setLoading2(false);
       }
-    }, [comments]);  
+    }, [comments]);
 
 
     async function deletePost() {
@@ -189,7 +188,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                 <div className={styles.commentForm}>
                   <input
                     className={styles.cmtInput}
-                    type="text" 
+                    type="text"
                     id="content"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
@@ -232,8 +231,8 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                 <p className={styles.author} key={post.user_id}>{post.user_id}</p>
             </div>
             <div className={styles.postContainer}>
-              <div 
-                className={styles.post} 
+              <div
+                className={styles.post}
                 dangerouslySetInnerHTML={{ __html: post.content }}
               ></div>
             </div>
@@ -258,9 +257,9 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             {expandReplyRoot ? (
               <>
                 <div className={styles.commentForm}>
-                  <input 
+                  <input
                     className={styles.cmtInput}
-                    type="text" 
+                    type="text"
                     id="content"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
@@ -284,13 +283,13 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
           </div>
         ) : (
           <>
-          <p>No comments yet. Click the "Reply" button to be the first to share your thoughts!</p>
+          <p>No comments yet. Click the {"}Reply{"} button to be the first to share your thoughts!</p>
           {expandReplyRoot ? (
               <>
                 <div className={styles.commentForm}>
-                  <input 
+                  <input
                     className={styles.cmtInput}
-                    type="text" 
+                    type="text"
                     id="content"
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
