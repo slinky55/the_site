@@ -1,6 +1,5 @@
 'use client'
 
-
 import React, {useState} from 'react';
 import styles from './page.module.css';
 import ReCAPTCHA from "react-google-recaptcha";
@@ -60,7 +59,7 @@ export default function ContactPage() {
                     name="firstName"
                     id="firstName"
                     autoComplete="given-name"
-                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
                 />
@@ -76,7 +75,7 @@ export default function ContactPage() {
                     name="last-name"
                     id="last-name"
                     autoComplete="family-name"
-                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -90,7 +89,7 @@ export default function ContactPage() {
                     name="email"
                     id="email"
                     autoComplete="email"
-                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
@@ -104,13 +103,14 @@ export default function ContactPage() {
               <textarea
                   name="message"
                   rows={4}
-                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
                   defaultValue={''}
                   id="msg"
                   value={msg}
                   onChange={(e) => setMsg(e.target.value)}
                   placeholder='Max number of characters: 250'
-              />
+                required
+                />
               </div>
             </div>
             <div className="sm:col-span-2 sm:row-span-4">
@@ -118,6 +118,7 @@ export default function ContactPage() {
                   className={styles.captcha}
                   sitekey="6Lelfp4pAAAAAFxiaaIe0QtZEOxOtk_OJJ77Jujw"
                   onChange={(val: any) => setCaptcha(val)}
+                  required
               />
             </div>
 
@@ -125,7 +126,7 @@ export default function ContactPage() {
           <div className="mt-10">
             <button
                 type="submit"
-                className="block w-full rounded-md bg-red-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600"
+                className="block w-full rounded-md bg-z-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
             >
               Send Message
             </button>
