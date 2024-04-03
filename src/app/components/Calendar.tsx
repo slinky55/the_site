@@ -10,12 +10,13 @@ function useTransformedEvents(initialEvents: unknown) {
 
     useEffect(() => {
         // @ts-ignore
-        const transformedEvents = initialEvents.map((eventData: { event_id: any; title: any; event_start: any; event_end: any; }) => {
+        const transformedEvents = initialEvents.map((eventData: { event_id: any; title: any; event_start: any; event_end: any; reg_link: any }) => {
             return {
                 id: eventData.event_id,
                 title: eventData.title,
                 start: eventData.event_start,
                 end: eventData.event_end,
+                html: eventData.reg_link,
             };
         });
 
@@ -35,12 +36,16 @@ export default function Calendar() {
 
     const events = useTransformedEvents(initialEvents);
 
+    const handleEventClick = (clickInfo: { event: { extendedProps: { html: string | URL | undefined } } }) => {
+        window.open(clickInfo.event.extendedProps.html, '_blank');
+    }
     return (
         <Container>
             <FullCalendar
                 plugins={[ dayGridPlugin ]}
                 initialView="dayGridMonth"
                 events={events}
+                eventClick={handleEventClick}
             />
         </Container>
     );
