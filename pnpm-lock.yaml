@@ -51,7 +51,7 @@ dependencies:
     specifier: ^5.15.14
     version: 5.15.14(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(@types/react@18.2.73)(react-dom@18.2.0)(react@18.2.0)
   '@mui/x-date-pickers':
-    specifier: ^7.1.0
+    specifier: ^7.0.0
     version: 7.1.0(@emotion/react@11.11.4)(@emotion/styled@11.11.5)(@mui/material@5.15.14)(@types/react@18.2.73)(date-fns@3.6.0)(react-dom@18.2.0)(react@18.2.0)
   '@tailwindcss/aspect-ratio':
     specifier: ^0.4.2
@@ -72,7 +72,7 @@ dependencies:
     specifier: ^3.6.0
     version: 3.6.0
   framer-motion:
-    specifier: ^11.0.24
+    specifier: ^11.0.22
     version: 11.0.24(react-dom@18.2.0)(react@18.2.0)
   fullcalendar:
     specifier: ^6.1.11
@@ -139,6 +139,9 @@ devDependencies:
   '@types/react-dom':
     specifier: ^18.2.23
     version: 18.2.23
+  '@types/react-google-recaptcha':
+    specifier: ^2.1.9
+    version: 2.1.9
   cypress:
     specifier: ^13.7.1
     version: 13.7.1
@@ -1466,6 +1469,12 @@ packages:
 
   /@types/react-dom@18.2.23:
     resolution: {integrity: sha512-ZQ71wgGOTmDYpnav2knkjr3qXdAFu0vsk8Ci5w3pGAIdj7/kKAyn+VsQDhXsmzzzepAiI9leWMmubXz690AI/A==}
+    dependencies:
+      '@types/react': 18.2.73
+    dev: true
+
+  /@types/react-google-recaptcha@2.1.9:
+    resolution: {integrity: sha512-nT31LrBDuoSZJN4QuwtQSF3O89FVHC4jLhM+NtKEmVF5R1e8OY0Jo4//x2Yapn2aNHguwgX5doAq8Zo+Ehd0ug==}
     dependencies:
       '@types/react': 18.2.73
     dev: true
