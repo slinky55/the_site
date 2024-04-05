@@ -18,7 +18,6 @@ export default function PartnersPage() {
             }
 
             const data = await res.json();
-
             if (!Array.isArray(data.partners)) {
                 throw new Error('Unexpected data format');
             }
@@ -36,21 +35,6 @@ export default function PartnersPage() {
 
   return (
     <>
-      <div id={styles.toolbar}>
-        <div>
-          <a href="#link2" className={styles.navLink}>Home</a>
-          <a href="#link3" className={styles.navLink}>About Us</a>
-          <a href="#link2" className={styles.navLink}>Research Library</a>
-          <a href="#link3" className={styles.navLink}>News and Events</a>
-          <a href="#link2" className={styles.navLink}>Partners</a>
-          <a href="#link3" className={styles.navLink}>Projects</a>
-          <a href="#link3" className={styles.navLink}>Blog</a>
-          <a href="#link3" className={styles.navLink}>Contact Us</a>
-        </div>
-        <div>
-          <a href="#link9" className={`${styles.signInButton}`}>Sign In</a>
-        </div>
-      </div>
       <div id={styles.redgraientsection}>
         <span style={{ width: "100vw" }}>Our Partners</span>
         <div id={styles.centerDisplayText}>
@@ -58,21 +42,24 @@ export default function PartnersPage() {
         </div>
       </div>
       <div id={styles.partnerblock}>
-        {loading ? (
+      {loading ? (
           <span>Loading...</span>
-        ) : partners.map((partner, index) => (
-          <div id={styles.threeboxes} key={index}>
-            <Image src={partner.logo} width={300} height={200} alt="Image" />
-            <span className={styles.paragraphHeader}>{partner.name}</span>
-            <span className={styles.paragraphContents}>{partner.description}</span>
-          </div>
-        ))}
-      </div>
-      <div id={`${styles.toolbar}`} style={{ justifyContent: 'center', color: 'white' }}>
-        <span className={styles.connectWithUs} style={{ marginRight: '20px' }}>Connect With Us</span>
-        <span className={styles.logo} style={{ marginRight: '20px' }}>Logo</span>
-        <span className={styles.logo} style={{ marginRight: '20px' }}>Logo</span>
-        <span className={styles.logo} style={{ marginRight: '20px' }}>Logo</span>
+        ) : (
+          <>
+            {[...Array(3)].map((_, i) => (
+              <div key={i}>
+                {partners.map((partner, index) => (
+                  <div id={styles.threeboxes} key={index}>
+                    <img src={partner.logo} width={300} height={200} alt="Image" />
+                    <span className={styles.paragraphHeader}>{partner.name}</span>
+                    <span className={styles.paragraphContents}>{partner.description}</span>
+                  </div>
+                ))}
+        </div>
+      ))}
+  </>
+)}
+
       </div>
     </>
   );
