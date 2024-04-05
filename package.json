@@ -34,6 +34,7 @@
     "date-fns": "^3.6.0",
     "framer-motion": "^11.0.22",
     "fullcalendar": "^6.1.11",
+    "lodash.debounce": "^4.0.8",
     "mariadb": "^3.3.0",
     "next": "14.0.4",
     "next-auth": "^4.24.7",
@@ -53,6 +54,7 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.7",
+    "@types/lodash.debounce": "^4.0.9",
     "@types/node": "^20.12.2",
     "@types/react": "^18.2.73",
     "@types/react-dom": "^18.2.23",
