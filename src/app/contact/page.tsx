@@ -4,6 +4,7 @@ import React, {useState} from 'react';
 import styles from './page.module.css';
 import ReCAPTCHA from "react-google-recaptcha";
 import {v4 as uuidv4} from 'uuid';
+import debounce from 'lodash.debounce';
 
 export default function ContactPage() {
   const [firstName, setFirstName] = useState('');
@@ -35,6 +36,8 @@ export default function ContactPage() {
     await fetch('/api/inquiries/createinquiry', postData);
   }
 
+  const debouncedCreateInquiry = debounce(createInquiry, 1000);
+
   return (
       <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
         <div
@@ -49,7 +52,7 @@ export default function ContactPage() {
             soon as we can!
           </p>
         </div>
-        <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+        <form action={debouncedCreateInquiry} method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
             <div>
               <label htmlFor="first-name" className="block text-sm font-semibold leading-6 text-gray-900">
@@ -64,6 +67,7 @@ export default function ContactPage() {
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
                     value={firstName}
                     onChange={(e) => setFirstName(e.target.value)}
+                    required
                 />
               </div>
             </div>
@@ -77,7 +81,9 @@ export default function ContactPage() {
                     name="last-name"
                     id="last-name"
                     autoComplete="family-name"
+                    onChange={(e) => setLastName(e.target.value)}
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
+                    required
                 />
               </div>
             </div>
@@ -94,6 +100,7 @@ export default function ContactPage() {
                     className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
+                    required
                 />
               </div>
             </div>
@@ -122,13 +129,12 @@ export default function ContactPage() {
                   onChange={(val: any) => setCaptcha(val)}
               />
             </div>
-
           </div>
           <div className="mt-10">
             <button
                 type="submit"
                 className="block w-full rounded-md bg-red-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-red-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-400"
-                onClick={createInquiry}
+                onClick={debouncedCreateInquiry}
             >
               Send Message
             </button>
