@@ -1,10 +1,5 @@
 'use client'
 import React, { useEffect, useState } from 'react';
-import { motion } from "framer-motion";
-import styles from './page.module.css';
-import Link from 'next/link';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faAngleLeft, faAngleRight, faUser, faCalendar } from '@fortawesome/free-solid-svg-icons';
 import { Post } from '../types/post';
 
 export default function BlogPage() {
@@ -13,6 +8,7 @@ export default function BlogPage() {
   const [error, setError] = useState<string | null>(null);
   const [ssStart, setSsStart] = useState<number>(0);
   const [ssEnd, setSsEnd] = useState<number>(3);
+  const [users, setUsers] = useState<any[]>([]);
 
   useEffect(() => {
     const postData = {
@@ -32,6 +28,24 @@ export default function BlogPage() {
 
         const data = await res.json();
         setPosts(data.posts);
+
+        // Fetch user data for each post
+        const users = await Promise.all(data.posts.map(async (post: { user_id: any; }) => {
+          const userRes = await fetch(`/api/users/getusers`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ id: post.user_id })
+          });
+          if (!userRes.ok) {
+            throw new Error(`HTTP error! Status: ${userRes.status}`);
+          }
+          return userRes.json();
+        }));
+
+        setUsers(users);
+
       } catch (error) {
         console.error(error);
         setError('Failed to load data');
@@ -88,55 +102,68 @@ export default function BlogPage() {
                           Learn about the latest trends and news in the world of technology, health, and entertainment.
                         </p>
                         <div className="mt-16 space-y-20 lg:mt-20 lg:space-y-20">
-                          {posts.map((post) => (
-                              <article key={post.post_id} className="relative isolate flex flex-col gap-8 lg:flex-row">
-                                <div
-                                    className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
-                                  <img
-                                      src={post.image_src}
-                                      alt=""
-                                      className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
-                                  />
-                                  <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"/>
-                                </div>
-                                <div>
-                                  <div className="flex items-center gap-x-4 text-xs">
-                                    <time dateTime={post.created_at} className="text-gray-500">
-                                      {post.created_at}
-                                    </time>
-                                    <a
-                                        href={post.topics}
-                                        className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                                    >
-                                      {post.topics}
-                                    </a>
+                          {posts.map((post, index) => {
+                            const date = new Date(post.created_at);
+                            const formattedDate = `${date.toLocaleString('default', { month: 'long' })} ${date.getDate()}`;
+                            const userDataObject = users[index];
+                            const userData = userDataObject && userDataObject.user && userDataObject.user[0];
+
+                            return (
+                                <article key={post.post_id} className="relative isolate flex flex-col gap-8 lg:flex-row">
+                                  <div
+                                      className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
+                                    <img
+                                        src={post.image_src}
+                                        alt=""
+                                        className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
+                                    />
+                                    <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"/>
                                   </div>
-                                  <div className="group relative max-w-xl">
-                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                                      <a href={"www.google.come"}>
-                                        <span className="absolute inset-0"/>
-                                        {post.title}
+                                  <div>
+                                    <div className="flex items-center gap-x-4 text-xs">
+                                      <time dateTime={date.toISOString()} className="text-gray-500">
+                                        {formattedDate}
+                                      </time>
+                                      <a
+                                          href={post.topics}
+                                          className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                                      >
+                                        {post.topics}
                                       </a>
-                                    </h3>
-                                    <p className="mt-5 text-sm leading-6 text-gray-600">{post.content}</p>
-                                  </div>
-                                  <div className="mt-6 flex border-t border-gray-900/5 pt-6">
-                                    <div className="relative flex items-center gap-x-4">
-                                      <img src={post.image_src} alt=""
-                                           className="h-10 w-10 rounded-full bg-gray-50"/>
-                                      <div className="text-sm leading-6">
-                                        <p className="font-semibold text-gray-900">
-                                          <a href={post.user_id}>
-                                            <span className="absolute inset-0"/>
-                                            {post.user_id}
-                                          </a>
-                                        </p>
+                                    </div>
+                                    <div className="group relative max-w-xl">
+                                      <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                                        <a href={"www.google.com"}>
+                                          <span className="absolute inset-0"/>
+                                          {post.title}
+                                        </a>
+                                      </h3>
+                                      <p className="mt-5 text-sm leading-6 text-gray-600">
+                                        {post.content.length > 150
+                                            ? <div
+                                                dangerouslySetInnerHTML={{__html: post.content.substring(0, 150) + "..."}}></div>
+                                            : <div dangerouslySetInnerHTML={{__html: post.content}}></div>
+                                        }
+                                      </p>
+                                    </div>ç
+                                    <div className="mt-6 flex border-t border-gray-900/5 pt-6">
+                                      <div className="relative flex items-center gap-x-4">
+                                        <img src={post.image_src} alt=""
+                                             className="h-10 w-10 rounded-full bg-gray-50"/>
+                                        <div className="text-sm leading-6">
+                                          <p className="font-semibold text-gray-900">
+                                            <a href={post.user_id}>
+                                              <span className="absolute inset-0"/>
+                                              {userData ? userData.name : 'Loading...'}
+                                            </a>
+                                          </p>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              </article>
-                          ))}
+                                </article>
+                            );
+                          })}
                         </div>
                       </div>
                     </div>
