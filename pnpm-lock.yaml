@@ -92,6 +92,9 @@ dependencies:
   next-auth:
     specifier: ^4.24.7
     version: 4.24.7(next@14.0.4)(react-dom@18.2.0)(react@18.2.0)
+  next-routes:
+    specifier: ^1.4.2
+    version: 1.4.2(next@14.0.4)(react@18.2.0)
   next-transpile-modules:
     specifier: ^10.0.1
     version: 10.0.1
@@ -3997,6 +4000,17 @@ packages:
       uuid: 8.3.2
     dev: false
 
+  /next-routes@1.4.2(next@14.0.4)(react@18.2.0):
+    resolution: {integrity: sha512-1Ljs0BEV9IGcJLKxC/WZUtmftSvmkY6DlI8fVs8dClCoR82QRzBGRka/L/XB76wE5814MMeP9qVJYQil0FE9QQ==}
+    peerDependencies:
+      next: '>=2'
+      react: ^15.4.2 || ^16
+    dependencies:
+      next: 14.0.4(@babel/core@7.24.3)(react-dom@18.2.0)(react@18.2.0)
+      path-to-regexp: 2.4.0
+      react: 18.2.0
+    dev: false
+
   /next-transpile-modules@10.0.1:
     resolution: {integrity: sha512-4VX/LCMofxIYAVV58UmD+kr8jQflpLWvas/BQ4Co0qWLWzVh06FoZkECkrX5eEZT6oJFqie6+kfbTA3EZCVtdQ==}
     dependencies:
@@ -4273,6 +4287,10 @@ packages:
     dependencies:
       lru-cache: 10.2.0
       minipass: 7.0.4
+
+  /path-to-regexp@2.4.0:
+    resolution: {integrity: sha512-G6zHoVqC6GGTQkZwF4lkuEyMbVOjoBKAEybQUypI1WTkqinCOrq2x6U2+phkJ1XsEMTy4LjtwPI7HW+NVrRR2w==}
+    dev: false
 
   /path-type@4.0.0:
     resolution: {integrity: sha512-gDKb8aZMDeD/tZWs9P6+q0J9Mwkdl6xMV8TjnGP3qJVJ06bdMgkbBlLU8IdfOsIsFz2BW1rNVT3XuNEl8zPAvw==}

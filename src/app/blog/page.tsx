@@ -1,6 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react';
 import { Post } from '../types/post';
+import { useRouter } from 'next/navigation';
 
 export default function BlogPage() {
   const [posts, setPosts] = useState<Post[] | null>(null);
@@ -9,6 +10,7 @@ export default function BlogPage() {
   const [ssStart, setSsStart] = useState<number>(0);
   const [ssEnd, setSsEnd] = useState<number>(3);
   const [users, setUsers] = useState<any[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
     const postData = {
@@ -107,6 +109,9 @@ export default function BlogPage() {
                             const formattedDate = `${date.toLocaleString('default', { month: 'long' })} ${date.getDate()}`;
                             const userDataObject = users[index];
                             const userData = userDataObject && userDataObject.user && userDataObject.user[0];
+                            const navigateToPost = () => {
+                              router.push(`/blog/${post.post_id}`);
+                            };
 
                             return (
                                 <article key={post.post_id} className="relative isolate flex flex-col gap-8 lg:flex-row">
@@ -133,13 +138,13 @@ export default function BlogPage() {
                                     </div>
                                     <div className="group relative max-w-xl">
                                       <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                                        <a href={"www.google.com"}>
+                                        <a onClick={navigateToPost}>
                                           <span className="absolute inset-0"/>
                                           {post.title}
                                         </a>
                                       </h3>
                                       <p className="mt-5 text-sm leading-6 text-gray-600">
-                                        {post.content.length > 150
+                                      {post.content.length > 150
                                             ? <div
                                                 dangerouslySetInnerHTML={{__html: post.content.substring(0, 150) + "..."}}></div>
                                             : <div dangerouslySetInnerHTML={{__html: post.content}}></div>
