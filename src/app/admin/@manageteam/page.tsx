@@ -34,7 +34,7 @@ export default function Page() {
             },
             body: JSON.stringify({
               limit: limit,
-              offset: (pagesLoaded * limit),
+              offset: (pagesLoaded * limit) + 1,
             })
         }
         async function getData() {
@@ -51,7 +51,7 @@ export default function Page() {
                     throw new Error('Unexpected data format');
                 }
 
-                setTeamLeaders(data.leaders);
+                setTeamLeaders(prevTeamLeaders => [...prevTeamLeaders, ...data.leaders]);
             } catch (error) {
                 console.error(error);
             } finally {

@@ -14,10 +14,14 @@ export default function AboutUs() {
 
   useEffect(() => {
     const postData = {
-      method: "GET",
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        limit: 10,
+        offset: 0
+      })
     }
 
     async function getData() {

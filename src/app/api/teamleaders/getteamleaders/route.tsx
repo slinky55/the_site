@@ -10,7 +10,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     
     try  {
         const result = await executeQuery({
-            query: 'SELECT * FROM TeamLeader LIMIT ? OFFSET ?',
+            query: 'SELECT * FROM TeamLeader ORDER BY leader_name DESC LIMIT ? OFFSET ?',
             values: [limit, offset],
         })
         console.log(result);
