@@ -38,10 +38,7 @@ export default function Calendar() {
 
     const events = useTransformedEvents(initialEvents);
 
-    const handleEventClick = (clickInfo: {
-        event: { title: string; url: string | undefined; extendedProps: { content: string }; start: Date; end: Date };
-        jsEvent: MouseEvent
-    }) => {
+    const handleEventClick = (clickInfo: { event: { title: string; url: string | undefined; extendedProps: { content: string }; start: Date; end: Date }; jsEvent: MouseEvent}) => {
         clickInfo.jsEvent.preventDefault();
         const eventObj = clickInfo.event;
         const startDate = new Date(eventObj.start).toLocaleDateString();
@@ -61,15 +58,15 @@ export default function Calendar() {
             }
         }
     }
-    return (
-        <Container>
-            <FullCalendar
-                plugins={[dayGridPlugin]}
-                initialView="dayGridMonth"
-                events={events}
-                //@ts-ignore
-                eventClick={handleEventClick}
-            />
-        </Container>
-    );
-}
+        return (
+            <Container>
+                <FullCalendar
+                    plugins={[ dayGridPlugin ]}
+                    initialView="dayGridMonth"
+                    events={events}
+                    //@ts-ignore
+                    eventClick={handleEventClick}
+                />
+            </Container>
+        )
+    }
