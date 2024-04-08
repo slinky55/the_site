@@ -14,7 +14,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     
     try  {
         const result = await executeQuery({
-            query: `UPDATE Partner SET name = ?, content = ?, regLink = ?, eventStart = STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.%fZ'), eventEnd = STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.%fZ') WHERE event_id = ?`,
+            query: `UPDATE Event SET name = ?, content = ?, regLink = ?, eventStart = STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.%fZ'), eventEnd = STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.%fZ') WHERE event_id = ?`,
             values: [name, content, regLink, eventStart, eventEnd, eventId],
         })
         console.log(result);

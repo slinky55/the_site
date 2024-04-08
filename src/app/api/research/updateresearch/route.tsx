@@ -8,15 +8,16 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     const researchId = formData.research_id;
     const title = formData.title;
     const journal = formData.journal;
-    const topics = formData.reg_link;
-    const thumbnail = formData.event_start;
-    const writtenOn = formData.event_end;
+    const topics = formData.topics;
+    const thumbnail = formData.thumbnail;
+    const writtenOn = formData.written_on;
+    const url = formData.url;
 
     
     try  {
         const result = await executeQuery({
-            query: `UPDATE Research SET title = ?, journal = ?, topics = ?, thumbnail = ?, written_on = ? WHERE research_id = ?`,
-            values: [title, journal, topics, thumbnail, writtenOn, researchId],
+            query: `UPDATE Research SET title = ?, journal = ?, topics = ?, thumbnail = ?, written_on = ?, url = ? WHERE research_id = ?`,
+            values: [title, journal, topics, thumbnail, writtenOn, url, researchId],
         })
         console.log(result);
 
