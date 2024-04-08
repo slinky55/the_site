@@ -1,6 +1,7 @@
 "use server"
 
 import styles from './page.module.css'
+import React, { useEffect, useState } from 'react';
 import { TeamLeader } from '../types/teamleader';
 import executeQuery from '../lib/db';
 import Image from 'next/image';

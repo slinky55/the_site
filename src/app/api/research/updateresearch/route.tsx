@@ -15,8 +15,9 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
 
     
     try  {
+        console.log(formData);
         const result = await executeQuery({
-            query: `UPDATE Research SET title = ?, journal = ?, topics = ?, thumbnail = ?, written_on = ?, url = ? WHERE research_id = ?`,
+            query: `UPDATE Research SET title = ?, journal = ?, topics = ?, thumbnail = ?, written_on = DATE_FORMAT(STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.000Z'), '%Y-%m-%d'), url = ? WHERE research_id = ?`,
             values: [title, journal, topics, thumbnail, writtenOn, url, researchId],
         })
         console.log(result);

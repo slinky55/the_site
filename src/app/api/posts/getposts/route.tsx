@@ -1,12 +1,16 @@
 import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
 
-export async function GET(req: NextRequest, res: NextResponse) {
-    
+export async function POST(req: NextRequest, res: NextResponse) {
+    console.log("hey");
+    const formData = await new Response(req.body).json();
+    const limit = formData.limit;
+    const offset = formData.offset;
+
     try  {
         const result = await executeQuery({
-            query: 'SELECT * FROM posts',
-            values: '',
+            query: 'SELECT * FROM posts ORDER BY created_at DESC LIMIT ? OFFSET ?',
+            values: [limit, offset],
         })
         console.log(result);
 
