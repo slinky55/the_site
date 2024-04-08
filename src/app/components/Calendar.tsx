@@ -1,4 +1,4 @@
-"use client"
+'use client'
 
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
@@ -57,6 +57,7 @@ export default function Calendar() {
                 window.open(eventObj.url, '_blank');
             }
         }
+    }
 
     return (
         <Container>
