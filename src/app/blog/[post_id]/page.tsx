@@ -228,7 +228,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             </div>
             <div className={styles.authorTile} key={post.user_id}>
                 <img src={post.image_src}></img>
-                <p className={styles.author} key={post.user_id}>{post.user_id}</p>
             </div>
             <div className={styles.postContainer}>
               <div
