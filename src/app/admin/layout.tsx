@@ -4,7 +4,6 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import styles from './page.module.css'
-import { ClassNames } from "@emotion/react";
 
 export default function AdminLayout({
   children,
@@ -42,8 +41,8 @@ export default function AdminLayout({
   feedback: React.ReactNode;
 }) {
 
-  const [display, setDisplay] = useState<number>(12);
-  const [submenu, setSubmenu] = useState<number>(10);
+  const [display, setDisplay] = useState<number>(14);
+  const [submenu, setSubmenu] = useState<number>(14);
   const [open, setOpen] = useState<boolean>(false);
 
   function toggleSubmenu(num: number) {
