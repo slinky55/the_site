@@ -1,12 +1,14 @@
 'use client'
 
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 
 import { Button } from '@/app/components/Button'
 import { NavLink } from '@/app/components/NavLink'
+import { getSession, useSession } from 'next-auth/react'
+import { Session } from '@next-auth/sequelize-adapter/dist/models'
 
 function MobileNavLink({
 href,
@@ -97,6 +99,22 @@ function MobileNavigation() {
 }
 
 export function Header() {
+    const [session, setSession] = useState(Object);
+
+    useEffect(() => {
+        getSession().then((s) => {
+            if (s) {
+                setSession(s)
+            } else {
+                setSession(null);
+            }
+        }).catch((e) => {
+            console.log("error getting session from server")
+            console.log(e);
+            setSession(null);
+        })
+    }, []);
+
     return (
         <header>
                 <nav className="relative z-50 flex justify-between bg-black col-span-12 px-32 h-14">
@@ -115,9 +133,9 @@ export function Header() {
                     <div className="flex items-center gap-x-5 md:gap-x-8">
                         <div className="hidden md:block">
                         </div>
-                        <Button href="/login" color="red">
-                <span>Sign In</span>
-                        </Button>
+                        {!session && <Button href="/login" color="red">
+                            <span>Sign In</span>
+                        </Button>}
                         <div className="-mr-1 md:hidden">
                             <MobileNavigation />
                         </div>

@@ -7,6 +7,8 @@ import DropboxChooser from 'react-dropbox-chooser';
 import { Project } from '@/app/types/project';
 import { Spinner } from "@/app/components/Spinner";
 
+import Image from "next/image";
+
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
     // View More Modal

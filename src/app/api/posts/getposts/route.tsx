@@ -1,7 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
-import type { NextApiRequest, NextApiResponse } from 'next';
-
 
 export async function POST(req: NextRequest, res: NextResponse) {
     console.log("hey");

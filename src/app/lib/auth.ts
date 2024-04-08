@@ -3,7 +3,7 @@ import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import executeQuery, { sequelize } from "./db";
 
-import SequelizeAdapter, { models } from "@auth/sequelize-adapter";
+import SequelizeAdapter, {models} from "@next-auth/sequelize-adapter";
 import { DataTypes } from "sequelize";
 
 import argon2 from "argon2";
@@ -37,7 +37,7 @@ export const authConfig = {
                 const {email, password} = credentials;
                 
                 try {
-                    const rows = await executeQuery("SELECT id, passwordHash FROM users WHERE email = ? LIMIT 1", email) as User[];
+                    const rows = await executeQuery({query: "SELECT id, passwordHash FROM users WHERE email = ? LIMIT 1", values: [email]}) as User[];
                     
                     if (rows.length < 1) {
                         // create user

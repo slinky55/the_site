@@ -34,7 +34,7 @@ export async function signUpWithEmail(prevState: any, formData: FormData) {
     const data = parse.data;
 
     try {
-        const query = await executeQuery("SELECT id FROM users WHERE email = ?", data.email) as User[];
+        const query = await executeQuery({query: "SELECT id FROM users WHERE email = ?", values: [data.email]}) as User[];
         if (query.length > 0) {
             return {
                 message: "Email is already in use",
@@ -49,7 +49,10 @@ export async function signUpWithEmail(prevState: any, formData: FormData) {
         });
         const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
 
-        const insert = await executeQuery("INSERT INTO users (id, name, email, passwordHash, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)", uuid, name, data.email, hash, date, date);
+        const insert = await executeQuery({
+            query: "INSERT INTO users (id, name, email, passwordHash, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)", 
+            values: [uuid, name, data.email, hash, date, date]
+        });
         console.log(insert)
 
         redirect("/")

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import styles from '../@manageprojects/page.module.css';
 import { Partner } from '@/app/types/partner';
 import { Spinner } from "@/app/components/Spinner";
+import Image from "next/image";
 
 export default function Page() {
     const [partners, setPartners] = useState<Partner[]>([]);
@@ -91,9 +92,9 @@ export default function Page() {
           <hr/>
       <div className={styles.container}> 
       {partners ? (
-        partners.map((partner) => (
-          <div className={styles.subContainer}>
-            <img className={styles.thumbnail} src={partner.logo}/>
+        partners.map((partner, key) => (
+          <div className={styles.subContainer} key={key}>
+            <Image className={styles.thumbnail} src={partner.logo} alt="key"/>
             <div className={styles.title}>
               {partner.name}
             </div>
