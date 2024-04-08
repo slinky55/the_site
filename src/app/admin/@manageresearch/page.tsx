@@ -171,7 +171,7 @@ export default function Page() {
 
     return (
       <>
-      <div className={styles.header}>Manage Team Members</div>
+      <div className={styles.header}>Manage Research</div>
           <hr/>
       <div className={styles.container}> 
       {research ? (
@@ -255,12 +255,19 @@ export default function Page() {
                             value={journal}
                             onChange={(e) => setJournal(e.target.value)}
                             required/>
-                            <textarea
-                            className={styles.contentInput}
-                            placeholder="Description of Member"
+                            <input
+                            className={styles.projectLeadInput}
+                            placeholder="URL"
                             id="url"
                             value={url}
                             onChange={(e) => setUrl(e.target.value)}
+                            required/>
+                            <input
+                            className={styles.projectLeadInput}
+                            placeholder="topics"
+                            id="topics"
+                            value={topics}
+                            onChange={(e) => setTopics(e.target.value)}
                             required/>
                             <div 
                             className={styles.galleryLabel}>
