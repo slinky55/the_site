@@ -1,9 +1,8 @@
 'use client'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment, useEffect, useState } from "react";
-import { Button } from "reactstrap";
 import { faCheckCircle, faReply, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
-import { Dialog, Description, Transition } from '@headlessui/react'
+import { Dialog, Description, Transition, Button } from '@headlessui/react'
 import styles from '../page.module.css'
 import { Comment } from '../../types/comment'
 

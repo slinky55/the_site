@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
     console.log("hey");
     const formData = await new Response(req.body).json();
     const researchId = formData.research_id;
@@ -11,11 +12,12 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const thumbnail = formData.thumbnail;
     const writtenOn = formData.written_on;
     const url = formData.url;
+
     
     try  {
         const result = await executeQuery({
-            query: `INSERT INTO Research (research_id, title, journal, topics, thumbnail, written_on, url, added_to_db) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
-            values: [researchId, title, journal, topics, thumbnail, writtenOn, url],
+            query: `UPDATE Research SET title = ?, journal = ?, topics = ?, thumbnail = ?, written_on = ?, url = ? WHERE research_id = ?`,
+            values: [title, journal, topics, thumbnail, writtenOn, url, researchId],
         })
         console.log(result);
 

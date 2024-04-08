@@ -1,17 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
+import type { NextApiRequest, NextApiResponse } from 'next';
 
-
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
     console.log("hey");
     const formData = await new Response(req.body).json();
-    const limit = formData.limit;
-    const offset = formData.offset;
+    const leaderId = formData.leader_id;
+    const name = formData.leader_name;
+    const role = formData.team_role;
+    const about = formData.about_me;
+    const imageSrc = formData.image_src;
+
     
     try  {
         const result = await executeQuery({
-            query: 'SELECT * FROM TeamLeader ORDER BY leader_name DESC LIMIT ? OFFSET ?',
-            values: [limit, offset],
+            query: `UPDATE TeamLeader SET leader_name = ?, team_role = ?, about_me = ?, image_src = ? WHERE leader_id = ?`,
+            values: [name, role, about, imageSrc, leaderId],
         })
         console.log(result);
 

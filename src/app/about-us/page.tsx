@@ -11,11 +11,11 @@ async function getData() {
         query: 'SELECT * FROM TeamLeader',
         values: '',
     })
-
     if (result) {
       return result;
     } else {
       return null;
+
     }
   } catch ( error ) {
     throw error;
