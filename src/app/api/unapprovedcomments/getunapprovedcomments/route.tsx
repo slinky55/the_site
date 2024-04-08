@@ -1,9 +1,7 @@
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
-import type { NextApiRequest, NextApiResponse } from 'next';
 
-
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
     
     try  {
         const result = await executeQuery({

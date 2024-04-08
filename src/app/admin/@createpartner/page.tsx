@@ -78,7 +78,7 @@ export default function Page() {
           required/>
           <div 
           className={styles.galleryLabel}>
-            Upload Partner's Logo
+            Upload Partner{"'"}s Logo
           </div>
           <DropboxChooser
             appKey={appKey}

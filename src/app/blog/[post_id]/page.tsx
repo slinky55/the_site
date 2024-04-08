@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faReply, faCancel, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { Post } from '../../types/post'
 import { Comment } from '../../types/comment'
+import Image from "next/image";
 
 interface PostPageProps {
   params: {

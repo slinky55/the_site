@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import styles from '../@manageprojects/page.module.css';
 import { Post } from '@/app/types/post';
 import { Comment } from '@/app/types/comment';
+import Image from "next/image"
 
 export default function Page() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -81,8 +82,8 @@ export default function Page() {
       <div className={styles.container}> 
       {post ? (
       <div>
-        {comments.map((comment) => (
-          <div className={styles.subContainer}>
+        {comments.map((comment, key) => (
+          <div className={styles.subContainer} key={key}>
             <div className={styles.title}>
               {comment.content}
             </div>
@@ -100,9 +101,9 @@ export default function Page() {
       </div>
       ) 
       : posts ? (
-        posts.map((post) => (
-          <div className={styles.subContainer}>
-            <img className={styles.thumbnail} src={post.image_src}/>
+        posts.map((post, key) => (
+          <div className={styles.subContainer} key={key}>
+            <Image className={styles.thumbnail} src={post.image_src} alt="filler"/>
             <div className={styles.title}>
               {post.title}
             </div>
