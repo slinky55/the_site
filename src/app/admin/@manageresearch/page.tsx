@@ -5,22 +5,23 @@ import { Dialog, Description, Transition, Button } from '@headlessui/react'
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
 import { Spinner } from '@/app/components/Spinner';
-import { TeamLeader } from '@/app/types/teamleader';
+import { Research } from '@/app/types/research';
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
 
-    const [teamLeaders, setTeamLeaders] = useState<TeamLeader[]>([]);
+    const [research, setResearch] = useState<Research[]>([]);
     const [loading, setLoading] = useState(true);
     // View More Modal
     const [modal, setModal] = useState<boolean[]>([]);
     // Inputs for Edits
     const [editing, setEditing] = useState<boolean>(false);
-    const [name, setName] = useState<string>('');
-    const [role, setRole] = useState<string>('');
-    const [about, setAbout] = useState<string>('');
+    const [title, setTitle] = useState<string>('');
+    const [journal, setJournal] = useState<string>('');
+    const [topics, setTopics] = useState<string>('');
     const [img, setImg] = useState<string>('');
-
+    const [url, setUrl] = useState<string>('');
+    const [writtenOn, setWrittenOn] = useState<Date>();
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
 
@@ -38,7 +39,7 @@ export default function Page() {
         }
         async function getData() {
             try {
-                const res = await fetch("/api/teamleaders/getteamleaders", queryData);
+                const res = await fetch("/api/research/getresearchs", queryData);
 
                 if (!res.ok) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
@@ -46,11 +47,11 @@ export default function Page() {
 
                 const data = await res.json();
 
-                if (!Array.isArray(data.leaders)) {
+                if (!Array.isArray(data.research)) {
                     throw new Error('Unexpected data format');
                 }
 
-                setTeamLeaders(data.leaders);
+                setResearch(data.research);
             } catch (error) {
                 console.error(error);
             } finally {
@@ -76,7 +77,7 @@ export default function Page() {
       }
       async function getData() {
           try {
-              const res = await fetch("/api/teamleaders/getteamleaders", queryData);
+              const res = await fetch("/api/research/getresearchs", queryData);
 
               if (!res.ok) {
                   throw new Error(`HTTP error! Status: ${res.status}`);
@@ -84,11 +85,11 @@ export default function Page() {
 
               const data = await res.json();
 
-              if (!Array.isArray(data.leaders)) {
+              if (!Array.isArray(data.research)) {
                   throw new Error('Unexpected data format');
               }
 
-              setTeamLeaders(prevTeamLeaders => [...prevTeamLeaders, ...data.leaders]);
+              setResearch(prevResearch => [...prevResearch, ...data.research]);
           } catch (error) {
               console.error(error);
           } finally {
@@ -108,18 +109,19 @@ export default function Page() {
         })
     }
 
-    async function updateMember(id: string) {
+    async function updateResearch(id: string) {
       const queryData = {
         method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            leader_id: id,
-            leader_name: name,
-            team_role: role,
-            about_me: about,
-            image_src: img
+            research_id: id,
+            title: title,
+            journal: journal,
+            topics: topics,
+            thumbnail: img,
+            written_on: writtenOn
           })
       }
 
@@ -132,18 +134,18 @@ export default function Page() {
       const data = await res.json();
     }
 
-    async function deleteMember(id: string) {
+    async function deleteResearch(id: string) {
       const queryData = {
         method: "DELETE",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            leader_id: id,
+            research_id: id,
           }),
       }
 
-      const res = await fetch("/api/teamleaders/deleteteamleaders", queryData)
+      const res = await fetch("/api/research/deleteresearch", queryData)
 
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
@@ -157,29 +159,31 @@ export default function Page() {
       setImg(files[0].link.replace('dl=0', 'raw=1'));
     }
 
-    function toggleEditing(tname: string, trole: string, tabout: string, timg: string) {
-      setName(tname);
-      setRole(trole);
-      setAbout(tabout);
-      setImg(timg);
+    function toggleEditing(rtitle: string, rjournal: string, rtopics: string, rimg: string, rurl: string, rwrittenOn: Date) {
+      setTitle(rtitle);
+      setJournal(rjournal);
+      setUrl(rurl);
+      setTopics(rtopics);
+      setImg(rimg);
+      setWrittenOn(rwrittenOn);
       setEditing(!editing);
     }
 
     return (
       <>
-      <div className={styles.header}>Manage Team Members</div>
+      <div className={styles.header}>Manage Research</div>
           <hr/>
       <div className={styles.container}> 
-      {teamLeaders ? (
-        teamLeaders.map((teamLeader, index) => (
+      {research ? (
+        research.map((research, index) => (
           <>
             <div className={styles.subContainer}>
-              <img className={styles.thumbnail} src={teamLeader.image_src}/>
+              <img className={styles.thumbnail} src={research.thumbnail}/>
               <div className={styles.title}>
-                {teamLeader.leader_name}
+                {research.title}
               </div>
               <div className={styles.role}>
-                {teamLeader.team_role}
+                {research.journal}
               </div>
               <button className={styles.btn} onClick={() => openModal(index)}>
                 View More
@@ -219,9 +223,9 @@ export default function Page() {
                       >
                         {!editing ? (
                           <div>
-                          Team Member: {teamLeader.leader_name}
-                          Role: {teamLeader.team_role}
-                          Thumbnail: <img className={styles.thumbnail} src={teamLeader.image_src}/>
+                          Title: {research.title}
+                          Journal: {research.journal}
+                          Thumbnail: <img className={styles.thumbnail} src={research.thumbnail}/>
                         </div>
                         ) : (
                             <></>
@@ -229,35 +233,45 @@ export default function Page() {
                       </Dialog.Title>
                       <Description>
                         {!editing ? (
-                          <div>Description: {teamLeader.about_me}</div>
+                          <div>
+                            <div>URL: {research.url}</div>
+                            <div>Topics: {research.topics}</div>
+                          </div>
                           ) : (
                           <div className={styles.container}>
                             <input
                             className={styles.titleInput}
                             type="text"
-                            placeholder="Member Name"
-                            id="name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Research Title"
+                            id="title"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
                             required/>
                             <input
                             className={styles.projectLeadInput}
                             type="text"
-                            placeholder="Member Role"
-                            id="role"
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
+                            placeholder="Research Journal"
+                            id="journal"
+                            value={journal}
+                            onChange={(e) => setJournal(e.target.value)}
                             required/>
-                            <textarea
-                            className={styles.contentInput}
-                            placeholder="Description of Member"
-                            id="about"
-                            value={about}
-                            onChange={(e) => setAbout(e.target.value)}
+                            <input
+                            className={styles.projectLeadInput}
+                            placeholder="URL"
+                            id="url"
+                            value={url}
+                            onChange={(e) => setUrl(e.target.value)}
+                            required/>
+                            <input
+                            className={styles.projectLeadInput}
+                            placeholder="topics"
+                            id="topics"
+                            value={topics}
+                            onChange={(e) => setTopics(e.target.value)}
                             required/>
                             <div 
                             className={styles.galleryLabel}>
-                              Upload New Picture of Member Here
+                              Upload New Thumbnail Here
                             </div>
                             <DropboxChooser
                               appKey={appKey}
@@ -277,16 +291,18 @@ export default function Page() {
                         <button
                           className={styles.btn}
                           onClick={() => toggleEditing(
-                            teamLeader.leader_name, 
-                            teamLeader.team_role, 
-                            teamLeader.about_me, 
-                            teamLeader.image_src)}
+                            research.title, 
+                            research.journal, 
+                            research.topics, 
+                            research.thumbnail,
+                            research.url,
+                            research.written_on)}
                         >
                           Edit
                         </button>
                         <button
                           className={styles.btn}
-                          onClick={() => deleteMember(teamLeader.leader_id)}
+                          onClick={() => deleteResearch(research.research_id)}
                         >
                           Delete
                         </button>
@@ -301,7 +317,7 @@ export default function Page() {
                         </button>
                         <button 
                           className={styles.btn}
-                          onClick={() => updateMember(teamLeader.leader_id)}
+                          onClick={() => updateResearch(research.research_id)}
                         >
                           Update
                         </button>
@@ -315,7 +331,7 @@ export default function Page() {
         </Transition>
         </>
       ))) : (
-        <span>No existing team members.</span>
+        <span>No existing research.</span>
       )} 
       </div>
       <div

@@ -5,23 +5,22 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 export async function POST(req: NextApiRequest, res: NextApiResponse) {
     console.log("hey");
     const formData = await new Response(req.body).json();
-    const researchId = formData.research_id;
-    const title = formData.title;
-    const journal = formData.journal;
-    const topics = formData.topics;
-    const thumbnail = formData.thumbnail;
-    const writtenOn = formData.written_on;
-    const url = formData.url;
+    const eventId = formData.event_id;
+    const name = formData.name;
+    const content = formData.content;
+    const regLink = formData.reg_link;
+    const eventStart = formData.event_start;
+    const eventEnd = formData.event_end;
     
     try  {
         const result = await executeQuery({
-            query: `INSERT INTO Research (research_id, title, journal, topics, thumbnail, written_on, url, added_to_db) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
-            values: [researchId, title, journal, topics, thumbnail, writtenOn, url],
+            query: `UPDATE Event SET name = ?, content = ?, regLink = ?, eventStart = STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.%fZ'), eventEnd = STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.%fZ') WHERE event_id = ?`,
+            values: [name, content, regLink, eventStart, eventEnd, eventId],
         })
         console.log(result);
 
         if (res) {
-            return NextResponse.json({research: result}, {status: 200})
+            return NextResponse.json({partner: result}, {status: 200})
         } else {
             console.error('Response object is undefined.');
         }

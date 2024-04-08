@@ -20,6 +20,8 @@ export default function AdminLayout({
   managecomments,
   createpost,
   manageposts,
+  createresearch,
+  manageresearch,
   feedback
 }: {
   children: React.ReactNode;
@@ -35,6 +37,8 @@ export default function AdminLayout({
   managecomments: React.ReactNode;
   createpost: React.ReactNode;
   manageposts: React.ReactNode;
+  createresearch: React.ReactNode;
+  manageresearch: React.ReactNode;
   feedback: React.ReactNode;
 }) {
 
@@ -113,7 +117,16 @@ export default function AdminLayout({
                 </div>
               )}
             </div>
-            <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(12)}>
+            <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(6)}>
+              <div className={`${styles.headerItem} ${submenu === 5 && styles.selected}`}>Research</div>
+              {submenu == 6 && (
+                <div className={styles.submenu}>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(12)}>Create Research</div>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(13)}>Manage Research</div>
+                </div>
+              )}
+            </div>
+            <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(14)}>
               <div className={styles.headerItem}>Feedback</div>
             </div>
           </div>
@@ -140,7 +153,9 @@ export default function AdminLayout({
           {(display == 9) && manageposts} 
           {(display == 10) && commentapproval}
           {(display == 11) && managecomments}
-          {(display == 12) && feedback} 
+          {(display == 12) && createresearch} 
+          {(display == 13) && manageresearch}
+          {(display == 14) && feedback}
         </div>
       </div>
     </>

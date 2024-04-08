@@ -5,23 +5,22 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 export async function POST(req: NextApiRequest, res: NextApiResponse) {
     console.log("hey");
     const formData = await new Response(req.body).json();
-    const researchId = formData.research_id;
-    const title = formData.title;
-    const journal = formData.journal;
-    const topics = formData.topics;
-    const thumbnail = formData.thumbnail;
-    const writtenOn = formData.written_on;
-    const url = formData.url;
+    const leaderId = formData.leader_id;
+    const name = formData.leader_name;
+    const role = formData.team_role;
+    const about = formData.about_me;
+    const imageSrc = formData.image_src;
+
     
     try  {
         const result = await executeQuery({
-            query: `INSERT INTO Research (research_id, title, journal, topics, thumbnail, written_on, url, added_to_db) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
-            values: [researchId, title, journal, topics, thumbnail, writtenOn, url],
+            query: `UPDATE TeamLeader SET leader_name = ?, team_role = ?, about_me = ?, image_src = ? WHERE leader_id = ?`,
+            values: [name, role, about, imageSrc, leaderId],
         })
         console.log(result);
 
         if (res) {
-            return NextResponse.json({research: result}, {status: 200})
+            return NextResponse.json({leaders: result}, {status: 200})
         } else {
             console.error('Response object is undefined.');
         }
