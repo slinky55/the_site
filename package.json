@@ -67,6 +67,7 @@
     "cypress": "^13.7.1",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.0.4",
+    "sequelize-adapter": "^2.1.5",
     "typescript": "^5.4.3"
   }
 }
