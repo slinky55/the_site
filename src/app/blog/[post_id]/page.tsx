@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faReply, faCancel, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { Post } from '../../types/post'
 import { Comment } from '../../types/comment'
+import Image from "next/image";
 
 interface PostPageProps {
   params: {
@@ -227,7 +228,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
               <p className={styles.date} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</p>
             </div>
             <div className={styles.authorTile} key={post.user_id}>
-                <img src={post.image_src}></img>
+                <Image src={post.image_src} alt=""/>
                 <p className={styles.author} key={post.user_id}>{post.user_id}</p>
             </div>
             <div className={styles.postContainer}>

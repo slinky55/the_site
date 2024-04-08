@@ -38,8 +38,8 @@ export default function Page() {
           <hr/>
       <div className={styles.container}> 
       {events ? (
-        events.map((event) => (
-          <div className={styles.subContainer}>
+        events.map((event, key) => (
+          <div className={styles.subContainer} key="key">
             <div className={styles.name}>
               {event.name}
             </div>

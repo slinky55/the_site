@@ -3,6 +3,8 @@ import { useEffect, useState } from 'react';
 import styles from './page.module.css';
 import { Project } from '@/app/types/project';
 
+import Image from "next/image";
+
 export default function Page() {
   const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
@@ -38,9 +40,9 @@ export default function Page() {
           <hr/>
       <div className={styles.container}> 
       {projects ? (
-        projects.map((project) => (
-          <div className={styles.subContainer}>
-            <img className={styles.thumbnail} src={project.primary_image_src}/>
+        projects.map((project, key) => (
+          <div className={styles.subContainer} key={key}>
+            <Image className={styles.thumbnail} src={project.primary_image_src} alt=""/>
             <div className={styles.title}>
               {project.title}
             </div>

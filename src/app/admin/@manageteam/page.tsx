@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react';
 import styles from '../@manageprojects/page.module.css';
+import Image from "next/image";
 
 export default function Page() {
   const [teamLeaders, setTeamLeaders] = useState<any[]>([]);
@@ -37,9 +38,9 @@ export default function Page() {
           <hr/>
       <div className={styles.container}> 
       {teamLeaders ? (
-        teamLeaders.map((teamLeader) => (
-          <div className={styles.subContainer}>
-            <img className={styles.thumbnail} src={teamLeader.image_src}/>
+        teamLeaders.map((teamLeader, key) => (
+          <div className={styles.subContainer} key={key}>
+            <Image className={styles.thumbnail} src={teamLeader.image_src} alt=""/>
             <div className={styles.title}>
               {teamLeader.leader_name}
             </div>
