@@ -2,21 +2,28 @@
 import { useEffect, useState } from "react";
 import styles from '../page.module.css'
 import { Inquiry } from '../../types/inquiry'
+import { Spinner } from "@/app/components/Spinner";
 
 export default function Page() {
     // Get Inquiries
-    const [inquiries, setInquiries] = useState<Inquiry[] | null>(null);
+    const [inquiries, setInquiries] = useState<Inquiry[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     // Expand Inquiry based on index
     const [expandInquiry, setExpandInquiry] = useState<boolean[]>([]);
+    const [pagesLoaded, setPagesLoaded] = useState<number>(0);
+    const limit = 10;
 
-    useEffect(() => {
+      useEffect(() => {
         const InquiryData = {
-          method: "GET",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
+          body: JSON.stringify({
+            limit: limit,
+            offset: 0,
+          })
         }
     
         async function getData() {
@@ -34,17 +41,52 @@ export default function Page() {
           } catch (error) {
             console.error(error);
             setError('Failed to load data');
+          } finally {
+              setPagesLoaded(1);
+              setLoading(false);
           }
         }
     
         getData();
       }, []);
-    
-      useEffect(() => {
-        if(inquiries) {
-          setLoading(false);
+
+      async function loadMore() {
+        setLoading(true);
+        const queryData = {
+          method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              limit: limit,
+              offset: (pagesLoaded * limit) - 1,
+            })
         }
-      }, [inquiries]);
+        async function getData() {
+            try {
+                const res = await fetch("/api/inquiries/getinquiries", queryData);
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+
+                const data = await res.json();
+
+                if (!Array.isArray(data.inquiries)) {
+                    throw new Error('Unexpected data format');
+                }
+
+                setInquiries(prevInquiries => [...prevInquiries, ...data.inquiries]);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+                setPagesLoaded(pagesLoaded + 1);
+            }
+      }
+
+      getData();
+    }
 
       function expand(index: number) {
         setExpandInquiry((prevArray) => {
@@ -57,11 +99,7 @@ export default function Page() {
 
     return (
       <div>
-          {loading ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p>Error: {error}</p>
-          ) : inquiries && inquiries.length > 0 ? (
+          {inquiries ? (
             <div className={styles.inquiriesContainer} key={1}>
               <p className={styles.title} key={2}>Contact Us Forms</p>
               <hr/>
@@ -96,6 +134,15 @@ export default function Page() {
           ) : (
             <p>No inquiries found.</p>
           )}
+          <div
+            className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
+          >
+            {!loading ? (
+              <button onClick={loadMore}>Load more items...</button>
+            ) : (
+              <Spinner />
+            )}
+          </div>
         </div>
     );
   }

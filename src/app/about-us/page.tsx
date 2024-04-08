@@ -1,8 +1,6 @@
 'use client'
 
-import { Container } from '@/app/components/Container'
 import styles from './page.module.css'
-import femaleStock from "./istockphoto-1280113805-612x612.jpg";
 import React, { useEffect, useState } from 'react';
 import { TeamLeader } from '../types/teamleader';
 
@@ -11,6 +9,7 @@ export default function AboutUs() {
   const [leaders, setLeaders] = useState<TeamLeader[] | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const limit = 10;
 
   useEffect(() => {
     const postData = {
@@ -19,7 +18,7 @@ export default function AboutUs() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        limit: 10,
+        limit: limit,
         offset: 0
       })
     }

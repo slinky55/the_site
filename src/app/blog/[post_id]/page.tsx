@@ -283,7 +283,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
           </div>
         ) : (
           <>
-          <p>No comments yet. Click the {"}Reply{"} button to be the first to share your thoughts!</p>
+          <p>No comments yet. Click the {"Reply"} button to be the first to share your thoughts!</p>
           {expandReplyRoot ? (
               <>
                 <div className={styles.commentForm}>

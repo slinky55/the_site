@@ -7,11 +7,23 @@ import { Project } from "../types/project";
 export default function Projects() {
     const [projects, setProjects] = useState<Project[]>([]);
     const [loading, setLoading] = useState(true);
+    const [pagesLoaded, setPagesLoaded] = useState<number>(0);
+    const limit = 10;
 
     useEffect(() => {
         async function getData() {
+            const projectData = {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  limit: limit,
+                  offset: 0,
+                })
+              }
             try {
-                const res = await fetch("/api/projects/getprojects");
+                const res = await fetch("/api/projects/getprojects", projectData);
 
                 if (!res.ok) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
@@ -28,6 +40,7 @@ export default function Projects() {
                 console.error(error);
             } finally {
                 setLoading(false);
+                setPagesLoaded(1);
             }
         }
 

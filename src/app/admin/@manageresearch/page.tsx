@@ -1,14 +1,17 @@
 'use client'
 import { useEffect, useState, Fragment } from 'react';
 import styles from '../@manageprojects/page.module.css';
-import { Dialog, Description, Transition, Button } from '@headlessui/react'
-// @ts-ignore
-import DropboxChooser from 'react-dropbox-chooser';
+import { Dialog, Description, Transition, Button } from '@headlessui/react';
 import { Spinner } from '@/app/components/Spinner';
 import { Research } from '@/app/types/research';
+import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
+// @ts-ignore
+import DropboxChooser from 'react-dropbox-chooser';
+import { DatePicker } from '@mui/x-date-pickers';
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
+    const currentDate = new Date();
 
     const [research, setResearch] = useState<Research[]>([]);
     const [loading, setLoading] = useState(true);
@@ -121,11 +124,12 @@ export default function Page() {
             journal: journal,
             topics: topics,
             thumbnail: img,
-            written_on: writtenOn
+            written_on: writtenOn,
+            url: url
           })
       }
 
-      const res = await fetch("/api/teamleaders/updateteamleader", queryData)
+      const res = await fetch("/api/research/updateresearch", queryData)
 
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
@@ -167,6 +171,8 @@ export default function Page() {
       setImg(rimg);
       setWrittenOn(rwrittenOn);
       setEditing(!editing);
+      console.log(writtenOn)
+      console.log(rwrittenOn)
     }
 
     return (
@@ -177,7 +183,7 @@ export default function Page() {
       {research ? (
         research.map((research, index) => (
           <>
-            <div className={styles.subContainer}>
+            <div className={styles.subContainer}  key={research.research_id}>
               <img className={styles.thumbnail} src={research.thumbnail}/>
               <div className={styles.title}>
                 {research.title}
@@ -189,7 +195,7 @@ export default function Page() {
                 View More
               </button>
           </div>
-          <Transition appear show={modal[index] ?? false} as={Fragment}>
+          <Transition appear show={modal[index] ?? false} as={Fragment}  key={research.research_id}>
           <Dialog
             as="div" className="relative z-10"
             onClose={() => openModal(index)} 
@@ -269,6 +275,13 @@ export default function Page() {
                             value={topics}
                             onChange={(e) => setTopics(e.target.value)}
                             required/>
+                            <DatePicker
+                              label="Date that the article was written on"
+                              
+                              defaultValue={writtenOn}
+                              value={writtenOn}
+                              onChange={(e)=> setWrittenOn(e ? e : writtenOn)}
+                             />
                             <div 
                             className={styles.galleryLabel}>
                               Upload New Thumbnail Here
@@ -290,6 +303,7 @@ export default function Page() {
                       <>
                         <button
                           className={styles.btn}
+                          key={research.research_id}
                           onClick={() => toggleEditing(
                             research.title, 
                             research.journal, 
@@ -311,12 +325,14 @@ export default function Page() {
                       <>
                         <button 
                           className={styles.btn}
+                          key={research.research_id}
                           onClick={() => setEditing(!editing)}
                         >
                           Cancel
                         </button>
                         <button 
                           className={styles.btn}
+                          key={research.research_id}
                           onClick={() => updateResearch(research.research_id)}
                         >
                           Update

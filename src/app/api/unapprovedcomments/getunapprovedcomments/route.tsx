@@ -3,12 +3,15 @@ import executeQuery from "../../../lib/db";
 import type { NextApiRequest, NextApiResponse } from 'next';
 
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
-    
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
+    console.log("hey");
+    const formData = await new Response(req.body).json();
+    const limit = formData.limit;
+    const offset = formData.offset;
     try  {
         const result = await executeQuery({
-            query: 'SELECT * FROM unapproved_comments',
-            values: '',
+            query: 'SELECT * FROM unapproved_comments ORDER BY created_at DESC LIMIT ? OFFSET ?',
+            values: [limit, offset],
         })
         console.log(result);
 
