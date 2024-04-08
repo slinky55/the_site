@@ -228,8 +228,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
               <p className={styles.date} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</p>
             </div>
             <div className={styles.authorTile} key={post.user_id}>
-                <Image src={post.image_src} alt=""/>
-                <p className={styles.author} key={post.user_id}>{post.user_id}</p>
+                <img src={post.image_src}></img>
             </div>
             <div className={styles.postContainer}>
               <div
