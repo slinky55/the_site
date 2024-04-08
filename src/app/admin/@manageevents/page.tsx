@@ -1,12 +1,28 @@
 'use client'
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import styles from './page.module.css';
+import { Dialog, Description, Transition, } from '@headlessui/react'
+import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
+// @ts-ignore
+import DropboxChooser from 'react-dropbox-chooser';
 import { Event } from '@/app/types/event';
 import { Spinner } from "@/app/components/Spinner";
 
 export default function Page() {
+    const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
+
     const [events, setEvents] = useState<Event[]>([]);
     const [loading, setLoading] = useState(true);
+
+     // View More Modal
+     const [modal, setModal] = useState<boolean[]>([]);
+     // Inputs for Edits
+     const [editing, setEditing] = useState<boolean>(false);
+     const [name, setName] = useState<string>('');
+     const [role, setRole] = useState<string>('');
+     const [about, setAbout] = useState<string>('');
+     const [img, setImg] = useState<string>('');
+
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
 

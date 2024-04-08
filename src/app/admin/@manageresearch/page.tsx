@@ -1,10 +1,9 @@
 'use client'
 import { useEffect, useState, Fragment } from 'react';
 import styles from '../@manageprojects/page.module.css';
-import { Dialog, Description, Transition, Button } from '@headlessui/react';
+import { Dialog, Description, Transition } from '@headlessui/react';
 import { Spinner } from '@/app/components/Spinner';
 import { Research } from '@/app/types/research';
-import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
 import { DatePicker } from '@mui/x-date-pickers';
