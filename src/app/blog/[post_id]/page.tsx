@@ -243,6 +243,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                 ) : (
                     <p>No posts available.</p>
                 )}
+
             </div>
             <hr></hr>
             <div key={3}>
