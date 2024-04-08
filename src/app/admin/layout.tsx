@@ -4,7 +4,6 @@ import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import styles from './page.module.css'
-import { ClassNames } from "@emotion/react";
 
 export default function AdminLayout({
   children,
@@ -20,6 +19,8 @@ export default function AdminLayout({
   managecomments,
   createpost,
   manageposts,
+  createresearch,
+  manageresearch,
   feedback
 }: {
   children: React.ReactNode;
@@ -35,11 +36,13 @@ export default function AdminLayout({
   managecomments: React.ReactNode;
   createpost: React.ReactNode;
   manageposts: React.ReactNode;
+  createresearch: React.ReactNode;
+  manageresearch: React.ReactNode;
   feedback: React.ReactNode;
 }) {
 
-  const [display, setDisplay] = useState<number>(12);
-  const [submenu, setSubmenu] = useState<number>(10);
+  const [display, setDisplay] = useState<number>(14);
+  const [submenu, setSubmenu] = useState<number>(14);
   const [open, setOpen] = useState<boolean>(false);
 
   function toggleSubmenu(num: number) {
@@ -113,7 +116,16 @@ export default function AdminLayout({
                 </div>
               )}
             </div>
-            <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(12)}>
+            <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(6)}>
+              <div className={`${styles.headerItem} ${submenu === 5 && styles.selected}`}>Research</div>
+              {submenu == 6 && (
+                <div className={styles.submenu}>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(12)}>Create Research</div>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(13)}>Manage Research</div>
+                </div>
+              )}
+            </div>
+            <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(14)}>
               <div className={styles.headerItem}>Feedback</div>
             </div>
           </div>
@@ -140,7 +152,9 @@ export default function AdminLayout({
           {(display == 9) && manageposts} 
           {(display == 10) && commentapproval}
           {(display == 11) && managecomments}
-          {(display == 12) && feedback} 
+          {(display == 12) && createresearch} 
+          {(display == 13) && manageresearch}
+          {(display == 14) && feedback}
         </div>
       </div>
     </>

@@ -1,16 +1,16 @@
 'use client'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Fragment, useEffect, useState } from "react";
-import { Button } from "reactstrap";
 import { faCheckCircle, faReply, faXmarkCircle } from "@fortawesome/free-solid-svg-icons";
-import { Dialog, Description, Transition } from '@headlessui/react'
+import { Dialog, Description, Transition, Button } from '@headlessui/react'
 import styles from '../page.module.css'
 import { Comment } from '../../types/comment'
+import { Spinner } from "@/app/components/Spinner";
 
 export default function Page() {
     // Get Unapproved Comments
-    const [comments, setComments] = useState<Comment[] | null>(null);
-    const [loading2, setLoading2] = useState(true);
+    const [comments, setComments] = useState<Comment[]>([]);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     // And get their parent Comment
     const [parentComment, setParentComment] = useState<{[commentId: string]: string}>({});
@@ -18,19 +18,26 @@ export default function Page() {
     const [parentPost, setParentPost] = useState<{[commentId: string]: string}>({});
     // Modal for Comment approval
     const [modal, setModal] = useState<boolean[]>([]);
+    // Pagination
+    const [pagesLoaded, setPagesLoaded] = useState<number>(0);
+    const limit = 10;
 
   
     useEffect(() => {
-      const InquiryData = {
-        method: "GET",
+      const cmtData = {
+        method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
+        body: JSON.stringify({
+            limit: limit,
+            offset: 0,
+          })
       }
   
       async function getData() {
         try {
-          const res2 = await fetch("/api/unapprovedcomments/getunapprovedcomments", InquiryData);
+          const res2 = await fetch("/api/unapprovedcomments/getunapprovedcomments", cmtData);
 
           if (!res2.ok) {
             throw new Error(`HTTP error! Status: ${res2.status}`)
@@ -42,11 +49,51 @@ export default function Page() {
         } catch (error) {
           console.error(error);
           setError('Failed to load data');
-        }
+        } finally {
+                setPagesLoaded(1);
+            }
       }
   
       getData();
     }, []);
+
+    async function loadMore() {
+        setLoading(true);
+        const queryData = {
+          method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              limit: limit,
+              offset: (pagesLoaded * limit) - 1,
+            })
+        }
+        async function getData() {
+            try {
+                const res = await fetch("/api/unapprovedcomments/getunapprovedcomments", queryData);
+
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+
+                const data = await res.json();
+
+                if (!Array.isArray(data.comments)) {
+                    throw new Error('Unexpected data format');
+                }
+
+                setComments(prevComments => [...prevComments, ...data.comments]);
+            } catch (error) {
+                console.error(error);
+            } finally {
+                setLoading(false);
+                setPagesLoaded(pagesLoaded + 1);
+            }
+      }
+
+      getData();
+    }
 
     useEffect(() => {
       if(comments) {
@@ -119,12 +166,12 @@ export default function Page() {
           getParentPost();
         }
       }
-      setLoading2(false);
+      setLoading(false);
     }, [comments]);
 
     useEffect(() => {
       if(Object.keys(parentComment).length > 0) {
-        setLoading2(false);
+        setLoading(false);
       }
     }, [parentComment]);
 
@@ -192,11 +239,7 @@ export default function Page() {
 
     return (
         <div>
-        {loading2 ? (
-            <p>Loading...</p>
-          ) : error ? (
-            <p>Error: {error}</p>
-          ) : comments && comments.length > 0 ? (
+        {comments ? (
             <div className={styles.inquiriesContainer} key={3}>
               <p className={styles.title} key={4}>Comments Pending Approval</p>
               <hr/>
@@ -298,6 +341,15 @@ export default function Page() {
           ) : (
             <p>No more comments pending approval.</p>
           )}
+          <div
+        className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
+      >
+        {!loading ? (
+          <button onClick={loadMore}>Load more items...</button>
+        ) : (
+          <Spinner />
+        )}
+      </div>
         </div>
     );
   }

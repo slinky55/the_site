@@ -1,21 +1,21 @@
 import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
-import type { NextApiRequest, NextApiResponse } from 'next';
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
     console.log("hey");
     const formData = await new Response(req.body).json();
     const researchId = formData.research_id;
     const title = formData.title;
     const journal = formData.journal;
-    const topics = formData.reg_link;
-    const thumbnail = formData.event_start;
-    const writtenOn = formData.event_end;
+    const topics = formData.topics;
+    const thumbnail = formData.thumbnail;
+    const writtenOn = formData.written_on;
+    const url = formData.url;
     
     try  {
         const result = await executeQuery({
-            query: `INSERT INTO Research (research_id, title, journal, topics, thumbnail, written_on, added_to_db) VALUES (?, ?, ?, ?, ?, ?, NOW())`,
-            values: [researchId, title, journal, topics, thumbnail, writtenOn],
+            query: `INSERT INTO Research (research_id, title, journal, topics, thumbnail, written_on, url, added_to_db) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
+            values: [researchId, title, journal, topics, thumbnail, writtenOn, url],
         })
         console.log(result);
 
