@@ -1,39 +1,12 @@
-'use client'
-
-import { useEffect, useState } from "react";
 import { Project } from "../types/project";
+import executeQuery from "../lib/db";
 
-
-export default function Projects() {
-    const [projects, setProjects] = useState<Project[]>([]);
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        async function getData() {
-            try {
-                const res = await fetch("/api/projects/getprojects");
-
-                if (!res.ok) {
-                    throw new Error(`HTTP error! Status: ${res.status}`);
-                }
-
-                const data = await res.json();
-
-                if (!Array.isArray(data.projects)) {
-                    throw new Error('Unexpected data format');
-                }
-
-                setProjects(data.projects);
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
-            }
-        }
-
-        getData();
-    }, []);
-
+export default async function Projects() {
+    const projects = await executeQuery({
+        query: 'SELECT * FROM Project',
+        values: '',
+    }) as Project[];
+    
     return (
         <div className="bg-white py-24 sm:py-32">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
@@ -44,7 +17,7 @@ export default function Projects() {
                     </p>
                 </div>
                 <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-                    {projects.map((project) => (
+                    {projects.map((project: Project) => (
                         <article key={project.title} className="flex flex-col items-start justify-between">
                             <div className="relative w-full">
                                 <img src={project.primary_image_src} alt="" className="object-cover w-full h-48 rounded-2xl" />

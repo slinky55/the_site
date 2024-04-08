@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react';
 import styles from '../@manageprojects/page.module.css';
 import { Post } from '@/app/types/post';
+import Image from "next/image";
 
 export default function Page() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -38,9 +39,9 @@ export default function Page() {
           <hr/>
       <div className={styles.container}> 
       {posts ? (
-        posts.map((post) => (
-          <div className={styles.subContainer}>
-            <img className={styles.thumbnail} src={post.image_src}/>
+        posts.map((post, key) => (
+          <div className={styles.subContainer} key={key}>
+            <Image className={styles.thumbnail} src={post.image_src} alt=""/>
             <div className={styles.title}>
               {post.title}
             </div>
