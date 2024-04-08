@@ -78,6 +78,7 @@
   
   
   #redgraientsection {
+    background-color: red;
     height: max(50vh, 250px);
     width: 100vw;
     background-size: cover;
@@ -264,7 +265,7 @@
     padding: max(0.85vw, 5px);
     padding-left: max(1.5vw, 20px);
     padding-right: max(1.5vw, 20px);
-    margin-right: max(5vw, 50px);
+    margin-right: max(0.25vw, 7.5px);
     font-size: max(1vw, 7.5px);
     color: white;
     text-decoration: none;
