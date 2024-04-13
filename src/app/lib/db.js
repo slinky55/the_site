@@ -1,28 +1,18 @@
-import mysql from 'serverless-mysql';
+import { QueryTypes, Sequelize } from "sequelize"
 
-import { Sequelize } from "sequelize"
-import mariadb from "mariadb";
-
-export const sequelize = new Sequelize(process.env.MYSQL_DATABASE, process.env.MYSQL_USER, process.env.MYSQL_PASSWORD, {
-  host: process.env.MYSQL_HOST,
-  dialect: "mariadb", 
-  dialectModule: mariadb,
+export const sequelize = new Sequelize(process.env.POSTGRES_URL, {
+  dialect: "postgres",
+  dialectOptions: {
+    ssl: true,
+  }
 });
-
-const db = mysql({
-    config: {
-        host: process.env.MYSQL_HOST,
-        port: process.env.MYSQL_PORT,
-        database: process.env.MYSQL_DATABASE,
-        user: process.env.MYSQL_USER,
-        password: process.env.MYSQL_PASSWORD
-    }
-})
 
 export default async function executeQuery({ query, values }) {
   try {
-    const results = await db.query(query, values);
-    await db.end();
+    const results = await sequelize.query(query, {
+      replacements: values,
+      type: QueryTypes.SELECT,
+    })
     return results;
   } catch (error) {
     return { error };
