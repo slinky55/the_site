@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import styles from '../@createevent/page.module.css';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
+import SuccessMessage from "@/app/components/SuccessMessage";
 
 export default function Page() {
 
@@ -14,6 +15,8 @@ export default function Page() {
     const [about, setAbout] = useState<string>('')
     const [partnershipFormed, setPartnershipFormed] = useState<string>('')
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
+
+    const [success, setSuccess] = useState(false);
 
     async function createPartner() {
       const postData = {
@@ -31,7 +34,17 @@ export default function Page() {
           }),
       }
 
-      await fetch('/api/partners/createpartner', postData);
+      try {
+        await fetch('/api/partners/createpartner', postData);
+        setSuccess(true);
+
+        setTimeout(()  => {
+          setSuccess(false);
+        }, 3000);
+        
+        } catch(error) {
+            console.error('Error:', error);
+        }
   }
 
     function uploadImg(files: any) {
@@ -96,6 +109,7 @@ export default function Page() {
           onClick={createPartner}>
             Create Partner
           </button>
+          <SuccessMessage success={success} message="Partner Successfully Added" />
         </div>
       </>
     )
