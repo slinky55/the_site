@@ -5,6 +5,7 @@ import styles from './page.module.css'
 import { v4 as uuidv4 } from 'uuid';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
+import SuccessMessage from "@/app/components/SuccessMessage";
 
 export default function Page() {
     const currentDate = new Date();
@@ -16,6 +17,8 @@ export default function Page() {
     const [img, setImg] = useState<string>('');
     const [uploaded, setUploaded] = useState<Boolean>(false)
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
+
+    const [success, setSuccess] = useState(false);
     
 
     async function createResearch() {
@@ -35,7 +38,17 @@ export default function Page() {
           }),
       }
 
-      await fetch('/api/research/createresearch', postData);
+      try {
+        await fetch('/api/research/createresearch', postData);
+        setSuccess(true);
+
+        setTimeout(()  => {
+          setSuccess(false);
+        }, 3000);
+        
+        } catch(error) {
+            console.error('Error:', error);
+        }
   }
 
   function uploadImg(files: any) {
@@ -101,6 +114,7 @@ export default function Page() {
           onClick={createResearch}>
             Create Research
           </button>
+          <SuccessMessage success={success} message="Research Successfully Uploaded" />
         </div>
       </>
     )
