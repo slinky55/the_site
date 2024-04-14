@@ -45,10 +45,18 @@
 	width: 100%;
 }
 
+.carouselButtons{
+	display: flex;
+	position: absolute;
+	gap: 100px;
+	top: initial;
+	left: 500px;
+	bottom: 50px;
+	right: initial;
+}
+
 .carouselButton {
 	position: absolute;
-	top: 96%;
-	transform: translateY(-50%);
 	background: transparent;
 	border: 0;
 	cursor: pointer;
@@ -56,15 +64,21 @@
 }
 
 .carouselButtonLeft {
-	left: 590px;
+	right: .25em;
 }
 
 .carouselButtonRight {
-	left: 630px;
+	left: .25em;
 }
 
 .carouselNav{
-
+	display: flex;
+	position: absolute;
+	gap: 100px;
+	top: initial;
+	left: 16px;
+	bottom: 40px;
+	right: initial;
 }
 
 .carouselIndicator {
@@ -73,22 +87,8 @@
 	width: 80px;
 	height: 12px;
 	background: #e40000;
-	top: 95%;
 	cursor: pointer;
 }
-
-.carouselIndicatorLeft{
-	left: 8%;
-}
-
-.carouselIndicatorMiddle{
-	left: 15%;
-}
-
-.carouselIndicatorRight{
-	left: 22%
-}
-
 .currentSlide{
 	background: white;
 }
@@ -193,4 +193,18 @@
 .content > *{
 	transform: translateY(25px);
 	transition: transform 0.6s;
+}
+
+@media (max-width: 768px) {
+	.carouselButtons{
+		left: 57vw
+	}
+	.carouselNav{
+		gap: 60px;
+		
+	}
+	.carouselIndicator {
+		width: 50px;
+		
+	}
 }
