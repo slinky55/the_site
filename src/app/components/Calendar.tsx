@@ -29,9 +29,18 @@ function useTransformedEvents(initialEvents: unknown) {
 
 export default function Calendar() {
     const [initialEvents, setInitialEvents] = useState([]);
-
+    const eventData = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            limit: 1000,
+            offset: 0
+        })
+    }
     useEffect(() => {
-        fetch('/api/events/getevents')
+        fetch('/api/events/getevents', eventData)
             .then(response => response.json())
             .then(data => setInitialEvents(data.events));
     }, []);

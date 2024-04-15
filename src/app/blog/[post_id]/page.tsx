@@ -143,7 +143,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             },
             body: JSON.stringify({
                 comment_id: uuidv4(),
-                user_id: '3ab70c34-984f-457e-9a0d-0387bb0f2771',
+                user_id: 'd9f78e32-919a-474e-b7b7-d20449275d24',
                 post_id: postId,
                 parent_comment_id: parentId,
                 content: content
