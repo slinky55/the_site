@@ -8,7 +8,7 @@ interface SuccessMessageProps {
 const SuccessMessage: React.FC<SuccessMessageProps> = ({ success, message }) => {
   return (
     success && (
-      <div className='text-green font-bold text-center'> {message} </div>
+      <div className='text-green-600 font-bold text-center mt-px'> {message} </div>
     )
   );
 };
