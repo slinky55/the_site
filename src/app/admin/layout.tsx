@@ -21,7 +21,15 @@ export default function AdminLayout({
   manageposts,
   createresearch,
   manageresearch,
-  feedback
+  feedback,
+  home,
+  about,
+  blog,
+  contact,
+  newsevents,
+  partners,
+  projects,
+  researchlib
 }: {
   children: React.ReactNode;
   createteam: React.ReactNode;
@@ -39,9 +47,17 @@ export default function AdminLayout({
   createresearch: React.ReactNode;
   manageresearch: React.ReactNode;
   feedback: React.ReactNode;
+  home: React.ReactNode;
+  about: React.ReactNode;
+  blog: React.ReactNode;
+  contact: React.ReactNode;
+  newsevents: React.ReactNode;
+  partners: React.ReactNode;
+  projects: React.ReactNode;
+  researchlib: React.ReactNode;
 }) {
 
-  const [display, setDisplay] = useState<number>(14);
+  const [display, setDisplay] = useState<number>(15);
   const [submenu, setSubmenu] = useState<number>(14);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -117,7 +133,7 @@ export default function AdminLayout({
               )}
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(6)}>
-              <div className={`${styles.headerItem} ${submenu === 5 && styles.selected}`}>Research</div>
+              <div className={`${styles.headerItem} ${submenu === 6 && styles.selected}`}>Research</div>
               {submenu == 6 && (
                 <div className={styles.submenu}>
                   <div className={styles.submenuItem} onClick={() => setDisplay(12)}>Create Research</div>
@@ -128,6 +144,21 @@ export default function AdminLayout({
             <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(14)}>
               <div className={styles.headerItem}>Feedback</div>
             </div>
+            <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(7)}>
+              <div className={`${styles.headerItem} ${submenu === 7 && styles.selected}`}>Page Layouts</div>
+              {submenu == 7 && (
+                <div className={styles.submenu}>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(15)}>Homepage</div>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(16)}>About Us</div>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(17)}>Research Library</div>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(18)}>News and Events</div>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(19)}>Partners</div>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(20)}>Projects</div>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(21)}>Blog</div>
+                  <div className={styles.submenuItem} onClick={() => setDisplay(22)}>Contact Us</div>
+                </div>
+              )}
+              </div>
           </div>
         ) : (
           <div className={`${open && styles.layoutSidebar} ${!open && styles.minimized}`}>
@@ -155,6 +186,14 @@ export default function AdminLayout({
           {(display == 12) && createresearch} 
           {(display == 13) && manageresearch}
           {(display == 14) && feedback}
+          {(display == 15) && home}
+          {(display == 16) && about} 
+          {(display == 17) && researchlib} 
+          {(display == 18) && newsevents}
+          {(display == 19) && partners}
+          {(display == 20) && projects} 
+          {(display == 21) && blog}
+          {(display == 22) && contact}
         </div>
       </div>
     </>

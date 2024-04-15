@@ -10,10 +10,10 @@ function useTransformedEvents(initialEvents: unknown) {
 
     useEffect(() => {
         // @ts-ignore
-        const transformedEvents = initialEvents.map((eventData: { event_id: any; title: any; event_start: any; event_end: any; reg_link: any; content: any; }) => {
+        const transformedEvents = initialEvents.map((eventData: { event_id: any; name: any; event_start: any; event_end: any; reg_link: any; content: any; }) => {
             return {
                 id: eventData.event_id,
-                title: eventData.title,
+                name: eventData.name,
                 content: eventData.content,
                 start: new Date(eventData.event_start).toISOString(),
                 end: new Date(eventData.event_end).toISOString(),
@@ -29,16 +29,28 @@ function useTransformedEvents(initialEvents: unknown) {
 
 export default function Calendar() {
     const [initialEvents, setInitialEvents] = useState([]);
-
+    const eventData = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            limit: 1000,
+            offset: 0
+        })
+    }
     useEffect(() => {
-        fetch('/api/events/getevents')
+        fetch('/api/events/getevents', eventData)
             .then(response => response.json())
-            .then(data => setInitialEvents(data.events));
+            .then(data => {
+                console.log(data.events);
+                setInitialEvents(data.events)
+            });
     }, []);
 
     const events = useTransformedEvents(initialEvents);
 
-    const handleEventClick = (clickInfo: { event: { title: string; url: string | undefined; extendedProps: { content: string }; start: Date; end: Date }; jsEvent: MouseEvent}) => {
+    const handleEventClick = (clickInfo: { event: { name: string | undefined; url: string | undefined; extendedProps: { content: string }; start: Date; end: Date }; jsEvent: MouseEvent}) => {
         clickInfo.jsEvent.preventDefault();
         const eventObj = clickInfo.event;
         const startDate = new Date(eventObj.start).toLocaleDateString();
@@ -46,7 +58,7 @@ export default function Calendar() {
 
         if (eventObj.url) {
             const userConfirmation = window.confirm(
-                'Event Title: ' + eventObj.title + '\n' +
+                'Event Title: ' + eventObj.name + '\n' +
                 'Start Date: ' + startDate + ' ' +
                 'End Date: ' + endDate + '\n' +
                 'Registration Link: ' + eventObj.url + '\n' +

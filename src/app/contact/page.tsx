@@ -9,6 +9,7 @@ export default function ContactPage() {
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [subject, setSubject] = useState('');
   const [msg, setMsg] = useState('');
   const [captcha, setCaptcha] = useState(null);
   const [postSuccess, setPostSuccess] = useState(false); 
@@ -46,6 +47,7 @@ export default function ContactPage() {
         first_name: firstName,
         last_name: lastName,
         email: email,
+        subj: subject,
         msg: msg,
       })
     };
@@ -56,6 +58,7 @@ export default function ContactPage() {
       setFirstName('');
       setLastName('');
       setEmail('');
+      setSubject('');
       setMsg('');
     } catch (error) {
       console.error('Error:', error);
@@ -124,6 +127,23 @@ export default function ContactPage() {
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
+          </div>
+          <div className="sm:col-span-2">
+            <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">
+              Subject
+            </label>
+            <div className="mt-2.5">
+              <input
+                type="text"
+                name="subject"
+                id="subject"
+                autoComplete="subject"
+                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
                 required
               />
             </div>
