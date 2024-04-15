@@ -7,6 +7,7 @@ import 'react-quill/dist/quill.snow.css';
 import styles from '../page.module.css';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
+import SuccessMessage from "@/app/components/SuccessMessage";
 
 
 export default function Page() {
@@ -15,6 +16,8 @@ export default function Page() {
     const [img, setImg] = useState<string>('')
     const [uploaded, setUploaded] = useState<Boolean>(false)
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
+
+    const [success, setSuccess] = useState(false);
 
 
     const toolbarOptions = [
@@ -56,8 +59,18 @@ export default function Page() {
             }),
         }
 
-        await fetch('/api/posts/createpost', postData);
-    }
+        try {
+            await fetch('/api/posts/createpost', postData);
+            setSuccess(true);
+    
+            setTimeout(()  => {
+              setSuccess(false);
+            }, 3000);
+            
+            } catch(error) {
+                console.error('Error:', error);
+            }
+      }
 
     function uploadImg(files: any) {
         setImg(files[0].link.replace('dl=0', 'raw=1'));
@@ -110,6 +123,7 @@ export default function Page() {
                 >
                     Create Post
                 </button>
+                <SuccessMessage success={success} message="Blog Post Successfully Uploaded" />
             </div>
           </div>
         </>
