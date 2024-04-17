@@ -11,13 +11,18 @@ export default function BlogPage() {
     const [ssEnd, setSsEnd] = useState<number>(3);
     const [users, setUsers] = useState<any[]>([]);
     const router = useRouter();
+    const limit = 10;
 
     useEffect(() => {
         const postData = {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify({
+                limit: limit,
+                offset: 0
+            })
         }
 
         async function getData() {
