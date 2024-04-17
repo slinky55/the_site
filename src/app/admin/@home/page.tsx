@@ -73,7 +73,7 @@ export default function Page() {
 
               const data = await res.json();
 
-              if (!Array.isArray(data.leaders)) {
+              if (!Array.isArray(data.images)) {
                   throw new Error('Unexpected data format');
               }
 
@@ -99,7 +99,7 @@ export default function Page() {
                 throw new Error('Unexpected data format');
             }
 
-            setImages(data.images);
+            setDivs(data.divs);
         } catch (error) {
             console.error(error);
         } finally {
@@ -112,6 +112,10 @@ export default function Page() {
       getDivData();
   }, []);
 
+  useEffect(() => {
+    console.log(divs);
+  }, [divs])
+
     async function loadMoreImg() {
       setLoadingImg(true);
       const queryData = {
@@ -120,6 +124,7 @@ export default function Page() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            page: 'home',
             limit: limit,
             offset: (imgPagesLoaded * limit) - 1,
           })
@@ -138,7 +143,7 @@ export default function Page() {
                   throw new Error('Unexpected data format');
               }
 
-              setImages(prevImages => [...prevImages, ...data.images]);
+              setImages(prevImages => [...prevImages || [], ...data.images]);
           } catch (error) {
               console.error(error);
           } finally {
@@ -158,6 +163,7 @@ export default function Page() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
+            page: 'home',
             limit: limit,
             offset: (divPagesLoaded * limit) - 1,
           })
@@ -176,7 +182,7 @@ export default function Page() {
                   throw new Error('Unexpected data format');
               }
 
-              setImages(prevDivs => [...prevDivs, ...data.divs]);
+              setDivs(prevDivs => [...prevDivs, ...data.divs]);
           } catch (error) {
               console.error(error);
           } finally {
@@ -230,7 +236,7 @@ export default function Page() {
       }
 
       try {
-          await fetch('/api/images/createimage', postData);
+          await fetch('/api/divs/creatediv', postData);
           setSuccess(true);
   
           setTimeout(()  => {
@@ -255,6 +261,20 @@ export default function Page() {
               Manage Existing Images
             </div>
             <hr className={styles.hr}/>
+            {
+              images ? (
+                images.map((img) => (
+                  <>
+                    <div>
+                      <img className={styles.thumbnail} src={img.url}/>
+                      <div className={styles.labelName}>{img.label}</div>
+                    </div>
+                  </>
+                ))
+              ) : (
+                <div>No images to load</div>
+              )
+            }
             <div
               className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
             >
@@ -270,6 +290,20 @@ export default function Page() {
               Manage Existing Textboxes
             </div>
             <hr className={styles.hr}/>
+            {
+              divs ? (
+                divs.map((div) => (
+                  <>
+                    <div>
+                      <div className={styles.divContent}>{div.content}</div>
+                      <div className={styles.labelName}>{div.label}</div>
+                    </div>
+                  </>
+                ))
+              ) : (
+                <div>No images to load</div>
+              )
+            }
             <div
             className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
             >
@@ -339,11 +373,10 @@ export default function Page() {
             <button 
               className={styles.btn} 
               onClick={createDiv}
-              disabled={!uploaded}
             >
-              Create Image
+              Create Textbox
             </button>
-            <SuccessMessage success={success} message="Image Successfully Added to the DB" />
+            <SuccessMessage success={success} message="Textbox Successfully Added to the DB" />
           </div>
         </div>
       </div>
