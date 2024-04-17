@@ -28,12 +28,12 @@ export default function Page() {
           "Content-Type": "application/json",
           },
           body: JSON.stringify({
-              event_id: uuidv4(),
+              research_id: uuidv4(),
               title: title,
               journal: journal,
               url: url,
               written_on: writtenOn,
-              topics: topics,
+              topics: "{" + topics + "}",
               thumbnail: img
           }),
       }

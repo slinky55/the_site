@@ -13,7 +13,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     
     try  {
         const result = await executeQuery({
-            query: `INSERT INTO Event (event_id, name, content, reg_link, event_start, event_end) VALUES (?, ?, ?, ?, STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.%fZ'), STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.%fZ'))`,
+            query: `INSERT INTO Event (event_id, name, content, reg_link, event_start, event_end) VALUES (?, ?, ?, ?, TO_TIMESTAMP(?, '%Y-%m-%dT%H:%i:%s.%fZ'), TO_TIMESTAMP(?, '%Y-%m-%dT%H:%i:%s.%fZ'))`,
             values: [eventId, name, content, regLink, eventStart, eventEnd],
         })
         console.log(result);
