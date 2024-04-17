@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import styles from './page.module.css';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
+import SuccessMessage from "@/app/components/SuccessMessage";
 
 export default function Page() {
     const [img, setImg] = useState<string>('')
@@ -13,6 +14,8 @@ export default function Page() {
     const [gallery, setGallery] = useState<string[]>([])
     const [content, setContent] = useState<string>('')
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
+
+    const [success, setSuccess] = useState(true);
 
     async function createProject() {
       const postData = {
@@ -30,7 +33,17 @@ export default function Page() {
           }),
       }
 
-      await fetch('/api/projects/createproject', postData);
+      try {
+        await fetch('/api/projects/createproject', postData);
+        setSuccess(true);
+
+        setTimeout(()  => {
+          setSuccess(false);
+        }, 3000);
+        
+        } catch(error) {
+            console.error('Error:', error);
+        }
   }
 
     function uploadImg(files: any) {
@@ -110,6 +123,7 @@ export default function Page() {
             Create Project
           </button>
         </div>
+        <center><SuccessMessage success={success} message="Project Successfully Uploaded" /></center>
       </>
     )
   }

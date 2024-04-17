@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from 'uuid';
 import styles from '../@createevent/page.module.css';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
+import SuccessMessage from "@/app/components/SuccessMessage";
 
 export default function Page() {
 
@@ -13,6 +14,8 @@ export default function Page() {
     const [role, setRole] = useState<string>('')
     const [about, setAbout] = useState<string>('')
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
+
+    const [success, setSuccess] = useState(false);
 
     async function createTeam() {
       const postData = {
@@ -29,7 +32,17 @@ export default function Page() {
           }),
       }
 
-      await fetch('/api/teamleaders/createteamleaders', postData);
+      try {
+        await fetch('/api/teamleaders/createteamleaders', postData);
+        setSuccess(true);
+
+        setTimeout(()  => {
+          setSuccess(false);
+        }, 3000);
+        
+        } catch(error) {
+            console.error('Error:', error);
+        }
   }
 
     function uploadImg(files: any) {
@@ -85,6 +98,7 @@ export default function Page() {
           onClick={createTeam}>
             Create Member
           </button>
+          <SuccessMessage success={success} message="Team Member Successfully Added" />
         </div>
       </>
     )

@@ -7,8 +7,9 @@ import Carousel from "@/app/components/Carousel"
 
 export default function Home() {
   return (
+    
     <main>
-      <Carousel />
+      <Carousel/>
 
       <div className={styles.smallDivide} style={{ height: '5px', backgroundColor: '#e40000' }}></div>
 

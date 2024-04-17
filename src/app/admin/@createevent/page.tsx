@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 import styles from './page.module.css'
 import { v4 as uuidv4 } from 'uuid';
+import SuccessMessage from "@/app/components/SuccessMessage";
 
 export default function Page() {
     const currentDate = new Date();
@@ -11,6 +12,8 @@ export default function Page() {
     const [content, setContent] = useState<string>('');
     const [start, setStart] = useState<Date>(currentDate);
     const [end, setEnd] = useState<Date>(currentDate);
+
+    const [success, setSuccess] = useState(false);
     
 
     async function createEvent() {
@@ -29,7 +32,17 @@ export default function Page() {
           }),
       }
 
-      await fetch('/api/events/createevent', postData);
+      try {
+        await fetch('/api/events/createevent', postData);
+        setSuccess(true);
+
+        setTimeout(()  => {
+          setSuccess(false);
+        }, 3000);
+        
+        } catch(error) {
+            console.error('Error:', error);
+        }
   }
   
     return (
@@ -79,6 +92,7 @@ export default function Page() {
           onClick={createEvent}>
             Create Event
           </button>
+          <SuccessMessage success={success} message="Event Successfully Created" />
         </div>
       </>
     )
