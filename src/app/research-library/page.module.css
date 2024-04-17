@@ -1,96 +1,128 @@
 #functionalBody {
-    width: 100vw;
-    height: 100vh;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: Arial;
-  }
-  
-  #inputSearch {
-    width: 80vw;
-    border-radius: 4px;
-    color: black;
-  }
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Arial;
+}
 
-  #verticalSection{
-    width: 30vw;
-    height: 80vh;
+#inputSearch {
+  width: max(50vw, 400px);
+  border-radius: 4px;
+  color: black;
+}
+
+#verticalSection{
+  width: min(30vw, 300px);
+  height: 25vh;
+  margin-top: max(2.5vh, 25px);
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.subsection{
+  width: 100%;
+  height: 2.5%;
+  margin: max(1vw, 10px);
+  font-size: max(1.375vw, 20px);
+  font-weight: bold;
+}
+
+.hrStyle{
+  border: 1.25px solid grey;
+}
+
+  
+#toolbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: black;
+  padding: max(2vw, 5px);
+  height: 5vh;
+  color: white;
+  width: 100vw;
+  text-align: left;
+}
+
+
+#toolbar > div:first-child {
+  display: flex;
+}
+
+#horizontalSection{
+  width: max(100vw);
+  height: 80vh;
+  background-color: gainsboro;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#toolbar > div:last-child {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex: 1;
+}
+
+  
+#toolbar > div:first-child {
+  display: flex;
+}
+
+
+#toolbar > div:last-child {
+  text-align: right;
+}
+
+.navLink{
+  margin-right: max(1.5vw, 5px);
+  font-size: max(1vw, 7px);
+  color: white;
+  text-decoration: none;
+}
+
+#whiteDisplayArea{
     display: flex;
+    overflow: scroll;
     flex-wrap: wrap;
-  }
+    background-color: white;
+    width: max(40vw, 700px); 
+    height: 70vh
+}
 
-  .subsection{
-    width: 100%;
-    height: 2.5%;
-    margin: max(1vw, 15px);
-    font-size: max(1.375vw, 10px);
-    font-weight: bold;
-  }
+.textContainer{
+  display: flex;
+  flex-wrap: wrap;
+}
 
-  .hrStyle{
-    border: 1.25px solid grey;
-  }
+.whiteDisplaySubsection{
+  width: 100%; 
+  height: 18.75%; 
+  margin: 15px;
+  display: flex;
+}
 
-    
-  #toolbar {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: black;
-    padding: max(2vw, 5px);
-    height: 5vh;
-    color: white;
-    width: 100vw;
-    text-align: left;
-  }
-  
-  
-  #toolbar > div:first-child {
-    display: flex;
-  }
-  
-  #horizontalSection{
-    width: 70vw;
-    height: 80vh;
-    background-color: gainsboro;
-  }
-  
-  #toolbar > div:last-child {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    flex: 1;
-  }
+#redBoxArea{
+  width: max(100vw, 1000px);
+  height: 20vh;
+  display: flex; 
+  color: white;
+  background-color: red;
+  justify-content: center;
+  align-items: center;
+}
 
-    
-  #toolbar > div:first-child {
-    display: flex;
-  }
-  
-  
-  #toolbar > div:last-child {
-    text-align: right;
-  }
-  
-      
-  .navLink{
-    margin-right: max(1.5vw, 5px);
-    font-size: max(1vw, 7px);
-    color: white;
-    text-decoration: none;
-  }
-  
-  
-  .signInButton{
-    background-color: red;
-    padding: max(0.85vw, 5px);
-    padding-left: max(1.5vw, 20px);
-    padding-right: max(1.5vw, 20px);
-    margin-right: max(0.25vw, 7.5px);
-    font-size: max(1vw, 7.5px);
-    color: white;
-    text-decoration: none;
-    border-radius: max(50px, 1.5vw);
-  }
-  
+.signInButton{
+  background-color: red;
+  padding: max(0.85vw, 5px);
+  padding-left: max(1.5vw, 20px);
+  padding-right: max(1.5vw, 20px);
+  margin-right: max(0.25vw, 7.5px);
+  font-size: max(1vw, 7.5px);
+  color: white;
+  text-decoration: none;
+  border-radius: max(50px, 1.5vw);
+}
