@@ -122,7 +122,7 @@ export default function Page() {
 
       getImgData();
       getDivData();
-  }, []);
+  }, [page]);
 
   useEffect(() => {
     console.log(divs);
