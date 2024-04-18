@@ -15,7 +15,7 @@ export default function Page() {
     const [content, setContent] = useState<string>('')
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
 
-    const [success, setSuccess] = useState(true);
+    const [success, setSuccess] = useState(false);
 
     async function createProject() {
       const postData = {
