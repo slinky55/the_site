@@ -1,11 +1,48 @@
 import { Project } from "../types/project";
 import executeQuery from "../lib/db";
+import { Image } from "../types/image";
+import { Div } from "../types/div";
 
 export default async function Projects() {
     const projects = await executeQuery({
         query: 'SELECT * FROM Project',
         values: '',
     }) as Project[];
+
+    const res = await executeQuery({
+        query: 'SELECT * FROM Images WHERE page=\'projects\'',
+        values: '',
+      }) as Image[];
+    
+      const images = res.map((img: Image) => {
+        return { ...img }
+      });
+    
+      const res2 = await executeQuery({
+        query: 'SELECT * FROM Divs WHERE page=\'projects\'',
+        values: '',
+      }) as Div[];
+    
+      const divs = res2.map((div: Div) => {
+        return { ...div }
+      });
+    
+      function getItem(l: string, img: boolean) {
+        if(img) {
+          for(let i = 0; i < images.length; i++) {
+            if(images[i].label===l) {
+              return images[i]
+            }
+          }
+        }
+        else {
+          for(let i = 0; i < divs.length; i++) {
+            if(divs[i].label===l) {
+              return divs[i]
+            }
+          }
+        }
+      }
     
     return (
         <div className="bg-white py-24 sm:py-32">
@@ -13,7 +50,7 @@ export default async function Projects() {
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Projects</h2>
                     <p className="mt-2 text-lg leading-8 text-gray-600">
-                        Welcome to the projects page. Here you can find all the projects we are currently working on.
+                        {getItem('intro',false)?.content}
                     </p>
                 </div>
                 <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
