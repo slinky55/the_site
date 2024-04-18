@@ -4,7 +4,7 @@ import { Fragment, useEffect, useState } from 'react'
 import Link from 'next/link'
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
-
+import styles from './page.module.css';
 import { Button } from '@/app/components/Button'
 import { NavLink } from '@/app/components/NavLink'
 import { getSession, useSession } from 'next-auth/react'
