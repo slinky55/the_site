@@ -70,16 +70,25 @@ export default async function PartnersPage() {
           </div>
         </div>
         <div id={styles.partnerblock}>
-            <>
-                  {partners?.map((partner, index) => (
-                    <div id={styles.threeboxes} key={index}>
-                      <img src={partner.logo} width={300} height={200} alt="Image" />
-                      <span className={styles.paragraphHeader}>{partner.name}</span>
-                      <span className={styles.paragraphContents}>{partner.description}</span>
-                    </div>
-                  ))}
-            </>
-          </div>
+      {loading ? (
+          <span>Loading...</span>
+        ) : (
+          <>
+            {[...Array(3)].map((_, i) => (
+              <div key={i}>
+                {partners.map((partner, index) => (
+                  <div id={styles.threeboxes} key={index}>
+                    <img src={partner.logo} width={300} height={200} alt="Image" />
+                    <span className={styles.paragraphHeader}>{partner.name}</span>
+                    <span className={styles.paragraphContents}>{partner.description}</span>
+                  </div>
+                ))}
+        </div>
+      ))}
+  </>
+)}
+
+      </div>
       </>
     )
 } catch (err: any) {
