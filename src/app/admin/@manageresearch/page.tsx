@@ -7,6 +7,8 @@ import { Research } from '@/app/types/research';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
 import { DatePicker } from '@mui/x-date-pickers';
+import UpdateMessage from "@/app/components/UpdateMessage";
+import DeleteMessage from "@/app/components/DeleteMessage";
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
@@ -23,9 +25,12 @@ export default function Page() {
     const [topics, setTopics] = useState<string>('');
     const [img, setImg] = useState<string>('');
     const [url, setUrl] = useState<string>('');
-    const [writtenOn, setWrittenOn] = useState<Date>();
+    const [writtenOn, setWrittenOn] = useState<Date>(new Date());
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
+
+    const [deleteState, setDeleteState] = useState(false);
+    const [updateState, setUpdateState] = useState(false);
 
 
     useEffect(() => {
@@ -107,11 +112,14 @@ export default function Page() {
       setModal((prevArray) => {
         const newArray = [...prevArray];
         newArray[index] = !newArray[index];
+        if (!newArray[index]) {
+          setEditing(false);
+        }
         return newArray;
         })
     }
 
-    async function updateResearch(id: string) {
+    async function updateResearch(id: string, index: number) {
       const queryData = {
         method: "POST",
           headers: {
@@ -134,10 +142,39 @@ export default function Page() {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
 
-      const data = await res.json();
-    }
+      setUpdateState(true);
 
-    async function deleteResearch(id: string) {
+      setTimeout(()  => {
+        setUpdateState(false);
+      }, 3000);
+
+      const data = await res.json();
+
+      const updatedResearchItem = {
+        ...research[index], // Keep other properties unchanged
+        title: title,
+        journal: journal,
+        topics: topics,
+        thumbnail: img,
+        written_on: writtenOn,
+        url: url
+      };
+      
+      setResearch(prevResearch => {
+        const updatedResearch = [...prevResearch];
+        updatedResearch[index] = updatedResearchItem;
+        return updatedResearch;
+      });
+      
+      // Close the modal after updating
+      setModal(prevModal => {
+        const newArray = [...prevModal];
+        newArray[index] = false;
+        return newArray;
+      });
+    }  
+
+    async function deleteResearch(id: string, index: number) {
       const queryData = {
         method: "DELETE",
           headers: {
@@ -153,6 +190,19 @@ export default function Page() {
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
+
+      setDeleteState(true);
+
+      setTimeout(()  => {
+        setDeleteState(false);
+      }, 3000);
+
+      setResearch(prevResearch => {
+        const updatedResearch = [...prevResearch];
+        updatedResearch.splice(index, 1); // Remove the research item at the specified index
+        return updatedResearch;
+      });
+      
 
       const data = await res.json();
 
@@ -315,7 +365,7 @@ export default function Page() {
                         </button>
                         <button
                           className={styles.btn}
-                          onClick={() => deleteResearch(research.research_id)}
+                          onClick={() => deleteResearch(research.research_id, index)}
                         >
                           Delete
                         </button>
@@ -332,7 +382,7 @@ export default function Page() {
                         <button 
                           className={styles.btn}
                           key={research.research_id}
-                          onClick={() => updateResearch(research.research_id)}
+                          onClick={() => updateResearch(research.research_id, index)}
                         >
                           Update
                         </button>
@@ -358,6 +408,14 @@ export default function Page() {
           <Spinner />
         )}
       </div>
+      <div className="w-full relative mb-15 flex justify-center">
+      <div className="absolute top-0">
+        <UpdateMessage update={updateState} message="Research successfully updated" />
+      </div>
+      <div className="absolute top-0">
+        <DeleteMessage deleteMsg={deleteState} message="Research successfully deleted" />
+      </div>
+    </div>
       </>
     )
   }

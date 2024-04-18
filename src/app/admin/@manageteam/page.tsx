@@ -109,6 +109,9 @@ export default function Page() {
       setModal((prevArray) => {
         const newArray = [...prevArray];
         newArray[index] = !newArray[index];
+        if (!newArray[index]) {
+          setEditing(false);
+        }
         return newArray;
         })
     }
@@ -161,6 +164,8 @@ export default function Page() {
         newArray[index] = false;
         return newArray;
       });
+
+      const data = await res.json();
     }
 
     async function deleteMember(id: string, index: number) {

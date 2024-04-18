@@ -6,6 +6,8 @@ import { Dialog, Description, Transition, Button } from '@headlessui/react'
 import DropboxChooser from 'react-dropbox-chooser';
 import { Project } from '@/app/types/project';
 import { Spinner } from "@/app/components/Spinner";
+import UpdateMessage from "@/app/components/UpdateMessage";
+import DeleteMessage from "@/app/components/DeleteMessage";
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
@@ -22,6 +24,9 @@ export default function Page() {
     const [loading, setLoading] = useState(true);
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
+
+    const [deleteState, setDeleteState] = useState(false);
+    const [updateState, setUpdateState] = useState(false);
 
     useEffect(() => {
         async function getData() {
@@ -102,11 +107,14 @@ export default function Page() {
     setModal((prevArray) => {
       const newArray = [...prevArray];
       newArray[index] = !newArray[index];
+      if (!newArray[index]) {
+        setEditing(false);
+      }
       return newArray;
       })
   }
 
-  async function updateProject(id: string) {
+  async function updateProject(id: string, index: number) {
     const queryData = {
       method: "POST",
         headers: {
@@ -128,10 +136,39 @@ export default function Page() {
       throw new Error(`HTTP error! Status: ${res.status}`);
     }
 
+    setUpdateState(true);
+
+      setTimeout(()  => {
+        setUpdateState(false);
+      }, 3000);
+
+      const updatedProjectItem = {
+        ...projects[index], // Keep other properties unchanged
+        title: title,
+        project_lead: lead,
+        gallery: gallery,
+        primary_image_src: img,
+        content: content,
+      };
+      
+      // Update project item in the projects array
+      setProjects(prevProjects => {
+        const updatedProjects = [...prevProjects];
+        updatedProjects[index] = updatedProjectItem;
+        return updatedProjects;
+      });
+      
+      // Close the modal after updating
+      setModal(prevModal => {
+        const newArray = [...prevModal];
+        newArray[index] = false;
+        return newArray;
+      });
+
     const data = await res.json();
   }
 
-  async function deleteProject(id: string) {
+  async function deleteProject(id: string, index: number) {
     const queryData = {
       method: "DELETE",
         headers: {
@@ -147,6 +184,19 @@ export default function Page() {
     if (!res.ok) {
       throw new Error(`HTTP error! Status: ${res.status}`);
     }
+
+    setDeleteState(true);
+
+    setTimeout(()  => {
+      setDeleteState(false);
+    }, 3000);
+
+    // Remove the project item at the specified index from the projects array
+    setProjects(prevProjects => {
+      const updatedProjects = [...prevProjects];
+      updatedProjects.splice(index, 1);
+      return updatedProjects;
+    });
 
     const data = await res.json();
 
@@ -315,7 +365,7 @@ export default function Page() {
                         </button>
                         <button
                           className={styles.btn}
-                          onClick={() => deleteProject(project.project_id)}
+                          onClick={() => deleteProject(project.project_id, index)}
                         >
                           Delete
                         </button>
@@ -330,7 +380,7 @@ export default function Page() {
                         </button>
                         <button 
                           className={styles.btn}
-                          onClick={() => updateProject(project.project_id)}
+                          onClick={() => updateProject(project.project_id, index)}
                         >
                           Update
                         </button>
@@ -356,6 +406,14 @@ export default function Page() {
           <Spinner />
         )}
       </div>
+      <div className="w-full relative mb-15 flex justify-center">
+      <div className="absolute top-0">
+        <UpdateMessage update={updateState} message="Project successfully updated" />
+      </div>
+      <div className="absolute top-0">
+        <DeleteMessage deleteMsg={deleteState} message="Project successfully deleted" />
+      </div>
+    </div>
       </>
     )
   }
