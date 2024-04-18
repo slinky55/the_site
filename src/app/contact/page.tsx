@@ -4,8 +4,12 @@ import React, { useState, useEffect } from 'react';
 import styles from './page.module.css';
 import ReCAPTCHA from "react-google-recaptcha";
 import { v4 as uuidv4 } from 'uuid';
+import { Image } from '../types/image';
+import { Div } from '../types/div';
 
 export default function ContactPage() {
+  const [images, setImages] = useState<Image[]>([]);
+  const [divs, setDivs] = useState<Div[]>([]);
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
@@ -13,6 +17,61 @@ export default function ContactPage() {
   const [msg, setMsg] = useState('');
   const [captcha, setCaptcha] = useState(null);
   const [postSuccess, setPostSuccess] = useState(false); 
+
+  useEffect(() => {
+    const queryData = {
+      method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          page: 'contact',
+          limit: 1000,
+          offset: 0,
+        })
+    }
+    async function getImgs() {
+        try {
+            const res = await fetch("/api/images/getimages", queryData);
+
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+
+            const data = await res.json();
+
+            if (!Array.isArray(data.images)) {
+                throw new Error('Unexpected data format');
+            }
+
+            setImages(data.images);
+        } catch (error) {
+            console.error(error);
+        } 
+    }
+    async function getDivs() {
+      try {
+          const res = await fetch("/api/divs/getdivs", queryData);
+
+          if (!res.ok) {
+              throw new Error(`HTTP error! Status: ${res.status}`);
+          }
+
+          const data = await res.json();
+
+          if (!Array.isArray(data.divs)) {
+              throw new Error('Unexpected data format');
+          }
+
+          setDivs(data.divs);
+      } catch (error) {
+          console.error(error);
+      } 
+    }
+
+    getImgs();
+    getDivs();
+  }, [])
 
   useEffect(() => { 
     // Run when postSuccess state changes
@@ -66,6 +125,23 @@ export default function ContactPage() {
     }
   }
 
+  function getItem(l: string, img: boolean) {
+    if(img) {
+      for(let i = 0; i < images.length; i++) {
+        if(images[i].label===l) {
+          return images[i]
+        }
+      }
+    }
+    else {
+      for(let i = 0; i < divs.length; i++) {
+        if(divs[i].label===l) {
+          return divs[i]
+        }
+      }
+    }
+  }
+
   return (
     <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div
@@ -75,8 +151,7 @@ export default function ContactPage() {
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact Us</h2>
         <p className="mt-2 text-lg leading-8 text-gray-600">
-          Use the form below to directly contact a group administrator. We'll respond as
-          soon as we can!
+          {getItem('intro', false)?.content}
         </p>
       </div>
       <form onSubmit={createInquiry} className="mx-auto mt-16 max-w-xl sm:mt-20">

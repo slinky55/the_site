@@ -2,14 +2,69 @@
 
 import { useState, useEffect } from "react"
 import styles from '../page.module.css';
-
-import workGroup1 from "../Workgroup1.jpg";
-import workGroup2 from "../Workgroup2.jpg";
-import workGroup6 from "../Workgroup6.jpg";
+import { Image } from "../types/image";
+import { Div } from "../types/div";
 
 export default function Carousel() {
+  const [images, setImages] = useState<Image[]>([]);
+  const [divs, setDivs] = useState<Div[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false); // Flag to indicate transition state
+
+  useEffect(()=>{
+    const queryData = {
+      method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          page: 'home',
+          limit: 1000,
+          offset: 0,
+        })
+    }
+    async function getImgs() {
+        try {
+            const res = await fetch("/api/images/getimages", queryData);
+
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+
+            const data = await res.json();
+
+            if (!Array.isArray(data.images)) {
+                throw new Error('Unexpected data format');
+            }
+
+            setImages(data.images);
+        } catch (error) {
+            console.error(error);
+        } 
+    }
+    async function getDivs() {
+      try {
+          const res = await fetch("/api/divs/getdivs", queryData);
+
+          if (!res.ok) {
+              throw new Error(`HTTP error! Status: ${res.status}`);
+          }
+
+          const data = await res.json();
+
+          if (!Array.isArray(data.divs)) {
+              throw new Error('Unexpected data format');
+          }
+
+          setDivs(data.divs);
+      } catch (error) {
+          console.error(error);
+      } 
+  }
+
+    getImgs();
+    getDivs();
+  }, [])
 
   useEffect(() => {
     const track = document.querySelector<HTMLElement>(`.${styles.carouselTrack}`);
@@ -103,19 +158,35 @@ export default function Carousel() {
     });
   }, [currentSlideIndex, isTransitioning]);
 
+  function getItem(l: string, img: boolean) {
+    if(img) {
+      for(let i = 0; i < images.length; i++) {
+        if(images[i].label===l) {
+          return images[i]
+        }
+      }
+    }
+    else {
+      for(let i = 0; i < divs.length; i++) {
+        if(divs[i].label===l) {
+          return divs[i]
+        }
+      }
+    }
+  }
 
     return (
       <div className={styles.carousel}>
           <div className={styles.carouselTrackContainer}>
           <ul className={styles.carouselTrack}>
             <li className={`${styles.carouselSlide} ${currentSlideIndex === 0 ? styles.currentSlide : ''}`}>
-              <img className={styles.carouselImages} src={workGroup6.src} alt="" />
+              {images && <img className={styles.carouselImages} src={getItem('Slideshow1', true)?.url} alt="" />}
             </li>
             <li className={`${styles.carouselSlide} ${currentSlideIndex === 1 ? styles.currentSlide : ''}`}>
-              <img className={styles.carouselImages} src={workGroup2.src} alt="" />
+              {images && <img className={styles.carouselImages} src={getItem('Slideshow2', true)?.url} alt="" />}
             </li>
             <li className={`${styles.carouselSlide} ${currentSlideIndex === 2 ? styles.currentSlide : ''}`}>
-              <img className={styles.carouselImages} src={workGroup1.src} alt="" />
+              {images && <img className={styles.carouselImages} src={getItem('Slideshow3', true)?.url} alt="" />}
             </li>
           </ul>
           </div>

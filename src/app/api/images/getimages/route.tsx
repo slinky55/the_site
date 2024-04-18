@@ -11,7 +11,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     
     try  {
         const result = await executeQuery({
-            query: 'SELECT * FROM Images WHERE page = ? ORDER BY label DESC LIMIT ? OFFSET ?',
+            query: 'SELECT * FROM Images WHERE page = ? ORDER BY label ASC LIMIT ? OFFSET ?',
             values: [page, limit, offset],
         })
         console.log(result);
