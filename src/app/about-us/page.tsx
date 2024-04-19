@@ -1,10 +1,11 @@
 "use server"
 
 import styles from './page.module.css'
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { TeamLeader } from '../types/teamleader';
 import executeQuery from '../lib/db';
 import Image from 'next/image';
+import { Div } from '../types/div';
 
 async function getData() {
   try  {
@@ -27,13 +28,30 @@ export default async function AboutUs() {
   try {
     const leaders: TeamLeader[] | null = await getData();
 
+    const res2 = await executeQuery({
+      query: 'SELECT * FROM Divs WHERE page=\'home\'',
+      values: '',
+    }) as Div[];
+  
+    const divs = res2.map((div: Div) => {
+      return { ...div }
+    });
+  
+    function getItem(l: string) {
+      for(let i = 0; i < divs.length; i++) {
+        if(divs[i].label===l) {
+          return divs[i]
+        }
+      }
+    }
+
     if (leaders == null || leaders.length == 0) {
       return (
         <>
           <div className={styles.container1}>
             <div className={styles.whoWeAre}>
               <h2 className={styles.aboutUsHeading}>Who We Are</h2>
-              <p className={styles.aboutUs}>The Technology Health and Equity (THE) Workgroup stands at the forefront of research, education, and advocacy aimed at leveraging social media and emerging technologies to advance health equity. Rooted in our core values of Respect, Empowerment, Advocacy, and Partnership (REAP), we strive to create a legacy of health for the next generation. Led by Dr. James, a distinguished Associate Professor at the University of Florida, our multidisciplinary team is committed to conducting innovative research on digital health technologies, mobile health, and online health communities. We empower individuals, families, and neighborhoods to access and utilize health information and services, particularly among vulnerable populations. Through community-engaged research and partnerships with organizations like Gardenia Gardens and Gainesville Public Housing, we address systemic barriers to health and advocate for those who are underrepresented and marginalized. Our internship program, coordinated by David Thompson, provides invaluable opportunities for undergraduate and graduate health students to contribute to meaningful projects and develop essential skills in health promotion and technology. Together, we strive to foster a culture of health, inclusion, and empowerment in communities across the nation.</p>
+              <p className={styles.aboutUs}>{getItem('WhoWeAre')?.content}</p>
             </div>
           </div>
           <div className={styles.container2}>

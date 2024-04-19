@@ -2,22 +2,29 @@
 import React, { useEffect, useState } from 'react';
 import { Post } from '../types/post';
 import { useRouter } from 'next/navigation';
+import { Div } from '../types/div';
+import { Image } from '../types/image';
 
 export default function BlogPage() {
+    const [images, setImages] = useState<Image[]>([]);
+    const [divs, setDivs] = useState<Div[]>([]);
     const [posts, setPosts] = useState<Post[] | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    const [ssStart, setSsStart] = useState<number>(0);
-    const [ssEnd, setSsEnd] = useState<number>(3);
     const [users, setUsers] = useState<any[]>([]);
     const router = useRouter();
+    const limit = 10;
 
     useEffect(() => {
         const postData = {
-            method: "GET",
+            method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
+            body: JSON.stringify({
+                limit: limit,
+                offset: 0
+            })
         }
 
         async function getData() {
@@ -53,7 +60,58 @@ export default function BlogPage() {
                 setError('Failed to load data');
             }
         }
-
+        const queryData = {
+            method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                page: 'blog',
+                limit: 1000,
+                offset: 0,
+              })
+          }
+          async function getImgs() {
+              try {
+                  const res = await fetch("/api/images/getimages", queryData);
+      
+                  if (!res.ok) {
+                      throw new Error(`HTTP error! Status: ${res.status}`);
+                  }
+      
+                  const data = await res.json();
+      
+                  if (!Array.isArray(data.images)) {
+                      throw new Error('Unexpected data format');
+                  }
+      
+                  setImages(data.images);
+              } catch (error) {
+                  console.error(error);
+              } 
+          }
+          async function getDivs() {
+            try {
+                const res = await fetch("/api/divs/getdivs", queryData);
+      
+                if (!res.ok) {
+                    throw new Error(`HTTP error! Status: ${res.status}`);
+                }
+      
+                const data = await res.json();
+      
+                if (!Array.isArray(data.divs)) {
+                    throw new Error('Unexpected data format');
+                }
+      
+                setDivs(data.divs);
+            } catch (error) {
+                console.error(error);
+            } 
+        }
+      
+        getImgs();
+        getDivs();
         getData();
     }, []);
 
@@ -65,27 +123,22 @@ export default function BlogPage() {
 
     const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health"]
 
-    function nextPost() {
-        if((ssEnd) == posts!.length) {
-            setSsStart(0);
-            setSsEnd(3);
+    function getItem(l: string, img: boolean) {
+        if(img) {
+          for(let i = 0; i < images.length; i++) {
+            if(images[i].label===l) {
+              return images[i]
+            }
+          }
         }
         else {
-            setSsStart(ssStart + 1);
-            setSsEnd(ssEnd + 1);
+          for(let i = 0; i < divs.length; i++) {
+            if(divs[i].label===l) {
+              return divs[i]
+            }
+          }
         }
-    }
-
-    function prevPost() {
-        if((ssStart - 1) < 0) {
-            setSsStart(posts!.length - 3);
-            setSsEnd(posts!.length);
-        }
-        else {
-            setSsStart(ssStart - 1);
-            setSsEnd(ssEnd - 1);
-        }
-    }
+      }
 
     return (
         <>
@@ -101,7 +154,7 @@ export default function BlogPage() {
                                 <div className="mx-auto max-w-2xl lg:max-w-4xl">
                                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the blog</h2>
                                     <p className="mt-2 text-lg leading-8 text-gray-600">
-                                        Learn about the latest trends and news in the world of technology, health, and entertainment.
+                                        {getItem('intro', false)?.content}
                                     </p>
                                     <div className="mt-16 space-y-20 lg:mt-20 lg:space-y-20">
                                         {posts.map((post, index) => {

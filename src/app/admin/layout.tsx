@@ -21,7 +21,8 @@ export default function AdminLayout({
   manageposts,
   createresearch,
   manageresearch,
-  feedback
+  feedback,
+  pagemodifier
 }: {
   children: React.ReactNode;
   createteam: React.ReactNode;
@@ -39,9 +40,10 @@ export default function AdminLayout({
   createresearch: React.ReactNode;
   manageresearch: React.ReactNode;
   feedback: React.ReactNode;
+  pagemodifier: React.ReactNode;
 }) {
 
-  const [display, setDisplay] = useState<number>(14);
+  const [display, setDisplay] = useState<number>(0);
   const [submenu, setSubmenu] = useState<number>(14);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -117,7 +119,7 @@ export default function AdminLayout({
               )}
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(6)}>
-              <div className={`${styles.headerItem} ${submenu === 5 && styles.selected}`}>Research</div>
+              <div className={`${styles.headerItem} ${submenu === 6 && styles.selected}`}>Research</div>
               {submenu == 6 && (
                 <div className={styles.submenu}>
                   <div className={styles.submenuItem} onClick={() => setDisplay(12)}>Create Research</div>
@@ -127,6 +129,9 @@ export default function AdminLayout({
             </div>
             <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(14)}>
               <div className={styles.headerItem}>Feedback</div>
+            </div>
+            <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(15)}>
+              <div className={styles.headerItem}>Page Layouts</div>
             </div>
           </div>
         ) : (
@@ -155,6 +160,7 @@ export default function AdminLayout({
           {(display == 12) && createresearch} 
           {(display == 13) && manageresearch}
           {(display == 14) && feedback}
+          {(display == 15) && pagemodifier}
         </div>
       </div>
     </>

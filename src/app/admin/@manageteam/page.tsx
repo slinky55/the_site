@@ -6,6 +6,8 @@ import { Dialog, Description, Transition } from '@headlessui/react'
 import DropboxChooser from 'react-dropbox-chooser';
 import { Spinner } from '@/app/components/Spinner';
 import { TeamLeader } from '@/app/types/teamleader';
+import UpdateMessage from "@/app/components/UpdateMessage";
+import DeleteMessage from "@/app/components/DeleteMessage";
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
@@ -23,6 +25,9 @@ export default function Page() {
 
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
+
+    const [deleteState, setDeleteState] = useState(false);
+    const [updateState, setUpdateState] = useState(false);
 
 
     useEffect(() => {
@@ -104,11 +109,14 @@ export default function Page() {
       setModal((prevArray) => {
         const newArray = [...prevArray];
         newArray[index] = !newArray[index];
+        if (!newArray[index]) {
+          setEditing(false);
+        }
         return newArray;
         })
     }
 
-    async function updateMember(id: string) {
+    async function updateMember(id: string, index: number) {
       const queryData = {
         method: "POST",
           headers: {
@@ -129,10 +137,38 @@ export default function Page() {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
 
+      setUpdateState(true);
+
+      setTimeout(()  => {
+        setUpdateState(false);
+      }, 3000);
+      
+
+      const updatedTeamLeader = {
+        ...teamLeaders[index], // Keep other properties unchanged
+        leader_name: name,
+        team_role: role,
+        about_me: about,
+        image_src: img
+      };
+
+      setTeamLeaders(prevTeamLeaders => {
+        const updatedLeaders = [...prevTeamLeaders];
+        updatedLeaders[index] = updatedTeamLeader;
+        return updatedLeaders;
+      });
+
+      // Close the modal after updating
+      setModal(prevModal => {
+        const newArray = [...prevModal];
+        newArray[index] = false;
+        return newArray;
+      });
+
       const data = await res.json();
     }
 
-    async function deleteMember(id: string) {
+    async function deleteMember(id: string, index: number) {
       const queryData = {
         method: "DELETE",
           headers: {
@@ -148,6 +184,19 @@ export default function Page() {
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
+
+      setDeleteState(true);
+
+      setTimeout(()  => {
+        setDeleteState(false);
+      }, 3000);
+
+      // Remove the deleted team member from the teamLeaders state
+      setTeamLeaders(prevTeamLeaders => {
+        const updatedTeamLeaders = [...prevTeamLeaders];
+        updatedTeamLeaders.splice(index, 1); // Remove the team member at the specified index
+        return updatedTeamLeaders;
+      });
 
       const data = await res.json();
 
@@ -286,7 +335,7 @@ export default function Page() {
                         </button>
                         <button
                           className={styles.btn}
-                          onClick={() => deleteMember(teamLeader.leader_id)}
+                          onClick={() => deleteMember(teamLeader.leader_id, index)}
                         >
                           Delete
                         </button>
@@ -301,7 +350,7 @@ export default function Page() {
                         </button>
                         <button 
                           className={styles.btn}
-                          onClick={() => updateMember(teamLeader.leader_id)}
+                          onClick={() => updateMember(teamLeader.leader_id, index)}
                         >
                           Update
                         </button>
@@ -327,6 +376,15 @@ export default function Page() {
           <Spinner />
         )}
       </div>
+      <div className="w-full relative mb-15 flex justify-center">
+      <div className="absolute top-0">
+        <UpdateMessage update={updateState} message="Team member successfully updated" />
+      </div>
+      <div className="absolute top-0">
+        <DeleteMessage deleteMsg={deleteState} message="Team member successfully deleted" />
+      </div>
+    </div>
+
       </>
     )
-  }
+}

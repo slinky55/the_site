@@ -6,6 +6,8 @@ import { Dialog, Description, Transition, Button } from '@headlessui/react'
 import DropboxChooser from 'react-dropbox-chooser';
 import { Partner } from '@/app/types/partner';
 import { Spinner } from "@/app/components/Spinner";
+import UpdateMessage from "@/app/components/UpdateMessage";
+import DeleteMessage from "@/app/components/DeleteMessage";
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
@@ -24,6 +26,9 @@ export default function Page() {
 
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
+
+    const [deleteState, setDeleteState] = useState(false);
+    const [updateState, setUpdateState] = useState(false);
 
     useEffect(() => {
       const partnersData = {
@@ -104,11 +109,14 @@ export default function Page() {
       setModal((prevArray) => {
         const newArray = [...prevArray];
         newArray[index] = !newArray[index];
+        if (!newArray[index]) {
+          setEditing(false);
+        }
         return newArray;
         })
     }
 
-    async function updatePartner(id: string) {
+    async function updatePartner(id: string, index: number) {
       const queryData = {
         method: "POST",
           headers: {
@@ -131,10 +139,38 @@ export default function Page() {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
 
+      setUpdateState(true);
+
+      setTimeout(()  => {
+        setUpdateState(false);
+      }, 3000);
+
+      const updatedPartnerItem = {
+        ...partners[index], // Keep other properties unchanged
+        name: name,
+        logo: img,
+        website_link: url,
+        partnership_formed: pf,
+        description: desc
+      };
+      
+      setPartners(prevPartners => {
+        const updatedPartners = [...prevPartners];
+        updatedPartners[index] = updatedPartnerItem;
+        return updatedPartners;
+      });
+      
+      // Close the modal after updating
+      setModal(prevModal => {
+        const newArray = [...prevModal];
+        newArray[index] = false;
+        return newArray;
+      });      
+
       const data = await res.json();
     }
 
-    async function deletePartner(id: string) {
+    async function deletePartner(id: string, index: number) {
       const queryData = {
         method: "DELETE",
           headers: {
@@ -150,6 +186,17 @@ export default function Page() {
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
+
+      setTimeout(()  => {
+        setDeleteState(false);
+      }, 3000);
+
+      setPartners(prevPartners => {
+        const updatedPartners = [...prevPartners];
+        updatedPartners.splice(index, 1); // Remove the partner item at the specified index
+        return updatedPartners;
+      });
+      
 
       const data = await res.json();
 
@@ -294,7 +341,7 @@ export default function Page() {
                         </button>
                         <button
                           className={styles.btn}
-                          onClick={() => deletePartner(partner.partner_id)}
+                          onClick={() => deletePartner(partner.partner_id, index)}
                         >
                           Delete
                         </button>
@@ -309,7 +356,7 @@ export default function Page() {
                         </button>
                         <button 
                           className={styles.btn}
-                          onClick={() => updatePartner(partner.partner_id)}
+                          onClick={() => updatePartner(partner.partner_id, index)}
                         >
                           Update
                         </button>
@@ -335,6 +382,14 @@ export default function Page() {
           <Spinner />
         )}
       </div>
+      <div className="w-full relative mb-15 flex justify-center">
+      <div className="absolute top-0">
+        <UpdateMessage update={updateState} message="Partner successfully updated" />
+      </div>
+      <div className="absolute top-0">
+        <DeleteMessage deleteMsg={deleteState} message="Partner successfully deleted" />
+      </div>
+    </div>
       </>
     )
   }

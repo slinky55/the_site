@@ -35,7 +35,6 @@ export default function Page() {
             }
     
             const data = await res.json();
-
   
             setInquiries(data.inquiries);
           } catch (error) {
@@ -103,7 +102,7 @@ export default function Page() {
             <div className={styles.inquiriesContainer} key={1}>
               <p className={styles.title} key={2}>Contact Us Forms</p>
               <hr/>
-              {inquiries.map((inquiry, index) => (
+              {inquiries?.map((inquiry, index) => (
                 <div className={styles.inquiryContainer} key={inquiry.inquiry_id}>
                   <div className={styles.authorContainer} onClick={() => expand(index)}>
                     <span className={styles.author} key={inquiry.inquiry_id}>{inquiry.first_name} {inquiry.last_name}</span>
