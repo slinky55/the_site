@@ -3,7 +3,7 @@
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import {Container} from './Container'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useMemo} from 'react'
 
 function useTransformedEvents(initialEvents: unknown) {
     const [events, setEvents] = useState([]);
@@ -29,7 +29,7 @@ function useTransformedEvents(initialEvents: unknown) {
 
 export default function Calendar() {
     const [initialEvents, setInitialEvents] = useState([]);
-    const eventData = {
+    const eventData = useMemo(() => ({
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export default function Calendar() {
             limit: 1000,
             offset: 0
         })
-    }
+    }), []);
     useEffect(() => {
         fetch('/api/events/getevents', eventData)
             .then(response => response.json())
