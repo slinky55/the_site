@@ -46,7 +46,7 @@ export default function Calendar() {
                 console.log(data.events);
                 setInitialEvents(data.events)
             });
-    }, []);
+    }, [eventData]);
 
     const events = useTransformedEvents(initialEvents);
 
@@ -58,7 +58,7 @@ export default function Calendar() {
 
         if (eventObj.url) {
             const userConfirmation = window.confirm(
-                'Event Name: ' + eventObj.title + '\n' + // Change this line
+                'Event Name: ' + eventObj.title + '\n' +
                 'Start Date: ' + startDate + ' ' +
                 'End Date: ' + endDate + '\n' +
                 'Registration Link: ' + eventObj.url + '\n' +
@@ -70,15 +70,15 @@ export default function Calendar() {
             }
         }
     }
-        return (
-            <Container>
-                <FullCalendar
-                    plugins={[ dayGridPlugin ]}
-                    initialView="dayGridMonth"
-                    events={events}
-                    //@ts-ignore
-                    eventClick={handleEventClick}
-                />
-            </Container>
-        )
-    }
+    return (
+        <Container>
+            <FullCalendar
+                plugins={[ dayGridPlugin ]}
+                initialView="dayGridMonth"
+                events={events}
+                //@ts-ignore
+                eventClick={handleEventClick}
+            />
+        </Container>
+    )
+}
