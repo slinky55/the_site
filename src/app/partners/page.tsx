@@ -66,20 +66,24 @@ export default async function PartnersPage() {
         <div id={styles.redgraientsection}>
           <span style={{ width: "100vw" }}>Our Partners</span>
           <div id={styles.centerDisplayText}>
-            {getItem('intro', false)?.content}
+            <span>{getItem('intro', false)?.content}</span>
           </div>
         </div>
         <div id={styles.partnerblock}>
-            <>
-                  {partners?.map((partner, index) => (
-                    <div id={styles.threeboxes} key={index}>
-                      <Image src={partner.logo} width={300} height={200} alt="Image" />
-                      <span className={styles.paragraphHeader}>{partner.name}</span>
-                      <span className={styles.paragraphContents}>{partner.description}</span>
-                    </div>
-                  ))}
-            </>
-          </div>
+          <>
+            {[...Array(3)].map((_, i) => (
+              <div key={i}>
+                {(partners || []).map((partner, index) => (
+                  <div id={styles.threeboxes} key={index}>
+                    <Image src={partner.logo} width={300} height={200} alt="Image" />
+                    <span className={styles.paragraphHeader}>{partner.name}</span>
+                    <span className={styles.paragraphContents}>{partner.description}</span>
+                  </div>
+                ))}
+              </div>
+            ))}
+          </>
+        </div>
       </>
     )
 } catch (err: any) {
