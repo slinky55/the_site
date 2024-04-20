@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
 
-export async function POST(req: NextRequest, res: NextResponse) {
+export async function DELETE(req: NextRequest, res: NextResponse) {
     const formData = await new Response(req.body).json();
     const id = formData.comment_id;
     try  {

@@ -186,8 +186,8 @@ export default function Page() {
           }),
       }
 
-      const res = await fetch("/api/unapprovedcomments/deleteunapprovedcomment", query2Data)
-
+      const res = await fetch("/api/unapprovedcomments/deleteunapprovedcomments", query2Data)
+      console.log(res);
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }

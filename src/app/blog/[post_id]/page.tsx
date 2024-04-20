@@ -97,6 +97,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             const group: {[parentId: string]: Comment[] } = {};
             const roots: Comment[] = [];
             const init: {[commentId: string]: boolean} = {};
+            console.log(comments);
             comments.forEach((comment: Comment) => {
                 init[comment.comment_id] = false;
                 if(comment.parent_comment_id) {
@@ -143,7 +144,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             },
             body: JSON.stringify({
                 comment_id: uuidv4(),
-                user_id: '3ab70c34-984f-457e-9a0d-0387bb0f2771',
+                user_id: 'd9f78e32-919a-474e-b7b7-d20449275d24',
                 post_id: postId,
                 parent_comment_id: parentId,
                 content: content
@@ -152,6 +153,26 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
         await fetch('/api/unapprovedcomments/createunapprovedcomment', queryData);
     }
+
+    async function deleteComment(id: string) {
+        const query2Data = {
+          method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              comment_id: id,
+            }),
+        }
+  
+        const res = await fetch("/api/comments/deletecomment", query2Data)
+        console.log(res);
+        if (!res.ok) {
+          throw new Error(`HTTP error! Status: ${res.status}`);
+        }
+
+        setComments(prevComments => (prevComments || []).filter(comment => comment.comment_id !== id));
+      }
 
     function toggleReply(id: string) {
         if(id == "root") {
@@ -180,7 +201,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                                 <p className={styles.date} key={comment.comment_id}><i>Edited on: {new Date(comment.last_modified).toLocaleString()}</i></p>
                                 <span>
                   <button onClick={() => toggleReply(comment.comment_id)}><FontAwesomeIcon className={styles.replyIcon} icon={faReply}/></button>
-                  <button><FontAwesomeIcon className={styles.trashIcon} icon={faTrash}/></button></span>
+                  <button onClick={() => deleteComment(comment.comment_id)}><FontAwesomeIcon className={styles.trashIcon} icon={faTrash}/></button></span>
                             </div>
                         </div>
                         {expandReply[comment.comment_id] ? (
@@ -283,7 +304,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                     </div>
                 ) : (
                     <>
-                        <p>No comments yet. Click the {"}Reply{"} button to be the first to share your thoughts!</p>
+                        <p>No comments yet. Click the {"Reply"} button to be the first to share your thoughts!</p>
                         {expandReplyRoot ? (
                             <>
                                 <div className={styles.commentForm}>

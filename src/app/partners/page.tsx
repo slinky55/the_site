@@ -1,6 +1,6 @@
+import Image from 'next/image';
 import executeQuery from '../lib/db';
 import { Div } from '../types/div';
-import { Image } from '../types/image';
 import styles from './page.module.css';
 import { Partner } from '@/app/types/partner';
 
@@ -29,9 +29,9 @@ export default async function PartnersPage() {
     const res = await executeQuery({
       query: 'SELECT * FROM Images WHERE page=\'home\'',
       values: '',
-    }) as Image[];
+    }) as any[];
   
-    const images = res.map((img: Image) => {
+    const images = res.map((img: any) => {
       return { ...img }
     });
   
@@ -73,7 +73,7 @@ export default async function PartnersPage() {
             <>
                   {partners?.map((partner, index) => (
                     <div id={styles.threeboxes} key={index}>
-                      <img src={partner.logo} width={300} height={200} alt="Image" />
+                      <Image src={partner.logo} width={300} height={200} alt="Image" />
                       <span className={styles.paragraphHeader}>{partner.name}</span>
                       <span className={styles.paragraphContents}>{partner.description}</span>
                     </div>
