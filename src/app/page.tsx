@@ -1,17 +1,17 @@
 import styles from './page.module.css';
 import Carousel from "@/app/components/Carousel"
 import executeQuery from './lib/db';
-import { Image } from './types/image';
 import { Div } from './types/div';
+import Image from 'next/image';
 
 export default async function Home() {
 
   const res = await executeQuery({
     query: 'SELECT * FROM Images WHERE page=\'home\'',
     values: '',
-  }) as Image[];
+  }) as any[];
 
-  const images = res.map((img: Image) => {
+  const images = res.map((img: any) => {
     return { ...img }
   });
 
@@ -52,7 +52,7 @@ export default async function Home() {
         <div className={styles.whoWeAreSummary}>
           <center>
             <h1 className={styles.whoWeAreHeader} style={{ color: '#e40000', paddingTop: '20px', paddingBottom: '0px', marginBottom: '0' }}>Who We Are</h1>
-            <img src={getItem('WhoWeAre', true)?.url} style={{ marginLeft: 'auto', marginRight: 'auto', paddingBottom: '20px'}} alt="" />
+            <Image src={getItem('WhoWeAre', true)?.url} style={{ marginLeft: 'auto', marginRight: 'auto', paddingBottom: '20px'}} alt="" width={600} height={500}/>
           </center>
           <p className={styles.whoWeAreParagraph}>{getItem('WhoWeAre1', false)?.content}</p>
           <p className={styles.whoWeAreParagraph}>{getItem('WhoWeAre2', false)?.content}</p>
@@ -66,7 +66,7 @@ export default async function Home() {
         <div className={styles.spotlightContainer}>
           <div className={styles.spotlightItem}>
             <div className={styles.image}>
-              <img src={getItem('Spotlight1', true)?.url} alt="" />
+              <Image src={getItem('Spotlight1', true)?.url} alt="" width={500} height={500}/>
               <div className={styles.content}>
                 <p>{getItem('Spotlight1', false)?.content}</p>
               </div>
@@ -74,7 +74,7 @@ export default async function Home() {
           </div>
           <div className={styles.spotlightItem}>
             <div className={styles.image}>
-              <img src={getItem('Spotlight2', true)?.url} alt="" />
+              <Image src={getItem('Spotlight2', true)?.url} alt="" width={500} height={500} />
               <div className={styles.content}>
                 <p>{getItem('Spotlight2', false)?.content}</p>
               </div>
@@ -82,7 +82,7 @@ export default async function Home() {
           </div>
           <div className={styles.spotlightItem}>
             <div className={styles.image}>
-              <img src={getItem('Spotlight3', true)?.url} alt="" />
+              <Image src={getItem('Spotlight3', true)?.url} alt="" width={500} height={500} />
               <div className={styles.content}>
                 <p>{getItem('Spotlight3', false)?.content}</p>
               </div>

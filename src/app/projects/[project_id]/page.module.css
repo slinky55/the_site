@@ -1,3 +1,12 @@
+.galleryContainer {
+  display: flex;
+  gap: 3px;
+  border: black 1px solid;
+  width: fit-content;
+  padding: 3px;
+  margin: 3px;
+}
+
 .galleryImg{
     cursor: pointer;
 }

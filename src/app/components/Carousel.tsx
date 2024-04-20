@@ -2,11 +2,11 @@
 
 import { useState, useEffect } from "react"
 import styles from '../page.module.css';
-import { Image } from "../types/image";
 import { Div } from "../types/div";
+import Image from "next/image";
 
 export default function Carousel() {
-  const [images, setImages] = useState<Image[]>([]);
+  const [images, setImages] = useState<any[]>([]);
   const [divs, setDivs] = useState<Div[]>([]);
   const [currentSlideIndex, setCurrentSlideIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false); // Flag to indicate transition state
@@ -180,13 +180,13 @@ export default function Carousel() {
           <div className={styles.carouselTrackContainer}>
           <ul className={styles.carouselTrack}>
             <li className={`${styles.carouselSlide} ${currentSlideIndex === 0 ? styles.currentSlide : ''}`}>
-              {images && <img className={styles.carouselImages} src={getItem('Slideshow1', true)?.url} alt="" />}
+              {images && <Image className={styles.carouselImages} src={getItem('Slideshow1', true)?.url} alt="" width={1000} height={1000}/>}
             </li>
             <li className={`${styles.carouselSlide} ${currentSlideIndex === 1 ? styles.currentSlide : ''}`}>
-              {images && <img className={styles.carouselImages} src={getItem('Slideshow2', true)?.url} alt="" />}
+              {images && <Image className={styles.carouselImages} src={getItem('Slideshow2', true)?.url} alt="" width={1000} height={1000}/>}
             </li>
             <li className={`${styles.carouselSlide} ${currentSlideIndex === 2 ? styles.currentSlide : ''}`}>
-              {images && <img className={styles.carouselImages} src={getItem('Slideshow3', true)?.url} alt="" />}
+              {images && <Image className={styles.carouselImages} src={getItem('Slideshow3', true)?.url} alt="" width={1000} height={1000}/>}
             </li>
           </ul>
           </div>
