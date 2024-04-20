@@ -80,7 +80,7 @@ export default async function AboutUs() {
         {leaders.map((leader: TeamLeader, key: any) => (
           <div className={styles.container3} key={key}>
             <div className={styles.person}>
-              <Image src={leader.image_src} className={styles.imgPerson} alt="Maria Lopez" width={100} height={100}/> {/*width and height need to be changed */}
+              <Image src={leader.image_src} className={styles.imgPerson} alt="Maria Lopez" width={200} height={200}/> {/*width and height need to be changed */}
               <div className={styles.personText}>
                 <p>{leader.leader_name}</p>
                 <p className={styles.position}>{leader.team_role}</p>

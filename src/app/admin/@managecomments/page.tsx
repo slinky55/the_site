@@ -94,7 +94,7 @@ export default function Page() {
                 {new Date(comment.created_at).toLocaleString()}
             </div>
             <button className={styles.btn}>
-              View More
+              Select
             </button>
         </div>
       ))}

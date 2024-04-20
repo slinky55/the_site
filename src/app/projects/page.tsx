@@ -1,7 +1,7 @@
 import { Project } from "../types/project";
 import executeQuery from "../lib/db";
-import { Image } from "../types/image";
 import { Div } from "../types/div";
+import Image from "next/image";
 
 export default async function Projects() {
     const projects = await executeQuery({
@@ -12,9 +12,9 @@ export default async function Projects() {
     const res = await executeQuery({
         query: 'SELECT * FROM Images WHERE page=\'projects\'',
         values: '',
-      }) as Image[];
+      }) as any[];
     
-      const images = res.map((img: Image) => {
+      const images = res.map((img: any) => {
         return { ...img }
       });
     
@@ -57,7 +57,7 @@ export default async function Projects() {
                     {projects.map((project: Project) => (
                         <article key={project.title} className="flex flex-col items-start justify-between">
                             <div className="relative w-full">
-                                <img src={project.primary_image_src} alt="" className="object-cover w-full h-48 rounded-2xl" />
+                                <Image src={project.primary_image_src} alt="" className="object-cover w-full h-48 rounded-2xl" width={500} height={500} />
                                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
                             </div>
                             <div className="max-w-xl">

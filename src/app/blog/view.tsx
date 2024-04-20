@@ -3,10 +3,10 @@ import React, { useEffect, useState } from 'react';
 import { Post } from '../types/post';
 import { useRouter } from 'next/navigation';
 import { Div } from '../types/div';
-import { Image } from '../types/image';
+import Image from 'next/image';
 
 export default function BlogPage() {
-    const [images, setImages] = useState<Image[]>([]);
+    const [images, setImages] = useState<any[]>([]);
     const [divs, setDivs] = useState<Div[]>([]);
     const [posts, setPosts] = useState<Post[] | null>(null);
     const [loading, setLoading] = useState(true);
@@ -109,10 +109,10 @@ export default function BlogPage() {
                 console.error(error);
             } 
         }
-      
+        getData();
         getImgs();
         getDivs();
-        getData();
+        
     }, []);
 
     useEffect(() => {
@@ -170,10 +170,11 @@ export default function BlogPage() {
                                                 <article key={post.post_id} className="relative isolate flex flex-col gap-8 lg:flex-row">
                                                     <div
                                                         className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
-                                                        <img
-                                                            src={post.image_src}
+                                                        <Image
+                                                            src='https://www.dropbox.com/scl/fi/z8vgvct0qo2tfs1r9i7eg/brownie-recipe.jpg?rlkey=f9vkc9dijqtvembbk5uzkwalk&raw=1'
                                                             alt=""
                                                             className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
+                                                            width={500} height={500}
                                                         />
                                                         <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10"/>
                                                     </div>
