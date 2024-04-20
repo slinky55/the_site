@@ -207,8 +207,10 @@ export default function BlogPage() {
                                                         </div>
                                                         <div className="mt-6 flex border-t border-gray-900/5 pt-6">
                                                             <div className="relative flex items-center gap-x-4">
-                                                                <img src={post.image_src} alt=""
-                                                                     className="h-10 w-10 rounded-full bg-gray-50"/>
+                                                                <Image src={post.image_src} alt=""
+                                                                     className="h-10 w-10 rounded-full bg-gray-50"
+                                                                     width={100}
+                                                                     height={100}/>
                                                                 <div className="text-sm leading-6">
                                                                     <p className="font-semibold text-gray-900">
                                                                         <a href={post.user_id}>
