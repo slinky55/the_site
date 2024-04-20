@@ -8,7 +8,7 @@ interface UpdateMessageProps {
 const UpdateMessage: React.FC<UpdateMessageProps> = ({ update, message }) => {
   return (
     update && (
-      <div className='text-green font-bold text-center'> {message} </div>
+      <div className='text-green-600 font-bold text-center'> {message} </div>
     )
   );
 };

@@ -8,7 +8,7 @@ interface DeleteMessageProps {
 const DeleteMessage: React.FC<DeleteMessageProps> = ({ deleteMsg, message }) => {
   return (
     deleteMsg && (
-      <div className='text-red font-bold text-center'> {message} </div>
+      <div className='text-red-600 font-bold text-center'> {message} </div>
     )
   );
 };

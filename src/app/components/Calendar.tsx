@@ -1,9 +1,9 @@
-'use client'
+"use client"
 
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import {Container} from './Container'
-import {useState, useEffect} from 'react'
+import {useState, useEffect, useMemo} from 'react'
 
 function useTransformedEvents(initialEvents: unknown) {
     const [events, setEvents] = useState([]);
@@ -13,7 +13,7 @@ function useTransformedEvents(initialEvents: unknown) {
         const transformedEvents = initialEvents.map((eventData: { event_id: any; name: any; event_start: any; event_end: any; reg_link: any; content: any; }) => {
             return {
                 id: eventData.event_id,
-                name: eventData.name,
+                title: eventData.name,
                 content: eventData.content,
                 start: new Date(eventData.event_start).toISOString(),
                 end: new Date(eventData.event_end).toISOString(),
@@ -29,7 +29,7 @@ function useTransformedEvents(initialEvents: unknown) {
 
 export default function Calendar() {
     const [initialEvents, setInitialEvents] = useState([]);
-    const eventData = {
+    const eventData = useMemo(() => ({
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -38,7 +38,7 @@ export default function Calendar() {
             limit: 1000,
             offset: 0
         })
-    }
+    }), []);
     useEffect(() => {
         fetch('/api/events/getevents', eventData)
             .then(response => response.json())
@@ -46,11 +46,11 @@ export default function Calendar() {
                 console.log(data.events);
                 setInitialEvents(data.events)
             });
-    }, []);
+    }, [eventData]);
 
     const events = useTransformedEvents(initialEvents);
 
-    const handleEventClick = (clickInfo: { event: { name: string | undefined; url: string | undefined; extendedProps: { content: string }; start: Date; end: Date }; jsEvent: MouseEvent}) => {
+    const handleEventClick = (clickInfo: { event: { title: string; url: string | undefined; extendedProps: { content: string }; start: Date; end: Date }; jsEvent: MouseEvent}) => {
         clickInfo.jsEvent.preventDefault();
         const eventObj = clickInfo.event;
         const startDate = new Date(eventObj.start).toLocaleDateString();
@@ -58,7 +58,7 @@ export default function Calendar() {
 
         if (eventObj.url) {
             const userConfirmation = window.confirm(
-                'Event Title: ' + eventObj.name + '\n' +
+                'Event Name: ' + eventObj.title + '\n' +
                 'Start Date: ' + startDate + ' ' +
                 'End Date: ' + endDate + '\n' +
                 'Registration Link: ' + eventObj.url + '\n' +
@@ -70,7 +70,6 @@ export default function Calendar() {
             }
         }
     }
-
     return (
         <Container>
             <FullCalendar
@@ -81,5 +80,5 @@ export default function Calendar() {
                 eventClick={handleEventClick}
             />
         </Container>
-    );
+    )
 }
