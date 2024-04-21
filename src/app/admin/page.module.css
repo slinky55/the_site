@@ -375,9 +375,14 @@
 }
 
 .newPostContentInput {
-    height: 200px;
+    resize: vertical; /* Allow vertical resizing */
+    overflow: auto; /* Add a scrollbar if the content overflows */
+    min-height: 200px; /* Set a minimum height */
     margin-bottom: 70px;
+}
 
+.newPostContentInput .ql-editor {
+    padding-bottom: 50px; /* Adjust as needed */
 }
 
 .newPostBtn {  
