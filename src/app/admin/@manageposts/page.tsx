@@ -6,6 +6,8 @@ import { Dialog, Description, Transition } from '@headlessui/react'
 import DropboxChooser from 'react-dropbox-chooser';
 import { Post } from '@/app/types/post';
 import { Spinner } from '@/app/components/Spinner';
+import UpdateMessage from "@/app/components/UpdateMessage";
+import DeleteMessage from "@/app/components/DeleteMessage";
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
@@ -23,6 +25,9 @@ export default function Page() {
 
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
+
+    const [deleteState, setDeleteState] = useState(false);
+    const [updateState, setUpdateState] = useState(false);
 
     useEffect(() => {
         const postData = {
@@ -103,11 +108,14 @@ export default function Page() {
       setModal((prevArray) => {
         const newArray = [...prevArray];
         newArray[index] = !newArray[index];
+        if (!newArray[index]) {
+          setEditing(false);
+        }
         return newArray;
         })
     }
 
-    async function updatePost(id: string) {
+    async function updatePost(id: string, index: number) {
       const queryData = {
         method: "POST",
           headers: {
@@ -129,9 +137,36 @@ export default function Page() {
       }
 
       const data = await res.json();
+
+      setUpdateState(true);
+
+      setTimeout(()  => {
+        setUpdateState(false);
+      }, 3000);
+
+      const updatedPostItem = {
+        ...posts[index], // Keep other properties unchanged
+        title: title,
+        topics: topics,
+        content: content,
+        image_src: img
+      };
+      
+      setPosts(prevPosts => {
+        const updatedPost = [...prevPosts];
+        updatedPost[index] = updatedPostItem;
+        return updatedPost;
+      });
+      
+      // Close the modal after updating
+      setModal(prevModal => {
+        const newArray = [...prevModal];
+        newArray[index] = false;
+        return newArray;
+      });      
     }
 
-    async function deletePost(id: string) {
+    async function deletePost(id: string, index: number) {
       const queryData = {
         method: "DELETE",
           headers: {
@@ -147,6 +182,18 @@ export default function Page() {
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
+
+      setDeleteState(true);
+
+      setTimeout(()  => {
+        setDeleteState(false);
+      }, 3000);
+
+      setPosts(prevPosts => {
+        const updatedPost = [...prevPosts];
+        updatedPost.splice(index, 1);
+        return updatedPost;
+      });
 
       const data = await res.json();
 
@@ -287,7 +334,7 @@ export default function Page() {
                         </button>
                         <button
                           className={styles.btn}
-                          onClick={() => deletePost(post.post_id)}
+                          onClick={() => deletePost(post.post_id, index)}
                         >
                           Delete
                         </button>
@@ -302,7 +349,7 @@ export default function Page() {
                         </button>
                         <button 
                           className={styles.btn}
-                          onClick={() => updatePost(post.post_id)}
+                          onClick={() => updatePost(post.post_id, index)}
                         >
                           Update
                         </button>
@@ -328,6 +375,14 @@ export default function Page() {
           <Spinner />
         )}
       </div>
+      <div className="w-full relative mb-15 flex justify-center">
+      <div className="absolute top-0">
+        <UpdateMessage update={updateState} message="Blog post successfully updated" />
+      </div>
+      <div className="absolute top-0">
+        <DeleteMessage deleteMsg={deleteState} message="Blog post successfully deleted" />
+      </div>
+    </div>
       </>
     )
   }

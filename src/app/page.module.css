@@ -131,22 +131,29 @@
 }
 
 .spotlightContainer{
-	display: flex;
-	flex-wrap: wrap;
-	flex-grow: 1;
+	width: 80%;
+	margin: auto;
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
 }
 
 .spotlightItem{
-	flex: 1 0 20%;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background-color: white;
-	border-radius: 10px;
-	height: 300px;
-	margin: 10px;
-	padding: 0px;
-	cursor: pointer;
+	flex: 0 0 calc(25vw - 25px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    margin: 10px;
+    padding: 0px;
+    cursor: pointer;
+	min-width: 0;
+}
+
+.spotlightItem::before {
+    content: "";
+    display: block;
+    padding-top: 100%; /* Equal to the width for a square aspect ratio */
 }
 
 
@@ -188,8 +195,8 @@
 	font-size: 14px;
 	color: #fff;
 	margin: auto;
-	justify-content: center;
-	align-items: center;
+	margin-top: 3vh;
+	padding: 0 20px;
 }
 
 .content > *{
@@ -219,5 +226,8 @@
 @media (max-width: 320px) {
     .whoWeAreParagraph{
 		max-width: 85%;
+	}
+	.content p{
+		font-size: 20px;
 	}
 }
