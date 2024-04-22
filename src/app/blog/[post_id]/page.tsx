@@ -1,12 +1,12 @@
 'use client'
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './page.module.css';
-import { useRouter } from 'next/navigation';
-import { v4 as uuidv4 } from 'uuid';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrash, faReply, faCancel, faCheck } from '@fortawesome/free-solid-svg-icons';
-import { Post } from '../../types/post'
-import { Comment } from '../../types/comment'
+import {useRouter} from 'next/navigation';
+import {v4 as uuidv4} from 'uuid';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import {faCancel, faCheck, faReply, faTrash} from '@fortawesome/free-solid-svg-icons';
+import {Post} from '../../types/post'
+import {Comment} from '../../types/comment'
 import {getSession} from "next-auth/react";
 
 interface PostPageProps {
@@ -170,7 +170,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
               comment_id: id,
             }),
         }
-  
+
         const res = await fetch("/api/comments/deletecomment", query2Data)
         console.log(res);
         if (!res.ok) {
@@ -248,23 +248,21 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                 ) : error ? (
                     <p>Error: {error}</p>
                 ) : post ? (
-                    <div className={styles.container} key={1}>
-                        <div className={styles.postHeader} key={2}>
-                            <p className={styles.title} key={3}>{post.title}</p>
-                            <p className={styles.date} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</p>
+                    <div className="px-6 lg:contents" key={1}>
+                        <div className="mx-auto max-w-2xl pb-24 pt-16 sm:pb-32 sm:pt-20 lg:ml-8 lg:mr-0 lg:w-full lg:max-w-lg lg:flex-none lg:pt-32 xl:w-1/2" key={2}>
+                            <h1 className="mt-2 text-3xl font-bold tracking-tight text-red-600 sm:text-4xl" key={3}>{post.title}</h1>
+                            <p className="text-base font-semibold leading-7 text-gray-600" key={post.post_id}>
+                                {new Date(post.created_at).toLocaleDateString(undefined, { month: 'long', year: 'numeric' })}
+                            </p>
                         </div>
                         <div className={styles.authorTile} key={post.user_id}>
                             <img src={post.image_src}></img>
                         </div>
-                        <div className={styles.postContainer}>
+                        <div className="mt-10 max-w-xl text-base leading-7 text-gray-700 lg:max-w-none">
                             <div
-                                className={styles.post}
-                                dangerouslySetInnerHTML={{ __html: post.content }}
+                                className="mt-16 text-1xl font-bold tracking-tight text-gray-900"
+                                dangerouslySetInnerHTML={{__html: post.content}}
                             ></div>
-                        </div>
-                        <div className={styles.postFooter}>
-                            <p className={styles.date} key={post.post_id}><i>Edited on: {new Date(post.last_modified).toLocaleString()}</i></p>
-                            <button onClick={deletePost}><FontAwesomeIcon className={styles.trashIcon} icon={faTrash}/></button>
                         </div>
                     </div>
                 ) : (
