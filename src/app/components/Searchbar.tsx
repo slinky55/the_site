@@ -20,7 +20,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ params, onDataReceived }) => {
     const [loading, setLoading] = useState(true);
     const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
     const [data, setData] = useState<any[]>([]);
-    const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health"]
+    const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health", "AI", "Science"]
 
     useEffect(() => {
         // Call the onDataReceived function when data changes

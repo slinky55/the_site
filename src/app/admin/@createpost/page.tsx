@@ -46,7 +46,7 @@ export default function Page() {
         ['clean']                                         // remove formatting button
       ];
 
-    const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health"]
+    const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health", "AI", "Science"]
       
     async function createPost() {
         const postData = {
