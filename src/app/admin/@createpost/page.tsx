@@ -8,6 +8,11 @@ import styles from '../page.module.css';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
 import SuccessMessage from "@/app/components/SuccessMessage";
+import Quill from 'quill';
+import ImageResize from 'quill-image-resize';
+
+Quill.register('modules/imageResize', ImageResize);
+
 
 
 export default function Page() {
@@ -100,11 +105,11 @@ export default function Page() {
                     value={postContent} 
                     onChange={setPostContent}
                     modules={{
-                            toolbar: {
-                                container: toolbarOptions
-                            }
-                        }
-                    }
+                        toolbar: {
+                            container: toolbarOptions
+                        },
+                        imageResize: {} // Add this line
+                    }}
                     placeholder="Write your blog content here!"  
                 />
                 <DropboxChooser

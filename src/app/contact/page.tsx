@@ -151,7 +151,7 @@ export default function ContactPage() {
       <div className="mx-auto max-w-2xl text-center">
         <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact Us</h2>
         <p className="mt-2 text-lg leading-8 text-gray-600">
-          {getItem('intro', false)?.content}
+          {(getItem('intro', false) as Div)?.content}
         </p>
       </div>
       <form onSubmit={createInquiry} className="mx-auto mt-16 max-w-xl sm:mt-20">

@@ -1,10 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
+import {getServerSession} from "next-auth";
+import {authConfig} from "@/app/lib/auth";
 
 export async function POST(req: NextRequest, res: NextResponse) {
     const formData = await new Response(req.body).json();
     const commentId = formData.comment_id;
-    const userId = formData.user_id;
+    const session = await getServerSession(authConfig);
+    if (!session) {
+        return NextResponse.json({error: "no session"}, {status: 403})
+    }
+    if (!session.user) {
+        return NextResponse.json({error: "no session"}, {status: 403})
+    }
+    const userId = session.user.id;
     const postId = formData.post_id;
     const parentId = formData.parent_comment_id;
     const content = formData.content;
