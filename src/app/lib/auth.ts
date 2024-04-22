@@ -27,8 +27,6 @@ export const authConfig = {
             },
 
             async authorize(credentials, req) {
-                console.log(credentials)
-
                 if (!credentials) {
                     console.log("no credentials recieved")
                     return null;
@@ -60,6 +58,7 @@ export const authConfig = {
                         name: userData.name,
                         email: userData.email,
                         image: userData.image,
+                        privilegeLevel: userData.privilegeLevel,
                     };
                 } catch (err) {
                     console.log(err)
@@ -72,8 +71,14 @@ export const authConfig = {
         signIn: "/login"
     },
     callbacks: {
-        async redirect() {
+        async redirect({url, baseUrl}: any) {
           return "/";
+        },
+
+        async session({session, token, user}: any) {
+            session.privilegeLevel = user.privilegeLevel;
+
+            return session;
         }
     },
     adapter: SequelizeAdapter(sequelize, {
