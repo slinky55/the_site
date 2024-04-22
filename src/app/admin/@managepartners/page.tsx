@@ -1,11 +1,11 @@
 'use client'
-import { useEffect, useState, Fragment } from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import styles from '../@manageprojects/page.module.css';
-import { Dialog, Description, Transition, Button } from '@headlessui/react'
+import {Description, Dialog, Transition} from '@headlessui/react'
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
-import { Partner } from '@/app/types/partner';
-import { Spinner } from "@/app/components/Spinner";
+import {Partner} from '@/app/types/partner';
+import {Spinner} from "@/app/components/Spinner";
 import UpdateMessage from "@/app/components/UpdateMessage";
 import DeleteMessage from "@/app/components/DeleteMessage";
 import Image from 'next/image';
@@ -154,19 +154,19 @@ export default function Page() {
         partnership_formed: pf,
         description: desc
       };
-      
+
       setPartners(prevPartners => {
         const updatedPartners = [...prevPartners];
         updatedPartners[index] = updatedPartnerItem;
         return updatedPartners;
       });
-      
+
       // Close the modal after updating
       setModal(prevModal => {
         const newArray = [...prevModal];
         newArray[index] = false;
         return newArray;
-      });      
+      });
 
       const data = await res.json();
     }
@@ -197,7 +197,7 @@ export default function Page() {
         updatedPartners.splice(index, 1); // Remove the partner item at the specified index
         return updatedPartners;
       });
-      
+
 
       const data = await res.json();
 
@@ -220,7 +220,7 @@ export default function Page() {
       <>
       <div className={styles.header}>Manage Partners</div>
           <hr/>
-      <div className={styles.container}> 
+      <div className={styles.container}>
       {partners ? (
         partners.map((partner, index) => (
           <>
@@ -242,7 +242,7 @@ export default function Page() {
             <Transition appear show={modal[index] ?? false} as={Fragment}>
           <Dialog
             as="div" className="relative z-10"
-            onClose={() => openModal(index)} 
+            onClose={() => openModal(index)}
             open={modal[index] ?? false}>
               <Transition.Child
                 as={Fragment}
@@ -288,7 +288,7 @@ export default function Page() {
                           ) : (
                           <div className={styles.container}>
                             <input
-                            className={styles.titleInput}
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                             type="text"
                             placeholder="Partner Name"
                             id="name"
@@ -296,7 +296,7 @@ export default function Page() {
                             onChange={(e) => setName(e.target.value)}
                             required/>
                             <input
-                            className={styles.projectLeadInput}
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                             type="text"
                             placeholder="Partner URL"
                             id="url"
@@ -304,13 +304,13 @@ export default function Page() {
                             onChange={(e) => setUrl(e.target.value)}
                             required/>
                             <textarea
-                            className={styles.contentInput}
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                             placeholder="Description of Partner"
                             id="desc"
                             value={desc}
                             onChange={(e) => setDesc(e.target.value)}
                             required/>
-                            <div 
+                            <div
                             className={styles.galleryLabel}>
                               Upload New Logo of Partner Here
                             </div>
@@ -332,9 +332,9 @@ export default function Page() {
                         <button
                           className={styles.btn}
                           onClick={() => toggleEditing(
-                            partner.name, 
-                            partner.website_link, 
-                            partner.description, 
+                            partner.name,
+                            partner.website_link,
+                            partner.description,
                             partner.partnership_formed,
                             partner.logo)}
                         >
@@ -349,13 +349,13 @@ export default function Page() {
                       </>
                       ) : (
                       <>
-                        <button 
+                        <button
                           className={styles.btn}
                           onClick={() => setEditing(!editing)}
                         >
                           Cancel
                         </button>
-                        <button 
+                        <button
                           className={styles.btn}
                           onClick={() => updatePartner(partner.partner_id, index)}
                         >
@@ -372,7 +372,7 @@ export default function Page() {
         </>
       ))) : (
         <span>No existing partners.</span>
-      )} 
+      )}
       </div>
       <div
         className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"

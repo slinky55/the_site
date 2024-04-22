@@ -1,8 +1,8 @@
 'use client'
-import { useState } from "react";
-import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
+import {useState} from "react";
+import {DesktopDateTimePicker} from '@mui/x-date-pickers/DesktopDateTimePicker';
 import styles from './page.module.css'
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
 import SuccessMessage from "@/app/components/SuccessMessage";
@@ -46,7 +46,7 @@ export default function Page() {
         setTimeout(()  => {
           setSuccess(false);
         }, 3000);
-        
+
         } catch(error) {
             console.error('Error:', error);
         }
@@ -56,14 +56,14 @@ export default function Page() {
     setImg(files[0].link.replace('dl=0', 'raw=1'));
     setUploaded(true);
   }
-  
+
     return (
       <>
         <div className={styles.title}>Create New Research</div>
           <hr/>
         <div className={styles.container}>
           <input
-          className={styles.nameInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           type="text"
           placeholder="Research Title"
           id="title"
@@ -71,7 +71,7 @@ export default function Page() {
           onChange={(e) => setTitle(e.target.value)}
           required/>
           <input
-          className={styles.nameInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           type="text"
           placeholder="Research Journal"
           id="journal"
@@ -79,14 +79,14 @@ export default function Page() {
           onChange={(e) => setJournal(e.target.value)}
           required/>
           <input
-          className={styles.urlInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           type="url"
           placeholder="Registration URL"
           id="url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}/>
           <textarea
-          className={styles.contentInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           placeholder="Research Topics"
           id="topics"
           value={topics}
@@ -100,16 +100,17 @@ export default function Page() {
             multiselect={false}
             extensions={['.jpeg', '.jpg', '.png', 'svg', 'webp', 'wbmp']}
           >
-            <button className={styles.dropboxUpload}>Upload Thumbnail</button>
+            <button                           className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            >Upload Thumbnail</button>
           </DropboxChooser>
-          <div 
+          <div
           className={styles.eventLabel}>
             Select when the research article was written.
           </div>
-          <DesktopDateTimePicker 
+          <DesktopDateTimePicker
           value={writtenOn}
           onChange={(e)=> setWrittenOn(e ? e : currentDate)}/>
-          <button 
+          <button
           className={styles.btn}
           disabled={!uploaded}
           onClick={createResearch}>
