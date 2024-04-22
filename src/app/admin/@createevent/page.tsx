@@ -88,8 +88,8 @@ export default function Page() {
           value={end}
           onChange={(e)=> setEnd(e ? e : currentDate)}/>
           <button
-          className={styles.btn}
-          onClick={createEvent}>
+              className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              onClick={createEvent}>
             Create Event
           </button>
           <SuccessMessage success={success} message="Event Successfully Created" />
