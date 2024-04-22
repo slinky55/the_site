@@ -1,6 +1,5 @@
 'use client'
 import {v4 as uuidv4} from 'uuid';
-import {Image} from '@/app/types/image';
 import {Div} from '@/app/types/div';
 import {useEffect, useState} from 'react';
 import {Spinner} from '@/app/components/Spinner';
