@@ -1,6 +1,6 @@
 'use client'
-import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import {useState} from "react";
+import {v4 as uuidv4} from 'uuid';
 import styles from '../@createevent/page.module.css';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
@@ -39,7 +39,7 @@ export default function Page() {
         setTimeout(()  => {
           setSuccess(false);
         }, 3000);
-        
+
         } catch(error) {
             console.error('Error:', error);
         }
@@ -56,32 +56,23 @@ export default function Page() {
           <hr/>
         <div className={styles.container}>
           <input
-          className={styles.titleInput}
-          type="text"
-          placeholder="Member Name"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"          placeholder="Member Name"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required/>
           <input
-          className={styles.projectLeadInput}
-          type="text"
-          placeholder="Member Role"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"          placeholder="Member Role"
           id="role"
           value={role}
           onChange={(e) => setRole(e.target.value)}
           required/>
-          <textarea
-          className={styles.contentInput}
+          <textarea className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           placeholder="Description of Member"
           id="about"
           value={about}
           onChange={(e) => setAbout(e.target.value)}
           required/>
-          <div 
-          className={styles.galleryLabel}>
-            Upload Picture of Member
-          </div>
           <DropboxChooser
             appKey={appKey}
             success={(files: any) => uploadImg(files)}
@@ -89,11 +80,12 @@ export default function Page() {
             multiselect={false}
             extensions={['.jpeg', '.jpg', '.png', 'svg', 'webp', 'wbmp']}
           >
-            <button className={styles.dropboxUpload}>Upload</button>
+              <button className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                  Upload A User Image
+              </button>
           </DropboxChooser>
-          <hr style={{gridColumn: 'span 2'}}/>
-          <button 
-          className={styles.btn}
+          <button
+              className="block w-full rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-red-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
           disabled={!uploaded}
           onClick={createTeam}>
             Create Member
