@@ -253,10 +253,6 @@ export default function Page() {
                       </div>
                       <span className={styles.comment}>{comment.content}</span>
                     </div>
-                    <div className={styles.buttonContainer}>
-                      <button className={styles.checkmarkBtn} onClick={() => approveComment(comment)}>Approve <FontAwesomeIcon className={styles.checkmark} icon={faCheckCircle}/></button>
-                      <button className={styles.xBtn} onClick={() => rejectComment(comment.comment_id)}>Reject <FontAwesomeIcon className={styles.x} icon={faXmarkCircle}/></button>
-                    </div>
                   </div>
                   <Transition appear show={modal[index] ?? false} as={Fragment}>
                     <Dialog

@@ -68,3 +68,9 @@ for that panel so this is being reused there. */
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+/* comment management panel */
+.instruction {
+    margin-left: 20px;
+    margin-bottom: 12px;
+}

@@ -9,10 +9,17 @@ import DropboxChooser from 'react-dropbox-chooser';
 import { DatePicker } from '@mui/x-date-pickers';
 import UpdateMessage from "@/app/components/UpdateMessage";
 import DeleteMessage from "@/app/components/DeleteMessage";
+import Image from 'next/image';
+import { Sort } from '@/app/types/sort';
+import SearchBar from '@/app/components/Searchbar';
+
+interface Data {
+  research: Research[]
+}
+
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
-    const currentDate = new Date();
 
     const [research, setResearch] = useState<Research[]>([]);
     const [loading, setLoading] = useState(true);
@@ -26,8 +33,13 @@ export default function Page() {
     const [img, setImg] = useState<string>('');
     const [url, setUrl] = useState<string>('');
     const [writtenOn, setWrittenOn] = useState<Date>(new Date());
+
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
+    const sort: Sort = {
+      fieldName: 'title',
+      direction: 'DESC'
+    }
 
     const [deleteState, setDeleteState] = useState(false);
     const [updateState, setUpdateState] = useState(false);
@@ -42,6 +54,8 @@ export default function Page() {
             body: JSON.stringify({
               limit: limit,
               offset: 0,
+              sort: sort,
+              filters: []
             })
         }
         async function getData() {
@@ -70,6 +84,10 @@ export default function Page() {
         getData();
     }, []);
 
+    useEffect(() => {
+      setLoading(false);
+    }, [research])
+
     async function loadMore() {
       setLoading(true);
       const queryData = {
@@ -80,6 +98,8 @@ export default function Page() {
           body: JSON.stringify({
             limit: limit,
             offset: (pagesLoaded * limit) - 1,
+            sort: sort, 
+            filters: []
           })
       }
       async function getData() {
@@ -224,16 +244,22 @@ export default function Page() {
       console.log(rwrittenOn)
     }
 
+    const handleDataReceived = (data: Data) => {
+      setResearch(data.research);
+  };
+  
+
     return (
       <>
       <div className={styles.header}>Manage Research</div>
           <hr/>
+          <SearchBar params={{ limit: 100, offset: 0, topics: true, type: 'research', sort: sort }} onDataReceived={handleDataReceived}/>
       <div className={styles.container}> 
       {research ? (
         research.map((research, index) => (
           <>
             <div className={styles.subContainer}  key={research.research_id}>
-              <img className={styles.thumbnail} src={research.thumbnail}/>
+              <Image className={styles.thumbnail} src={research.thumbnail} width={500} height={500} alt=""/>
               <div className={styles.title}>
                 {research.title}
               </div>
@@ -280,7 +306,7 @@ export default function Page() {
                           <div>
                           Title: {research.title}
                           Journal: {research.journal}
-                          Thumbnail: <img className={styles.thumbnail} src={research.thumbnail}/>
+                          Thumbnail: <Image className={styles.thumbnail} src={research.thumbnail} width={500} height={500} alt=""/>
                         </div>
                         ) : (
                             <></>
