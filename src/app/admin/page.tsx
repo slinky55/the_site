@@ -14,7 +14,7 @@ export default async function AdminPage() {
     redirect("/")
   }
 
-  if (user.privilegeLevel != "admin") {
+  if (session.privilegeLevel != "admin") {
     redirect("/")
   }
 
