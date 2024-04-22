@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faReply, faCancel, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { Post } from '../../types/post'
 import { Comment } from '../../types/comment'
+import {getSession} from "next-auth/react";
 
 interface PostPageProps {
     params: {
@@ -118,6 +119,8 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
 
     async function deletePost() {
+        const session = await getSession();
+
         const postData = {
             method: "DELETE",
             headers: {
@@ -128,7 +131,10 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             }),
         }
 
-        await fetch(`/api/posts/deletepost`, postData);
+        const res = await fetch(`/api/posts/deletepost`, postData);
+        if (res.status === 403) {
+            return;
+        }
 
         router.push('/blog')
     }

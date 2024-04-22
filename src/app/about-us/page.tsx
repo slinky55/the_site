@@ -12,7 +12,7 @@ async function getData() {
     const result: TeamLeader[] = await executeQuery({
         query: 'SELECT * FROM TeamLeader',
         values: '',
-    })
+    }) as TeamLeader[];
     if (result) {
       return result;
     } else {

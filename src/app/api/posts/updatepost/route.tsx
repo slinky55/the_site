@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import executeQuery from "../../../lib/db";
 import type { NextApiRequest, NextApiResponse } from 'next';
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextRequest, res: NextResponse) {
     console.log("hey");
     const formData = await new Response(req.body).json();
     const postId = formData.post_id;
@@ -15,7 +15,7 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
     try  {
         const result = await executeQuery({
             query: `UPDATE posts SET title = ?, topics = ?, image_src = ?, content = ?, last_modified = NOW() WHERE post_id = ?`,
-            values: [userId, title, topics, imageSrc, content, postId],
+            values: [title, topics, imageSrc, content, postId],
         })
         console.log(result);
 
