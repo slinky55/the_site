@@ -5,6 +5,12 @@ import { Dialog, Description, Transition, } from '@headlessui/react'
 import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
 import { Event } from '@/app/types/event';
 import { Spinner } from "@/app/components/Spinner";
+import { Sort } from '@/app/types/sort';
+import SearchBar from '@/app/components/Searchbar';
+
+interface Data {
+  events: Event[]
+}
 
 export default function Page() {
     const [events, setEvents] = useState<Event[]>([]);
@@ -22,6 +28,10 @@ export default function Page() {
 
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
+    const sort: Sort = {
+      fieldName: 'event_start',
+      direction: 'DESC'
+    }
 
     const [deleteState, setDeleteState] = useState(false);
     const [updateState, setUpdateState] = useState(false);
@@ -35,6 +45,8 @@ export default function Page() {
         body: JSON.stringify({
           limit: limit,
           offset: 0,
+          sort: sort,
+          filters: []
         })
       }
         async function getData() {
@@ -73,6 +85,8 @@ export default function Page() {
           body: JSON.stringify({
             limit: limit,
             offset: (pagesLoaded * limit) - 1,
+            sort: sort,
+            filters: []
           })
       }
       async function getData() {
@@ -210,10 +224,15 @@ export default function Page() {
       console.log(estart, eend);
     }
 
+    const handleDataReceived = (data: Data) => {
+      setEvents(data.events);
+    };
+
     return (
       <>
       <div className={styles.header}>Manage Events</div>
           <hr/>
+          <SearchBar params={{ limit: 100, offset: 0, topics: false, type: 'events', sort: sort }} onDataReceived={handleDataReceived}/>
       <div className={styles.container}> 
       {events ? (
         events.map((event, index) => (

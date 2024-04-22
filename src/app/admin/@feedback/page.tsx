@@ -3,6 +3,12 @@ import { useEffect, useState } from "react";
 import styles from '../page.module.css'
 import { Inquiry } from '../../types/inquiry'
 import { Spinner } from "@/app/components/Spinner";
+import { Sort } from "@/app/types/sort";
+import SearchBar from "@/app/components/Searchbar";
+
+interface Data {
+  inquiries: Inquiry[]
+}
 
 export default function Page() {
     // Get Inquiries
@@ -13,6 +19,10 @@ export default function Page() {
     const [expandInquiry, setExpandInquiry] = useState<boolean[]>([]);
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
+    const sort: Sort = {
+      fieldName: 'created_at',
+      direction: 'DESC'
+    }
 
       useEffect(() => {
         const InquiryData = {
@@ -23,6 +33,8 @@ export default function Page() {
           body: JSON.stringify({
             limit: limit,
             offset: 0,
+            sort: sort,
+            filters: []
           })
         }
     
@@ -59,6 +71,8 @@ export default function Page() {
             body: JSON.stringify({
               limit: limit,
               offset: (pagesLoaded * limit) - 1,
+              sort: sort,
+              filters: []
             })
         }
         async function getData() {
@@ -95,13 +109,18 @@ export default function Page() {
         })
       }
 
+      const handleDataReceived = (data: Data) => {
+        setInquiries(data.inquiries);
+    };
+
 
     return (
       <div>
+        <SearchBar params={{ limit: 100, offset: 0, topics: false, type: 'inquiries', sort: sort }} onDataReceived={handleDataReceived}/>
+          <p className={styles.title} key={2}>Contact Us Forms</p>
+          <hr/>
           {inquiries ? (
             <div className={styles.inquiriesContainer} key={1}>
-              <p className={styles.title} key={2}>Contact Us Forms</p>
-              <hr/>
               {inquiries?.map((inquiry, index) => (
                 <div className={styles.inquiryContainer} key={inquiry.inquiry_id}>
                   <div className={styles.authorContainer} onClick={() => expand(index)}>

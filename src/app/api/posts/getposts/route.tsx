@@ -6,6 +6,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const formData = await new Response(req.body).json();
     const limit = formData.limit;
     const offset = formData.offset;
+    const sort = formData.sort;
     const filters = formData.filters;
 
     var query = "SELECT * FROM posts";
@@ -23,8 +24,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
             }
         }
     }
-
-    query = query.concat(" ORDER BY created_at DESC LIMIT ? OFFSET ?");
+    query = query.concat(` ORDER BY ${sort.fieldName} ${sort.direction} LIMIT ? OFFSET ?`);
 
     try  {
         const result = await executeQuery({
