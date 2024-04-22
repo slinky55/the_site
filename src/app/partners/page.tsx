@@ -71,15 +71,11 @@ export default async function PartnersPage() {
         </div>
         <div id={styles.partnerblock}>
           <>
-            {[...Array(3)].map((_, i) => (
-              <div key={i}>
-                {(partners || []).map((partner, index) => (
-                  <div id={styles.threeboxes} key={index}>
-                    <Image src={partner.logo} width={300} height={200} alt="Image" />
-                    <span className={styles.paragraphHeader}>{partner.name}</span>
-                    <span className={styles.paragraphContents}>{partner.description}</span>
-                  </div>
-                ))}
+            {(partners || []).map((partner, index) => (
+              <div id={styles.threeboxes} key={index}>
+                <Image src={partner.logo} width={300} height={200} alt="Image" />
+                <span className={styles.paragraphHeader}>{partner.name}</span>
+                <span className={styles.paragraphContents}>{partner.description}</span>
               </div>
             ))}
           </>

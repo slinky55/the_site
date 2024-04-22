@@ -8,6 +8,7 @@ export const sequelize = new Sequelize(process.env.POSTGRES_URL, {
 });
 
 export default async function executeQuery({ query, values }) {
+  console.log(query);
   try {
     const results = await sequelize.query(query, {
       replacements: values,

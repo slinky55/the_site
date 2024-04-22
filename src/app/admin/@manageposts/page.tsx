@@ -6,6 +6,13 @@ import { Dialog, Description, Transition } from '@headlessui/react'
 import DropboxChooser from 'react-dropbox-chooser';
 import { Post } from '@/app/types/post';
 import { Spinner } from '@/app/components/Spinner';
+import Image from 'next/image';
+import SearchBar from '@/app/components/Searchbar';
+import { Sort } from '@/app/types/sort';
+
+interface Data {
+  posts: Post[]
+}
 import UpdateMessage from "@/app/components/UpdateMessage";
 import DeleteMessage from "@/app/components/DeleteMessage";
 
@@ -25,6 +32,10 @@ export default function Page() {
 
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
+    const sort: Sort = {
+      fieldName: 'created_at',
+      direction: 'DESC'
+    }
 
     const [deleteState, setDeleteState] = useState(false);
     const [updateState, setUpdateState] = useState(false);
@@ -38,6 +49,7 @@ export default function Page() {
           body: JSON.stringify({
             limit: limit,
             offset: 0,
+            filters: []
           })
         }
         async function getData() {
@@ -66,6 +78,10 @@ export default function Page() {
         getData();
     }, []);
 
+    useEffect(() => {
+      setLoading(false);
+    }, [posts])
+
     async function loadMore() {
         setLoading(true);
         const queryData = {
@@ -76,6 +92,7 @@ export default function Page() {
             body: JSON.stringify({
               limit: limit,
               offset: (pagesLoaded * limit) - 1,
+              filters: []
             })
         }
         async function getData() {
@@ -211,16 +228,21 @@ export default function Page() {
       setEditing(!editing);
     }
 
+    const handleDataReceived = (data: Data) => {
+      setPosts(data.posts);
+  };
+
     return (
       <>
-      <div className={styles.header}>Manage Posts</div>
+        <div className={styles.header}>Manage Posts</div>
           <hr/>
+          <SearchBar params={{ limit: 100, offset: 0, topics: true, type: 'posts', sort: sort }} onDataReceived={handleDataReceived}/>
       <div className={styles.container}> 
-      {posts ? (
+      {loading ? (<></>) : posts ? (
         posts.map((post, index) => (
           <>
             <div className={styles.subContainer} key={index}>
-              <img className={styles.thumbnail} src={post.image_src} alt=""/>
+              <Image className={styles.thumbnail} src={post.image_src} width={500} height={500} alt=""/>
               <div className={styles.title}>
                 {post.title}
               </div>
@@ -269,7 +291,7 @@ export default function Page() {
                         {!editing ? (
                           <div>
                           Title: {post.title}
-                          Thumbnail: <img className={styles.thumbnail} src={post.image_src}/>
+                          Thumbnail: <Image className={styles.thumbnail} src={post.image_src} width={500} height={500} alt=""/>
                         </div>
                         ) : (
                             <></>

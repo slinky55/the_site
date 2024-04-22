@@ -1,6 +1,5 @@
 'use client'
 import { v4 as uuidv4 } from 'uuid';
-import { Image } from '@/app/types/image';
 import { Div } from '@/app/types/div';
 import { useState, useEffect } from 'react';
 import { Spinner } from '@/app/components/Spinner';
@@ -8,12 +7,13 @@ import styles from './page.module.css';
 import SuccessMessage from "@/app/components/SuccessMessage";
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
+import Image from 'next/image';
 
 
 export default function Page() {
     /* Loading Images and Divs from DB */
     const [divs, setDivs] = useState<Div[]>([]);
-    const [images,setImages] = useState<Image[]>([]);
+    const [images,setImages] = useState<any[]>([]);
     const [loadingImg, setLoadingImg] = useState(true);
     const [loadingDiv, setLoadingDiv] = useState(true);
     const [imgPagesLoaded, setImgPagesLoaded] = useState<number>(0);
@@ -289,7 +289,7 @@ export default function Page() {
                 images.map((img) => (
                   <>
                     <div>
-                      <img className={styles.thumbnail} src={img.url}/>
+                      <Image className={styles.thumbnail} src={img.url} alt="" width={800} height={800}/>
                       <div className={styles.labelName}>{img.label}</div>
                     </div>
                   </>

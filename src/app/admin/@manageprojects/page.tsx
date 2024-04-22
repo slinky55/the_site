@@ -8,6 +8,13 @@ import { Project } from '@/app/types/project';
 import { Spinner } from "@/app/components/Spinner";
 import UpdateMessage from "@/app/components/UpdateMessage";
 import DeleteMessage from "@/app/components/DeleteMessage";
+import Image from 'next/image';
+import { Sort } from '@/app/types/sort';
+import SearchBar from '@/app/components/Searchbar';
+
+interface Data {
+  projects: Project[]
+}
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
@@ -24,6 +31,10 @@ export default function Page() {
     const [loading, setLoading] = useState(true);
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
+    const sort: Sort = {
+      fieldName: 'title',
+      direction: 'DESC'
+    }
 
     const [deleteState, setDeleteState] = useState(false);
     const [updateState, setUpdateState] = useState(false);
@@ -38,6 +49,8 @@ export default function Page() {
             body: JSON.stringify({
               limit: limit,
               offset: 0,
+              sort: sort,
+              filters: []
             })
           }
             try {
@@ -75,6 +88,8 @@ export default function Page() {
           body: JSON.stringify({
             limit: limit,
             offset: (pagesLoaded * limit) - 1,
+            sort: sort,
+            filters: []
           })
       }
       async function getData() {
@@ -234,16 +249,21 @@ export default function Page() {
     setEditing(!editing);
   }
 
+  const handleDataReceived = (data: Data) => {
+    setProjects(data.projects);
+  };
+
     return (
       <>
       <div className={styles.header}>Manage Projects</div>
           <hr/>
+        <SearchBar params={{ limit: 100, offset: 0, topics: false, type: 'projects', sort: sort }} onDataReceived={handleDataReceived}/>
       <div className={styles.container}> 
       {projects ? (
         projects.map((project, index) => (
           <>
             <div className={styles.subContainer}>
-              <img className={styles.thumbnail} src={project.primary_image_src}/>
+              <Image className={styles.thumbnail} src={project.primary_image_src} width={100} height={100} alt=""/>
               <div className={styles.title}>
                 {project.title}
               </div>
@@ -290,7 +310,7 @@ export default function Page() {
                           <div>
                           Title: {project.title}
                           Project Leader: {project.project_lead}
-                          Thumbnail: <img className={styles.thumbnail} src={project.primary_image_src}/>
+                          Thumbnail: <Image className={styles.thumbnail} src={project.primary_image_src} width={500} height={500} alt=""/>
                         </div>
                         ) : (
                             <></>
