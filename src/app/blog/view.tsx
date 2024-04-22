@@ -4,6 +4,7 @@ import { Post } from '../types/post';
 import { useRouter } from 'next/navigation';
 import { Div } from '../types/div';
 import Image from 'next/image';
+import { Filter } from '../types/filter'
 
 export default function BlogPage() {
     const [images, setImages] = useState<any[]>([]);
@@ -12,8 +13,12 @@ export default function BlogPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [users, setUsers] = useState<any[]>([]);
+    const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
+    const [searchContent, setSearchContent] = useState<string>('');
+    const [filters, setFilters] = useState<Filter[]>([]);
     const router = useRouter();
     const limit = 10;
+    const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health"]
 
     useEffect(() => {
         const postData = {
@@ -23,7 +28,8 @@ export default function BlogPage() {
             },
             body: JSON.stringify({
                 limit: limit,
-                offset: 0
+                offset: 0,
+                filters: []
             })
         }
 
@@ -121,7 +127,87 @@ export default function BlogPage() {
         }
     }, [posts]);
 
-    const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health"]
+    const arrayToString = (array: string[]) => array.join(', ');
+
+    const toggleTopic = (topic: string) => {
+        if (selectedTopics.includes(topic)) {
+            setSelectedTopics(selectedTopics.filter(item => item !== topic));
+        } else {
+            setSelectedTopics([...selectedTopics, topic]);
+        }
+    };
+
+    async function search() {
+        setLoading(true);
+        setFilters([]);
+        if(selectedTopics.length > 0) {
+            const filter = {
+                fieldName: 'topics',
+                operator: 'IN',
+                fieldValue:  arrayToString(selectedTopics)
+            }
+            setFilters([filter]);
+        }
+        
+        if(searchContent !== '') {
+            const filter = {
+                fieldName: 'title',
+                operator: 'CONTAINS',
+                fieldValue: searchContent
+            }
+            setFilters((prevFilters) => [...prevFilters, filter])
+        }
+
+        if(filters.length > 0) {
+            const postData = {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    limit: limit,
+                    offset: 0,
+                    filters: filters
+                })
+            }
+    
+            async function getData() {
+                try {
+                    const res = await fetch("/api/posts/getposts", postData);
+    
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! Status: ${res.status}`);
+                    }
+    
+                    const data = await res.json();
+                    setPosts(data.posts);
+    
+                    // Fetch user data for each post
+                    const users = await Promise.all(data.posts.map(async (post: { user_id: any; }) => {
+                        const userRes = await fetch(`/api/users/getusers`, {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                            },
+                            body: JSON.stringify({ id: post.user_id })
+                        });
+                        if (!userRes.ok) {
+                            throw new Error(`HTTP error! Status: ${userRes.status}`);
+                        }
+                        return userRes.json();
+                    }));
+    
+                    setUsers(users);
+    
+                } catch (error) {
+                    console.error(error);
+                    setError('Failed to load data');
+                } finally {
+                    setLoading(false);
+                }
+            }
+        }
+    }
 
     function getItem(l: string, img: boolean) {
         if(img) {
@@ -142,6 +228,51 @@ export default function BlogPage() {
 
     return (
         <>
+            <div className='m-6'>
+                <div className="search__input border-[1px] border-solid border-red-500 flex flex-row items-center gap-5 p-1 rounded-[8px]">
+                    <label 
+                        className='pl-2'
+                        htmlFor="inputId">
+                        <svg fill="#FF0000" height="20px" width="20px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 488.4 488.4">
+                            <path d="M0,203.25c0,112.1,91.2,203.2,203.2,203.2c51.6,0,98.8-19.4,134.7-51.2l129.5,129.5c2.4,2.4,5.5,3.6,8.7,3.6
+                            s6.3-1.2,8.7-3.6c4.8-4.8,4.8-12.5,0-17.3l-129.6-129.5c31.8-35.9,51.2-83,51.2-134.7c0-112.1-91.2-203.2-203.2-203.2
+                            S0,91.15,0,203.25z M381.9,203.25c0,98.5-80.2,178.7-178.7,178.7s-178.7-80.2-178.7-178.7s80.2-178.7,178.7-178.7
+                            S381.9,104.65,381.9,203.25z"/>
+                        </svg>
+                    </label>
+                    <input
+                        id="inputId"
+                        value={searchContent}
+                        onChange={(e) => setSearchContent(e.target.value)}
+                        placeholder="Search for a blog post"
+                        className=" focus:ring-0 bg-[transparent] outline-none border-none w-full py-3 pr-3 rounded-md focus:outline-none" 
+                        required />
+                    <button onClick={search} className="m-2 py-2 px-4 rounded bg-red-500 text-white hover:bg-red-700">Search</button>
+                </div>
+                <div className="flex flex-wrap">
+                    {topics.map((topic, index) => (
+                        <button
+                        key={index}
+                        className={`m-2 py-2 px-4 rounded ${selectedTopics.includes(topic) ? 'bg-red-500 text-white' : 'border border-red-500 bg-transparent text-red-500'}`}
+                        onClick={() => toggleTopic(topic)}
+                        >
+                            {topic}
+                        </button>
+                    ))}
+                    <button
+                        className={`m-2 py-2 px-4 rounded ${selectedTopics.length === topics.length ? 'bg-red-500 text-white' : 'border border-red-500 bg-transparent text-red-500'}`}
+                        onClick={() => {
+                            if (selectedTopics.length === topics.length) {
+                                setSelectedTopics([]);
+                            } else {
+                                setSelectedTopics([...topics]);
+                            }
+                        }}
+                    >
+                        {selectedTopics.length === topics.length ? 'Deselect All' : 'Select All'}
+                    </button>
+                </div>
+            </div>
             <div>
                 {loading ? (
                     <p>Loading...</p>
@@ -171,7 +302,7 @@ export default function BlogPage() {
                                                     <div
                                                         className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
                                                         <Image
-                                                            src='https://www.dropbox.com/scl/fi/z8vgvct0qo2tfs1r9i7eg/brownie-recipe.jpg?rlkey=f9vkc9dijqtvembbk5uzkwalk&raw=1'
+                                                            src={post.image_src}
                                                             alt=""
                                                             className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
                                                             width={500} height={500}
@@ -210,7 +341,8 @@ export default function BlogPage() {
                                                                 <Image src={post.image_src} alt=""
                                                                      className="h-10 w-10 rounded-full bg-gray-50"
                                                                      width={100}
-                                                                     height={100}/>
+                                                                     height={100}
+                                                                     />
                                                                 <div className="text-sm leading-6">
                                                                     <p className="font-semibold text-gray-900">
                                                                         <a href={post.user_id}>
@@ -237,6 +369,5 @@ export default function BlogPage() {
                 }
             </div>
         </>
-    )
-        ;
+    );
 }

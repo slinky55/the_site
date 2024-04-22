@@ -8,6 +8,7 @@ import { Project } from '@/app/types/project';
 import { Spinner } from "@/app/components/Spinner";
 import UpdateMessage from "@/app/components/UpdateMessage";
 import DeleteMessage from "@/app/components/DeleteMessage";
+import Image from 'next/image';
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
@@ -243,7 +244,7 @@ export default function Page() {
         projects.map((project, index) => (
           <>
             <div className={styles.subContainer}>
-              <img className={styles.thumbnail} src={project.primary_image_src}/>
+              <Image className={styles.thumbnail} src={project.primary_image_src} width={100} height={100} alt=""/>
               <div className={styles.title}>
                 {project.title}
               </div>
@@ -290,7 +291,7 @@ export default function Page() {
                           <div>
                           Title: {project.title}
                           Project Leader: {project.project_lead}
-                          Thumbnail: <img className={styles.thumbnail} src={project.primary_image_src}/>
+                          Thumbnail: <Image className={styles.thumbnail} src={project.primary_image_src} width={500} height={500} alt=""/>
                         </div>
                         ) : (
                             <></>

@@ -8,6 +8,7 @@ import { Partner } from '@/app/types/partner';
 import { Spinner } from "@/app/components/Spinner";
 import UpdateMessage from "@/app/components/UpdateMessage";
 import DeleteMessage from "@/app/components/DeleteMessage";
+import Image from 'next/image';
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
@@ -224,7 +225,7 @@ export default function Page() {
         partners.map((partner, index) => (
           <>
             <div className={styles.subContainer} key={index}>
-              <img className={styles.thumbnail} src={partner.logo} alt="key"/>
+              <Image className={styles.thumbnail} src={partner.logo} width={500} height={500} alt=""/>
               <div className={styles.title}>
                 {partner.name}
               </div>
@@ -275,7 +276,7 @@ export default function Page() {
                           Partner: {partner.name}
                           URL: {partner.website_link}
                           Partner Since: {partner.partnership_formed}
-                          Logo: <img className={styles.thumbnail} src={partner.logo}/>
+                          Logo: <Image className={styles.thumbnail} src={partner.logo} width={500} height={500} alt=""/>
                         </div>
                         ) : (
                             <></>

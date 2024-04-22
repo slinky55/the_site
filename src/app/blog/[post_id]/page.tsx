@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faReply, faCancel, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { Post } from '../../types/post'
 import { Comment } from '../../types/comment'
+import Image from 'next/image';
 
 interface PostPageProps {
     params: {
@@ -116,7 +117,8 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         }
     }, [comments]);
 
-
+    /* note: function unused at the moment because 
+       post deletion will be done in the admin panel */
     async function deletePost() {
         const postData = {
             method: "DELETE",
@@ -248,7 +250,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                             <p className={styles.date} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</p>
                         </div>
                         <div className={styles.authorTile} key={post.user_id}>
-                            <img src={post.image_src}></img>
+                            <Image src={post.image_src} alt="" width={500} height={500}/>
                         </div>
                         <div className={styles.postContainer}>
                             <div
@@ -258,7 +260,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                         </div>
                         <div className={styles.postFooter}>
                             <p className={styles.date} key={post.post_id}><i>Edited on: {new Date(post.last_modified).toLocaleString()}</i></p>
-                            <button onClick={deletePost}><FontAwesomeIcon className={styles.trashIcon} icon={faTrash}/></button>
                         </div>
                     </div>
                 ) : (
