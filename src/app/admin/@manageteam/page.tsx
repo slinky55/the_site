@@ -8,6 +8,8 @@ import {Spinner} from '@/app/components/Spinner';
 import {TeamLeader} from '@/app/types/teamleader';
 import UpdateMessage from "@/app/components/UpdateMessage";
 import DeleteMessage from "@/app/components/DeleteMessage";
+import Image from 'next/image';
+import { Sort } from '@/app/types/sort';
 
 export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
@@ -25,6 +27,10 @@ export default function Page() {
 
     const [pagesLoaded, setPagesLoaded] = useState<number>(0);
     const limit = 10;
+    const sort: Sort = {
+      fieldName: 'leader_name',
+      direction: 'ASC'
+    }
 
     const [deleteState, setDeleteState] = useState(false);
     const [updateState, setUpdateState] = useState(false);
@@ -39,6 +45,7 @@ export default function Page() {
             body: JSON.stringify({
               limit: limit,
               offset: 0,
+              sort: sort
             })
         }
         async function getData() {
@@ -223,7 +230,7 @@ export default function Page() {
         teamLeaders.map((teamLeader, index) => (
           <>
             <div className={styles.subContainer}>
-              <img className={styles.thumbnail} src={teamLeader.image_src}/>
+              <Image className={styles.thumbnail} src={teamLeader.image_src} alt="" width={500} height={500}/>
               <div className={styles.title}>
                 {teamLeader.leader_name}
               </div>
@@ -270,7 +277,7 @@ export default function Page() {
                           <div>
                           Team Member: {teamLeader.leader_name}
                           Role: {teamLeader.team_role}
-                          Thumbnail: <img className={styles.thumbnail} src={teamLeader.image_src}/>
+                          Thumbnail: <Image className={styles.thumbnail} src={teamLeader.image_src} alt="" width={500} height={500}/>
                         </div>
                         ) : (
                             <></>

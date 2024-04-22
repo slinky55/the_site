@@ -4,6 +4,18 @@ import { Post } from '../types/post';
 import { useRouter } from 'next/navigation';
 import { Div } from '../types/div';
 import Image from 'next/image';
+import SearchBar from '../components/Searchbar';
+import { Sort } from '../types/sort';
+
+interface BlogProps {
+    params: {
+        post_id: string;
+    };
+}
+
+interface Data {
+    posts: Post[]
+}
 
 export default function BlogPage() {
     const [images, setImages] = useState<any[]>([]);
@@ -14,6 +26,10 @@ export default function BlogPage() {
     const [users, setUsers] = useState<any[]>([]);
     const router = useRouter();
     const limit = 10;
+    const sort: Sort = {
+        fieldName: 'created_at',
+        direction: 'DESC'
+      }
 
     useEffect(() => {
         const postData = {
@@ -23,7 +39,9 @@ export default function BlogPage() {
             },
             body: JSON.stringify({
                 limit: limit,
-                offset: 0
+                offset: 0,
+                sort: sort,
+                filters: []
             })
         }
 
@@ -121,7 +139,9 @@ export default function BlogPage() {
         }
     }, [posts]);
 
-    const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health"]
+    const handleDataReceived = (data: Data) => {
+        setPosts(data.posts);
+    };
 
     function getItem(l: string, img: boolean) {
         if(img) {
@@ -142,6 +162,7 @@ export default function BlogPage() {
 
     return (
         <>
+            <SearchBar params={{ limit: 100, offset: 0, topics: true, type: 'posts', sort: sort }} onDataReceived={handleDataReceived}/>
             <div>
                 {loading ? (
                     <p>Loading...</p>
@@ -149,7 +170,7 @@ export default function BlogPage() {
                     <p>Error: {error}</p>
                 ) : posts && posts.length > 0 ?
                     (
-                        <div className="bg-white py-24 sm:py-32">
+                        <div className="bg-white py-4 sm:py-8">
                             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                                 <div className="mx-auto max-w-2xl lg:max-w-4xl">
                                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">From the blog</h2>
@@ -171,7 +192,7 @@ export default function BlogPage() {
                                                     <div
                                                         className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
                                                         <Image
-                                                            src='https://www.dropbox.com/scl/fi/z8vgvct0qo2tfs1r9i7eg/brownie-recipe.jpg?rlkey=f9vkc9dijqtvembbk5uzkwalk&raw=1'
+                                                            src={post.image_src}
                                                             alt=""
                                                             className="absolute inset-0 h-full w-full rounded-2xl bg-gray-50 object-cover"
                                                             width={500} height={500}
@@ -210,7 +231,8 @@ export default function BlogPage() {
                                                                 <Image src={post.image_src} alt=""
                                                                      className="h-10 w-10 rounded-full bg-gray-50"
                                                                      width={100}
-                                                                     height={100}/>
+                                                                     height={100}
+                                                                     />
                                                                 <div className="text-sm leading-6">
                                                                     <p className="font-semibold text-gray-900">
                                                                         <a href={post.user_id}>
@@ -237,6 +259,5 @@ export default function BlogPage() {
                 }
             </div>
         </>
-    )
-        ;
+    );
 }

@@ -4,6 +4,13 @@ import styles from '../@manageprojects/page.module.css';
 import { Post } from '@/app/types/post';
 import { Comment } from '@/app/types/comment';
 import Image from "next/image"
+import { Filter } from '@/app/types/filter';
+import { Sort } from '@/app/types/sort';
+import SearchBar from '@/app/components/Searchbar';
+
+interface Data {
+  posts: Post[]
+}
 
 export default function Page() {
   const [posts, setPosts] = useState<Post[]>([]);
@@ -11,10 +18,30 @@ export default function Page() {
   const [comments, setComments] = useState<Comment[]>([]);
   const [loading, setLoading] = useState(true);
 
+  const [searchContent, setSearchContent] = useState<string>('');
+  
+  const limit = 10;
+  const sort: Sort = {
+    fieldName: 'created_at',
+    direction: 'DESC'
+  }
+
     useEffect(() => {
+      const postData = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          limit: 1000,
+          offset: 0,
+          sort: sort,
+          filters: []
+        })
+      }
         async function getData() {
             try {
-                const res = await fetch("/api/posts/getposts");
+                const res = await fetch("/api/posts/getposts", postData);
 
                 if (!res.ok) {
                     throw new Error(`HTTP error! Status: ${res.status}`);
@@ -74,36 +101,81 @@ export default function Page() {
       getData();
     }, [post]);
 
+    async function deleteComment(id: string) {
+      const query2Data = {
+        method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            comment_id: id,
+          }),
+      }
+
+      const res = await fetch("/api/comments/deletecomment", query2Data)
+      console.log(res);
+      if (!res.ok) {
+        throw new Error(`HTTP error! Status: ${res.status}`);
+      }
+
+      const data = await res.json();
+
+    }
+
+    const handleDataReceived = (data: Data) => {
+      setPosts(data.posts);
+  };
+
     return (
       <>
       <div className={styles.header}>Manage Comments</div>
           <hr/>
+          <SearchBar params={{ limit: 100, offset: 0, topics: true, type: 'posts', sort: sort }} onDataReceived={handleDataReceived}/>
       <div className={styles.instruction}>Please begin by selecting the post whose comments you wish to review.</div>
       <div className={styles.container}> 
       {post ? (
-      <div>
-        {comments.map((comment, key) => (
-          <div className={styles.subContainer} key={key}>
-            <div className={styles.title}>
-              {comment.content}
+        <>
+          {posts.map((post, key) => (
+            <div className={styles.subContainer} key={key}>
+              <Image className={styles.thumbnail} src={post.image_src} alt="" width={500} height={500}/>
+              <div className={styles.title}>
+                {post.title}
+              </div>
+              <div className={styles.user}>
+                {post.user_id}
+              </div>
+              <div className={styles.date}>
+                  {new Date(post.created_at).toLocaleString()}
+              </div>
+              <button onClick={() => setPost(post)} className={styles.btn}>
+                Select Post
+              </button>
             </div>
-            <div className={styles.user}>
-              {comment.user_id}
-            </div>
-            <div className={styles.date}>
-                {new Date(comment.created_at).toLocaleString()}
-            </div>
-            <button className={styles.btn}>
-              Select
-            </button>
-        </div>
-      ))}
-      </div>
+          ))}
+          <div>
+            {comments.map((comment, key) => (
+              <div className={styles.subContainer} key={key}>
+                <div className={styles.title}>
+                  {comment.content}
+                </div>
+                <div className={styles.user}>
+                  {comment.user_id}
+                </div>
+                <div className={styles.date}>
+                    {new Date(comment.created_at).toLocaleString()}
+                </div>
+                <button className={styles.btn} onClick={() => deleteComment(comment.comment_id)}>
+                    Delete
+                </button>
+              </div>
+            ))}
+          </div>
+        </>
       ) 
       : posts ? (
         posts.map((post, key) => (
           <div className={styles.subContainer} key={key}>
-            <Image className={styles.thumbnail} src={post.image_src} alt="filler"/>
+            <Image className={styles.thumbnail} src={post.image_src} alt="" width={500} height={500}/>
             <div className={styles.title}>
               {post.title}
             </div>

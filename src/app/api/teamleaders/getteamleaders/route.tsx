@@ -7,13 +7,13 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const formData = await new Response(req.body).json();
     const limit = formData.limit;
     const offset = formData.offset;
-    
+    const sort = formData.sort;
+
     try  {
         const result = await executeQuery({
-            query: 'SELECT * FROM TeamLeader ORDER BY leader_name DESC LIMIT ? OFFSET ?',
+            query: `SELECT * FROM TeamLeader ORDER BY ${sort.fieldName} ${sort.direction} LIMIT ? OFFSET ?`,
             values: [limit, offset],
         })
-        console.log(result);
 
         if (res) {
             return NextResponse.json({leaders: result}, {status: 200})

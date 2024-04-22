@@ -1,14 +1,12 @@
 'use client'
 
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment } from 'react'
 import Link from 'next/link'
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 import styles from './page.module.css';
 import { Button } from '@/app/components/Button'
 import { NavLink } from '@/app/components/NavLink'
-import { getSession, useSession } from 'next-auth/react'
-import { Session } from '@next-auth/sequelize-adapter/dist/models'
 
 function MobileNavLink({
 href,
@@ -99,48 +97,21 @@ function MobileNavigation() {
 }
 
 export function Header() {
-    const [session, setSession] = useState(Object);
-
-    useEffect(() => {
-        getSession().then((s) => {
-            if (s) {
-                setSession(s)
-            } else {
-                setSession(null);
-            }
-        }).catch((e) => {
-            console.log("error getting session from server")
-            console.log(e);
-            setSession(null);
-        })
-    }, []);
-
     return (
-        <header>
-                <nav className="relative z-50 flex justify-between bg-black col-span-12 px-32 h-14">
-                    <div className="flex items-center md:gap-x-12">
-                        <div className="hidden md:flex md:gap-x-6">
-                            <NavLink href="/">Home</NavLink>
-                            <NavLink href="/about-us">About Us</NavLink>
-                            <NavLink href="/research-library">Research Library</NavLink>
-                            <NavLink href="/news-and-events">News and Events</NavLink>
-                            <NavLink href="/partners">Partners</NavLink>
-                            <NavLink href="/projects">Projects</NavLink>
-                            <NavLink href="/blog">Blog</NavLink>
-                            <NavLink href="/contact">Contact Us</NavLink>
-                        </div>
-                    </div>
-                    <div className="flex items-center gap-x-5 md:gap-x-8">
-                        <div className="hidden md:block">
-                        </div>
-                        {!session && <Button href="/login" color="red">
-                            <span>Sign In</span>
-                        </Button>}
-                        <div className="-mr-1 md:hidden">
-                            <MobileNavigation />
-                        </div>
-                    </div>
-                </nav>
-        </header>
+        <div id={styles.toolbar}>
+        <div>
+          <a href="/" className={styles.navLink}>Home</a>
+          <a href="/about-us" className={styles.navLink}>About Us</a>
+          <a href="/research-library" className={styles.navLink}>Research Library</a>
+          <a href="/news-and-elements" className={styles.navLink}>News and Events</a>
+          <a href="/partners" className={styles.navLink}>Partners</a>
+          <a href="/projects" className={styles.navLink}>Projects</a>
+          <a href="/blog" className={styles.navLink}>Blog</a>
+          <a href="/contact" className={styles.navLink}>Contact Us</a>
+        </div>
+        <div>
+          <a href="#link9" className={`${styles.signInButton}`}>Sign In</a>
+        </div>
+      </div>
     )
 }

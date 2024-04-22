@@ -63,26 +63,36 @@ export default async function PartnersPage() {
 
     return (
       <>
-        <div id={styles.redgraientsection}>
-          <span style={{ width: "100vw" }}>Our Partners</span>
-          <div id={styles.centerDisplayText}>
-            <span>{getItem('intro', false)?.content}</span>
-          </div>
-        </div>
-        <div id={styles.partnerblock}>
-          <>
-            {[...Array(3)].map((_, i) => (
-              <div key={i}>
-                {(partners || []).map((partner, index) => (
-                  <div id={styles.threeboxes} key={index}>
-                    <Image src={partner.logo} width={300} height={200} alt="Image" />
-                    <span className={styles.paragraphHeader}>{partner.name}</span>
-                    <span className={styles.paragraphContents}>{partner.description}</span>
-                  </div>
-                ))}
+        <div className="bg-white py-4 sm:py-8">
+          <div className="mx-auto max-w-7xl px-6 lg:px-8">
+              <div className="mx-auto max-w-2xl text-center">
+                  <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Partners</h2>
+                  <p className="mt-2 text-lg leading-8 text-gray-600">
+                      Meet the T.H.E. Team's partners!
+                  </p>
               </div>
-            ))}
-          </>
+              <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+                  {partners?.map((partner: Partner) => (
+                      <article key={partner.name} className="flex flex-col items-start justify-between">
+                          <div className="relative w-full">
+                              <Image src={partner.logo} alt="" className="object-cover w-full h-48 rounded-2xl" width={500} height={500} />
+                              <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
+                          </div>
+                          <div className="max-w-xl">
+                              <div className="group relative">
+                                  <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+                                      <a href={`${partner.website_link}`}>
+                                          <span className="absolute inset-0" />
+                                          {partner.name}
+                                      </a>
+                                  </h3>
+                                  <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{partner.description}</p>
+                              </div>
+                          </div>
+                      </article>
+                  ))}
+              </div>
+          </div>
         </div>
       </>
     )

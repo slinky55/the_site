@@ -4,6 +4,7 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import {Container} from './Container'
 import {useState, useEffect, useMemo} from 'react'
+import { Sort } from '../types/sort'
 
 function useTransformedEvents(initialEvents: unknown) {
     const [events, setEvents] = useState([]);
@@ -29,6 +30,10 @@ function useTransformedEvents(initialEvents: unknown) {
 
 export default function Calendar() {
     const [initialEvents, setInitialEvents] = useState([]);
+    const sort: Sort = {
+        fieldName: 'event_start',
+        direction: 'DESC'
+    }
     const eventData = useMemo(() => ({
         method: "POST",
         headers: {
@@ -36,7 +41,9 @@ export default function Calendar() {
         },
         body: JSON.stringify({
             limit: 1000,
-            offset: 0
+            offset: 0,
+            sort: sort,
+            filters: []
         })
     }), []);
     useEffect(() => {
