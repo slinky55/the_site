@@ -1,6 +1,6 @@
 'use client'
-import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import {useState} from "react";
+import {v4 as uuidv4} from 'uuid';
 import styles from './page.module.css';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
@@ -40,7 +40,7 @@ export default function Page() {
         setTimeout(()  => {
           setSuccess(false);
         }, 3000);
-        
+
         } catch(error) {
             console.error('Error:', error);
         }
@@ -65,7 +65,7 @@ export default function Page() {
           <hr/>
         <div className={styles.container}>
           <input
-          className={styles.titleInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           type="text"
           placeholder="Project Name"
           id="title"
@@ -73,7 +73,7 @@ export default function Page() {
           onChange={(e) => setTitle(e.target.value)}
           required/>
           <input
-          className={styles.projectLeadInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           type="text"
           placeholder="Project Leader"
           id="projectLead"
@@ -87,7 +87,7 @@ export default function Page() {
           value={content}
           onChange={(e) => setContent(e.target.value)}
           required/>
-          <div 
+          <div
           className={styles.galleryLabel}>
             Upload project thumbnail
           </div>
@@ -101,7 +101,7 @@ export default function Page() {
             <button className={styles.dropboxUpload}>Upload Thumbnail</button>
           </DropboxChooser>
           <hr style={{gridColumn: 'span 2'}}/>
-          <div 
+          <div
           className={styles.galleryLabel}>
             Upload images to project gallery
           </div>
@@ -116,7 +116,7 @@ export default function Page() {
           </DropboxChooser>
           <div></div>
           <hr style={{gridColumn: 'span 2'}}/>
-          <button 
+          <button
           className={styles.btn}
           disabled={!uploaded}
           onClick={createProject}>
