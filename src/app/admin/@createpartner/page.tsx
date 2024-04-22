@@ -1,6 +1,6 @@
 'use client'
-import { useEffect, useState } from "react";
-import { v4 as uuidv4 } from 'uuid';
+import {useState} from "react";
+import {v4 as uuidv4} from 'uuid';
 import styles from '../@createevent/page.module.css';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
@@ -41,7 +41,7 @@ export default function Page() {
         setTimeout(()  => {
           setSuccess(false);
         }, 3000);
-        
+
         } catch(error) {
             console.error('Error:', error);
         }
@@ -58,7 +58,7 @@ export default function Page() {
           <hr/>
         <div className={styles.container}>
           <input
-          className={styles.titleInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           type="text"
           placeholder="Partner Name"
           id="name"
@@ -66,7 +66,7 @@ export default function Page() {
           onChange={(e) => setName(e.target.value)}
           required/>
           <input
-          className={styles.projectLeadInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           type="text"
           placeholder="Link to Partner's Website"
           id="role"
@@ -74,22 +74,21 @@ export default function Page() {
           onChange={(e) => setLink(e.target.value)}
           required/>
           <textarea
-          className={styles.contentInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           placeholder="Description of Partner"
           id="about"
           value={about}
           onChange={(e) => setAbout(e.target.value)}
           required/>
           <input
-          className={styles.projectLeadInput}
-          style={{gridColumn: 'span 2'}}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           type="text"
           placeholder="Date Partnership was Formed. Please enter only the year in 'yyyy' form (i.e. 2017)"
           id="partnershipFormed"
           value={partnershipFormed}
           onChange={(e) => setPartnershipFormed(e.target.value)}
           required/>
-          <div 
+          <div
           className={styles.galleryLabel}>
             Upload Partner{"'"}s Logo
           </div>
@@ -100,12 +99,14 @@ export default function Page() {
             multiselect={false}
             extensions={['.jpeg', '.jpg', '.png', 'svg', 'webp', 'wbmp']}
           >
-            <button className={styles.dropboxUpload}>Upload</button>
+            <button                           className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+            >Upload</button>
           </DropboxChooser>
           <hr style={{gridColumn: 'span 2'}}/>
-          <button 
-          className={styles.btn}
-          disabled={!uploaded}
+          <button
+              className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+
+              disabled={!uploaded}
           onClick={createPartner}>
             Create Partner
           </button>

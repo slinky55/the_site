@@ -1,8 +1,8 @@
 'use client'
-import { useEffect, useState } from "react";
-import { DesktopDateTimePicker } from '@mui/x-date-pickers/DesktopDateTimePicker';
+import {useState} from "react";
+import {DesktopDateTimePicker} from '@mui/x-date-pickers/DesktopDateTimePicker';
 import styles from './page.module.css'
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 import SuccessMessage from "@/app/components/SuccessMessage";
 
 export default function Page() {
@@ -14,7 +14,7 @@ export default function Page() {
     const [end, setEnd] = useState<Date>(currentDate);
 
     const [success, setSuccess] = useState(false);
-    
+
 
     async function createEvent() {
       const postData = {
@@ -39,19 +39,19 @@ export default function Page() {
         setTimeout(()  => {
           setSuccess(false);
         }, 3000);
-        
+
         } catch(error) {
             console.error('Error:', error);
         }
   }
-  
+
     return (
       <>
         <div className={styles.title}>Create a New Event</div>
           <hr/>
         <div className={styles.container}>
           <input
-          className={styles.nameInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           type="text"
           placeholder="Event Name"
           id="name"
@@ -59,37 +59,37 @@ export default function Page() {
           onChange={(e) => setName(e.target.value)}
           required/>
           <input
-          className={styles.urlInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           type="url"
           placeholder="Registration URL"
           id="url"
           value={url}
           onChange={(e) => setUrl(e.target.value)}/>
           <textarea
-          className={styles.contentInput}
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           placeholder="Event Description"
           id="content"
           value={content}
           onChange={(e) => setContent(e.target.value)}
           required/>
           <hr style={{gridColumn: 'span 2'}}/>
-          <div 
+          <div
           className={styles.eventLabel}>
             Select Event Start Date & Time
           </div>
-          <div 
+          <div
           className={styles.eventLabel}>
             Select Event End Date & Time
           </div>
-          <DesktopDateTimePicker 
+          <DesktopDateTimePicker
           value={start}
           onChange={(e)=> setStart(e ? e : currentDate)}/>
-          <DesktopDateTimePicker 
+          <DesktopDateTimePicker
           value={end}
           onChange={(e)=> setEnd(e ? e : currentDate)}/>
-          <button 
-          className={styles.btn}
-          onClick={createEvent}>
+          <button
+              className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+              onClick={createEvent}>
             Create Event
           </button>
           <SuccessMessage success={success} message="Event Successfully Created" />

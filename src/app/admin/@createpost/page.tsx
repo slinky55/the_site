@@ -1,7 +1,6 @@
 'use client'
-import { useRouter } from 'next/navigation';
-import React, { useEffect, useState } from 'react'
-import { v4 as uuidv4 } from 'uuid';
+import React, {useState} from 'react'
+import {v4 as uuidv4} from 'uuid';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
 import styles from '../page.module.css';
@@ -29,25 +28,25 @@ export default function Page() {
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
         ['blockquote', 'code-block'],
         ['link', 'image', 'video', 'formula'],
-      
+
         [{ 'header': 1 }, { 'header': 2 }],               // custom button values
         [{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }],
         [{ 'script': 'sub'}, { 'script': 'super' }],      // superscript/subscript
         [{ 'indent': '-1'}, { 'indent': '+1' }],          // outdent/indent
         [{ 'direction': 'rtl' }],                         // text direction
-      
+
         [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
         [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      
+
         [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
         [{ 'font': [] }],
         [{ 'align': [] }],
-      
+
         ['clean']                                         // remove formatting button
       ];
 
     const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health"]
-      
+
     async function createPost() {
         const postData = {
             method: "POST",
@@ -67,11 +66,11 @@ export default function Page() {
         try {
             await fetch('/api/posts/createpost', postData);
             setSuccess(true);
-    
+
             setTimeout(()  => {
               setSuccess(false);
             }, 3000);
-            
+
             } catch(error) {
                 console.error('Error:', error);
             }
@@ -84,13 +83,13 @@ export default function Page() {
 
     return (
         <>
-        
+
           <div>
             <div className={styles.title}>Create a New Post</div>
             <hr/>
             <div className={styles.newPostContainer}>
                 <input
-                    className={styles.newPostTitleInput}
+                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                     placeholder="Title"
                     type="text"
                     id="title"
@@ -101,8 +100,8 @@ export default function Page() {
                 <ReactQuill
                     theme="snow"
                     className={styles.newPostContentInput}
-                    id="postContent" 
-                    value={postContent} 
+                    id="postContent"
+                    value={postContent}
                     onChange={setPostContent}
                     modules={{
                         toolbar: {
@@ -110,7 +109,7 @@ export default function Page() {
                         },
                         imageResize: {} // Add this line
                     }}
-                    placeholder="Write your blog content here!"  
+                    placeholder="Write your blog content here!"
                 />
                 <DropboxChooser
                     appKey={appKey}
@@ -121,8 +120,8 @@ export default function Page() {
                 >
                     <button className={styles.dropboxUpload}>Upload Post Thumbnail</button>
                 </DropboxChooser>
-                <button 
-                    className={styles.newPostBtn} 
+                <button
+                    className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     onClick={createPost}
                     disabled={!uploaded}
                 >

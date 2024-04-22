@@ -6,6 +6,7 @@ import styles from '../@createevent/page.module.css';
 import DropboxChooser from 'react-dropbox-chooser';
 import SuccessMessage from "@/app/components/SuccessMessage";
 
+
 export default function Page() {
 
     const [img, setImg] = useState<string>('')
@@ -56,18 +57,21 @@ export default function Page() {
           <hr/>
         <div className={styles.container}>
           <input
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"          placeholder="Member Name"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+              placeholder="Member Name"
           id="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
           required/>
           <input
-              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"          placeholder="Member Role"
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+              placeholder="Member Role"
           id="role"
           value={role}
           onChange={(e) => setRole(e.target.value)}
           required/>
-          <textarea className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+          <textarea
+              className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
           placeholder="Description of Member"
           id="about"
           value={about}
@@ -80,17 +84,25 @@ export default function Page() {
             multiselect={false}
             extensions={['.jpeg', '.jpg', '.png', 'svg', 'webp', 'wbmp']}
           >
-              <button className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
-                  Upload A User Image
+              <button
+                  className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+                  <div className="flex items-center">
+                      Upload User Image
+                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                           stroke="currentColor" className="w-6 h-6">
+                          <path strokeLinecap="round" strokeLinejoin="round"
+                                d="M9 8.25H7.5a2.25 2.25 0 0 0-2.25 2.25v9a2.25 2.25 0 0 0 2.25 2.25h9a2.25 2.25 0 0 0 2.25-2.25v-9a2.25 2.25 0 0 0-2.25-2.25H15m0-3-3-3m0 0-3 3m3-3V15"/>
+                      </svg>
+                  </div>
               </button>
           </DropboxChooser>
-          <button
-              className="block w-full rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-red-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-          disabled={!uploaded}
-          onClick={createTeam}>
-            Create Member
-          </button>
-          <SuccessMessage success={success} message="Team Member Successfully Added" />
+            <button
+                className="block w-full rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-red-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                disabled={!uploaded}
+                onClick={createTeam}>
+                Create Member
+            </button>
+            <SuccessMessage success={success} message="Team Member Successfully Added" />
         </div>
       </>
     )
