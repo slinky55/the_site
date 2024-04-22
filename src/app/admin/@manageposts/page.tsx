@@ -1,11 +1,11 @@
 'use client'
-import { useEffect, useState, Fragment } from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import styles from '../@manageprojects/page.module.css';
-import { Dialog, Description, Transition } from '@headlessui/react'
+import {Description, Dialog, Transition} from '@headlessui/react'
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
-import { Post } from '@/app/types/post';
-import { Spinner } from '@/app/components/Spinner';
+import {Post} from '@/app/types/post';
+import {Spinner} from '@/app/components/Spinner';
 import UpdateMessage from "@/app/components/UpdateMessage";
 import DeleteMessage from "@/app/components/DeleteMessage";
 
@@ -151,19 +151,19 @@ export default function Page() {
         content: content,
         image_src: img
       };
-      
+
       setPosts(prevPosts => {
         const updatedPost = [...prevPosts];
         updatedPost[index] = updatedPostItem;
         return updatedPost;
       });
-      
+
       // Close the modal after updating
       setModal(prevModal => {
         const newArray = [...prevModal];
         newArray[index] = false;
         return newArray;
-      });      
+      });
     }
 
     async function deletePost(id: string, index: number) {
@@ -215,7 +215,7 @@ export default function Page() {
       <>
       <div className={styles.header}>Manage Posts</div>
           <hr/>
-      <div className={styles.container}> 
+      <div className={styles.container}>
       {posts ? (
         posts.map((post, index) => (
           <>
@@ -237,7 +237,7 @@ export default function Page() {
             <Transition appear show={modal[index] ?? false} as={Fragment}>
           <Dialog
             as="div" className="relative z-10"
-            onClose={() => openModal(index)} 
+            onClose={() => openModal(index)}
             open={modal[index] ?? false}>
               <Transition.Child
                 as={Fragment}
@@ -297,13 +297,13 @@ export default function Page() {
                             onChange={(e) => setTopics(e.target.value)}
                             required/>
                             <textarea
-                            className={styles.contentInput}
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                             placeholder="Post Content (To be changed to quill...)"
                             id="content"
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                             required/>
-                            <div 
+                            <div
                             className={styles.galleryLabel}>
                               Upload New Picture of Member Here
                             </div>
@@ -325,9 +325,9 @@ export default function Page() {
                         <button
                           className={styles.btn}
                           onClick={() => toggleEditing(
-                            post.title, 
-                            post.topics, 
-                            post.content, 
+                            post.title,
+                            post.topics,
+                            post.content,
                             post.image_src)}
                         >
                           Edit
@@ -341,13 +341,13 @@ export default function Page() {
                       </>
                       ) : (
                       <>
-                        <button 
+                        <button
                           className={styles.btn}
                           onClick={() => setEditing(!editing)}
                         >
                           Cancel
                         </button>
-                        <button 
+                        <button
                           className={styles.btn}
                           onClick={() => updatePost(post.post_id, index)}
                         >
@@ -364,7 +364,7 @@ export default function Page() {
         </>
       ))) : (
         <span>No existing posts.</span>
-      )} 
+      )}
       </div>
       <div
         className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"

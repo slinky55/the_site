@@ -1,11 +1,11 @@
 'use client'
-import { useEffect, useState, Fragment } from 'react';
+import {Fragment, useEffect, useState} from 'react';
 import styles from './page.module.css';
-import { Dialog, Description, Transition, Button } from '@headlessui/react'
+import {Description, Dialog, Transition} from '@headlessui/react'
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
-import { Project } from '@/app/types/project';
-import { Spinner } from "@/app/components/Spinner";
+import {Project} from '@/app/types/project';
+import {Spinner} from "@/app/components/Spinner";
 import UpdateMessage from "@/app/components/UpdateMessage";
 import DeleteMessage from "@/app/components/DeleteMessage";
 
@@ -150,14 +150,14 @@ export default function Page() {
         primary_image_src: img,
         content: content,
       };
-      
+
       // Update project item in the projects array
       setProjects(prevProjects => {
         const updatedProjects = [...prevProjects];
         updatedProjects[index] = updatedProjectItem;
         return updatedProjects;
       });
-      
+
       // Close the modal after updating
       setModal(prevModal => {
         const newArray = [...prevModal];
@@ -238,7 +238,7 @@ export default function Page() {
       <>
       <div className={styles.header}>Manage Projects</div>
           <hr/>
-      <div className={styles.container}> 
+      <div className={styles.container}>
       {projects ? (
         projects.map((project, index) => (
           <>
@@ -257,7 +257,7 @@ export default function Page() {
             <Transition appear show={modal[index] ?? false} as={Fragment}>
           <Dialog
             as="div" className="relative z-10"
-            onClose={() => openModal(index)} 
+            onClose={() => openModal(index)}
             open={modal[index] ?? false}>
               <Transition.Child
                 as={Fragment}
@@ -318,13 +318,13 @@ export default function Page() {
                             onChange={(e) => setLead(e.target.value)}
                             required/>
                             <textarea
-                            className={styles.contentInput}
+                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                             placeholder="Description of Member"
                             id="content"
                             value={content}
                             onChange={(e) => setContent(e.target.value)}
                             required/>
-                            <div 
+                            <div
                             className={styles.galleryLabel}>
                               Upload New Thumbnail for Project Here
                             </div>
@@ -355,9 +355,9 @@ export default function Page() {
                         <button
                           className={styles.btn}
                           onClick={() => toggleEditing(
-                            project.title, 
-                            project.project_lead, 
-                            project.content, 
+                            project.title,
+                            project.project_lead,
+                            project.content,
                             project.primary_image_src,
                             project.gallery)}
                         >
@@ -372,13 +372,13 @@ export default function Page() {
                       </>
                       ) : (
                       <>
-                        <button 
+                        <button
                           className={styles.btn}
                           onClick={() => setEditing(!editing)}
                         >
                           Cancel
                         </button>
-                        <button 
+                        <button
                           className={styles.btn}
                           onClick={() => updateProject(project.project_id, index)}
                         >
@@ -395,7 +395,7 @@ export default function Page() {
           </>
       ))) : (
         <span>No existing projects.</span>
-      )} 
+      )}
       </div>
       <div
         className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"

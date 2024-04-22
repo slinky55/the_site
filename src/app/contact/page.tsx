@@ -1,11 +1,11 @@
 'use client'
 
-import React, { useState, useEffect } from 'react';
+import React, {useEffect, useState} from 'react';
 import styles from './page.module.css';
 import ReCAPTCHA from "react-google-recaptcha";
-import { v4 as uuidv4 } from 'uuid';
-import { Image } from '../types/image';
-import { Div } from '../types/div';
+import {v4 as uuidv4} from 'uuid';
+import {Image} from '../types/image';
+import {Div} from '../types/div';
 
 export default function ContactPage() {
   const [images, setImages] = useState<Image[]>([]);
@@ -16,7 +16,7 @@ export default function ContactPage() {
   const [subject, setSubject] = useState('');
   const [msg, setMsg] = useState('');
   const [captcha, setCaptcha] = useState(null);
-  const [postSuccess, setPostSuccess] = useState(false); 
+  const [postSuccess, setPostSuccess] = useState(false);
 
   useEffect(() => {
     const queryData = {
@@ -47,7 +47,7 @@ export default function ContactPage() {
             setImages(data.images);
         } catch (error) {
             console.error(error);
-        } 
+        }
     }
     async function getDivs() {
       try {
@@ -66,14 +66,14 @@ export default function ContactPage() {
           setDivs(data.divs);
       } catch (error) {
           console.error(error);
-      } 
+      }
     }
 
     getImgs();
     getDivs();
   }, [])
 
-  useEffect(() => { 
+  useEffect(() => {
     // Run when postSuccess state changes
     if (postSuccess) {
       const messageElement = document.querySelector('.text-center.font-bold');
@@ -85,7 +85,7 @@ export default function ContactPage() {
         }, 3000); // Hide the message after 3 seconds
       }
     }
-  }, [postSuccess]); 
+  }, [postSuccess]);
 
   async function createInquiry(event: { preventDefault: () => void; }) {
     event.preventDefault(); // Prevent default form submission
@@ -232,7 +232,7 @@ export default function ContactPage() {
               <textarea
                 name="msg"
                 rows={4}
-                className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-400 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
                 defaultValue={''}
                 id="msg"
                 value={msg}
