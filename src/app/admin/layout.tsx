@@ -1,8 +1,8 @@
 "use client"
 
-import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBars } from "@fortawesome/free-solid-svg-icons";
+import {useState} from "react";
+import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {faBars} from "@fortawesome/free-solid-svg-icons";
 import styles from './page.module.css'
 
 export default function AdminLayout({
@@ -153,11 +153,11 @@ export default function AdminLayout({
           {(display == 5) && manageevents}
           {(display == 6) && createproject}
           {(display == 7) && manageprojects}
-          {(display == 8) && createpost} 
-          {(display == 9) && manageposts} 
+          {(display == 8) && createpost}
+          {(display == 9) && manageposts}
           {(display == 10) && commentapproval}
           {(display == 11) && managecomments}
-          {(display == 12) && createresearch} 
+          {(display == 12) && createresearch}
           {(display == 13) && manageresearch}
           {(display == 14) && feedback}
           {(display == 15) && pagemodifier}
