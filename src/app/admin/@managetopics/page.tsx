@@ -114,14 +114,14 @@ export default function Page() {
         />
         <button type="submit">Create Topic</button>
       </form>
-      <ul>
+      <div>
         {topics.map((topic, index) => (
           <li key={topic.topic_id}>
             {topic.topic}
             <button onClick={() => deleteTopic(topic.topic_id, index)}>Delete</button>
           </li>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }

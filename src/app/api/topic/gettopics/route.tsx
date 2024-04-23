@@ -4,10 +4,9 @@ import executeQuery from "../../../lib/db";
 
 export async function POST(req: NextRequest, res: NextResponse) {
     console.log("hey");
-    const formData = await new Response(req.body).json();
     try  {
         const result = await executeQuery({
-            query: 'SELECT * FROM Topic ORDER BY Topic DESC',
+            query: 'SELECT * FROM Topic ORDER BY topic DESC',
             values: [],
         })
         console.log(result);

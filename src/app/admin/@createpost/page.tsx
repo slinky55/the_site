@@ -1,5 +1,5 @@
 'use client'
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import {v4 as uuidv4} from 'uuid';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css';
@@ -12,17 +12,53 @@ import ImageResize from 'quill-image-resize';
 
 Quill.register('modules/imageResize', ImageResize);
 
+interface Topic {
+    topic_id: string,
+    topic: string
+}
 
 
 export default function Page() {
     const [title, setTitle] = useState('')
     const [postContent, setPostContent] = useState('')
     const [img, setImg] = useState<string>('')
+    const [topics, setTopics] = useState('')
+    const [topicsList, setTopicsList] = useState<Topic[]>([])
+    const [selectedTopics, setSelectedTopics] = useState<Topic[]>([]);
     const [uploaded, setUploaded] = useState<Boolean>(false)
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
 
     const [success, setSuccess] = useState(false);
 
+    useEffect(()=> {
+        const queryData = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            }
+          }
+            async function getData() {
+                try {
+                    const res = await fetch("/api/topic/gettopics", queryData);
+      
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! Status: ${res.status}`);
+                    }
+      
+                    const data = await res.json();
+      
+                    if (!Array.isArray(data.topics)) {
+                        throw new Error('Unexpected data format');
+                    }
+      
+                    setTopicsList(data.topics);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+      
+            getData();
+    }, [])
 
     const toolbarOptions = [
         ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
@@ -44,10 +80,14 @@ export default function Page() {
 
         ['clean']                                         // remove formatting button
       ];
-
-    const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health", "AI", "Science"]
       
     async function createPost() {
+        for(let i = 0; i < selectedTopics.length; i++) {
+            setTopics((prevTopics) => {
+                const r = prevTopics.concat(selectedTopics[i].topic)
+                return r;
+            });
+        }
         const postData = {
             method: "POST",
             headers: {
@@ -57,7 +97,7 @@ export default function Page() {
                 post_id: uuidv4(),
                 user_id: 'd9f78e32-919a-474e-b7b7-d20449275d24',
                 title: title,
-                topics: "{}",
+                topics: "{" + topics + "}",
                 image_src: img,
                 content: postContent
             }),
@@ -80,6 +120,14 @@ export default function Page() {
         setImg(files[0].link.replace('dl=0', 'raw=1'));
         setUploaded(true);
     }
+
+    const toggleTopic = (topic: Topic) => {
+        if (selectedTopics.includes(topic)) {
+            setSelectedTopics(selectedTopics.filter(item => item !== topic));
+        } else {
+            setSelectedTopics([...selectedTopics, topic]);
+        }
+    };
 
     return (
         <>
@@ -120,6 +168,31 @@ export default function Page() {
                 >
                     <button className={styles.dropboxUpload}>Upload Post Thumbnail</button>
                 </DropboxChooser>
+                {topicsList && (
+                <div className="flex flex-wrap">
+                    {topicsList.map((topic, index) => (
+                        <button
+                        key={index}
+                        className={`m-2 py-2 px-4 rounded ${selectedTopics.includes(topic) ? 'bg-red-500 text-white' : 'border border-red-500 bg-transparent text-red-500'}`}
+                        onClick={() => toggleTopic(topic)}
+                        >
+                            {topic.topic}
+                        </button>
+                    ))}
+                    <button
+                        className={`m-2 py-2 px-4 rounded ${selectedTopics.length === topics.length ? 'bg-red-500 text-white' : 'border border-red-500 bg-transparent text-red-500'}`}
+                        onClick={() => {
+                            if (selectedTopics.length === topicsList.length) {
+                                setSelectedTopics([]);
+                            } else {
+                                setSelectedTopics([...topicsList]);
+                            }
+                        }}
+                    >
+                        {selectedTopics.length === topics.length ? 'Deselect All' : 'Select All'}
+                    </button>
+                </div>
+                )}
                 <button
                     className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
                     onClick={createPost}
