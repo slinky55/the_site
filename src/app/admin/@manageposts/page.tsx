@@ -50,6 +50,7 @@ export default function Page() {
           body: JSON.stringify({
             limit: limit,
             offset: 0,
+            sort: sort,
             filters: []
           })
         }
@@ -93,6 +94,7 @@ export default function Page() {
             body: JSON.stringify({
               limit: limit,
               offset: (pagesLoaded * limit) - 1,
+              sort: sort,
               filters: []
             })
         }

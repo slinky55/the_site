@@ -8,7 +8,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     const researchId = formData.research_id;
     const title = formData.title;
     const journal = formData.journal;
-    const topics = formData.topics;
+    const topics = "{" + formData.topics + "}";
     const thumbnail = formData.thumbnail;
     const writtenOn = formData.written_on;
     const url = formData.url;
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     try  {
         console.log(formData);
         const result = await executeQuery({
-            query: `UPDATE Research SET title = ?, journal = ?, topics = ?, thumbnail = ?, written_on = DATE_FORMAT(STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.000Z'), '%Y-%m-%d'), url = ? WHERE research_id = ?`,
+            query: `UPDATE Research SET title = ?, journal = ?, topics = ?, thumbnail = ?, written_on = TO_DATE(?, 'YYYY-MM-DD'), url = ? WHERE research_id = ?`,
             values: [title, journal, topics, thumbnail, writtenOn, url, researchId],
         })
         console.log(result);

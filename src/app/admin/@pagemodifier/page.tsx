@@ -8,6 +8,7 @@ import SuccessMessage from "@/app/components/SuccessMessage";
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
 import Image from 'next/image';
+import Home from '@/app/page';
 
 
 export default function Page() {
@@ -268,6 +269,7 @@ export default function Page() {
     return (
       <div className={styles.container}>
         <h1>Current Page: {capitalize(page)}</h1>
+        
         <select value={page} onChange={handlePageChange}>
           <option value="home">Home</option>
           <option value="about">About</option>

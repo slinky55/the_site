@@ -142,7 +142,7 @@ export default function Page() {
           })
       }
 
-      const res = await fetch("/api/event/updateevent", queryData)
+      const res = await fetch("/api/events/updateevent", queryData)
 
       if (!res.ok) {
         throw new Error(`HTTP error! Status: ${res.status}`);
