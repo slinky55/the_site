@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faReply } from '@fortawesome/free-solid-svg-icons';
 import { Post } from '../../types/post'
 import { Comment } from '../../types/comment'
+import Image from 'next/image';
 
 interface PostPageProps {
     params: {
@@ -269,7 +270,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                             <p className={styles.date} key={post.post_id}>{new Date(post.created_at).toLocaleString()}</p>
                         </div>
                         <div className={styles.authorTile} key={post.user_id}>
-                            <img src={post.image_src}></img>
+                            <Image src={post.image_src} alt="" width={700} height={700}/>
                         </div>
                         <div className={styles.postContainer}>
                             <div
@@ -278,7 +279,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                             ></div>
                         </div>
                         <div className={styles.postFooter}>
-                            <p className={styles.date} key={post.post_id}><i>Edited on: {new Date(post.last_modified).toLocaleString()}</i></p>
+                            <p className={styles.date} key={post.post_id}><i>Created on: {new Date(post.created_at).toLocaleString()}</i></p>
                             <button onClick={deletePost}><FontAwesomeIcon className={styles.trashIcon} icon={faTrash as any}/></button>
                         </div>
                     </div>
@@ -318,7 +319,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
                 ) : (
                     <>
-                        <p>No comments yet. Click the {"Reply"} button to be the first to share your thoughts!</p>
+                        <p className='m-3'>No comments yet. Use the comment box below to be the first to share your thoughts!</p>
                         <>
                             <div className={styles.commentForm}>
                                 <div className={styles.commentBox}>

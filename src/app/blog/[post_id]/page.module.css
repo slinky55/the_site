@@ -36,7 +36,8 @@
 }
 
 .post {
-
+    margin-top: 20px;
+    margin-left: 10px;
 }
 
 .postFooter {
@@ -83,6 +84,7 @@
 /* Input Boxes */
 .commentForm {
     position: relative;
+    margin-left: 10px;
 }
 
 .authorInput {
@@ -125,7 +127,7 @@
 .commentSubmit{
     padding: 6px 14px;
     border: none;
-    background: #009cff;
+    background: #ff0000;
     color: #fff;
     cursor: pointer;
     border-radius: 2px;;

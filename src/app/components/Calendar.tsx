@@ -80,7 +80,7 @@ export default function Calendar() {
         }
     }
     return (
-        <div className="flex">
+        <div className="mt-10 flex">
             <Container className="w-3/4">
                 <FullCalendar
                     plugins={[ dayGridPlugin ]}
@@ -97,7 +97,7 @@ export default function Calendar() {
                     <div className="bg-white shadow-md rounded-md p-4">
                         <h2 className="text-lg font-bold mb-4">{eventName}</h2>
                         <div className="mb-2">
-                            <span className="font-semibold">Link:</span> {link}
+                            <span className="font-semibold hover:text-red-500">Link:</span> <a href={`${link}`}>{link}</a>
                         </div>
                         <div className="mb-2">
                             <span className="font-semibold">Content:</span> {content}
