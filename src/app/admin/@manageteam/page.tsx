@@ -207,7 +207,7 @@ export default function Page() {
       });
 
       openModal(index);
-      
+
       const data = await res.json();
 
     }
@@ -244,153 +244,147 @@ export default function Page() {
                 View More
               </button>
           </div>
-          <Transition appear show={modal[index] ?? false} as={Fragment}>
-          <Dialog
-            as="div" className="relative z-10"
-            onClose={() => openModal(index)}
-            open={modal[index] ?? false}>
-              <Transition.Child
-                as={Fragment}
-                enter="ease-out duration-300"
-                enterFrom="opacity-0"
-                enterTo="opacity-100"
-                leave="ease-in duration-200"
-                leaveFrom="opacity-100"
-                leaveTo="opacity-0"
-              >
-                <div className="fixed inset-0 bg-black/25" />
-            </Transition.Child>
-            <div className="fixed inset-0 overflow-y-auto">
-              <div className="flex min-h-full items-center justify-center p-4 text-center">
-                <Transition.Child
-                  as={Fragment}
-                  enter="ease-out duration-300"
-                  enterFrom="opacity-0 scale-95"
-                  enterTo="opacity-100 scale-100"
-                  leave="ease-in duration-200"
-                  leaveFrom="opacity-100 scale-100"
-                  leaveTo="opacity-0 scale-95"
-                >
-                  <Dialog.Panel className="w-full max-w-md transform overflow-hidden rounded-2xl bg-white p-6 text-left align-middle shadow-xl transition-all">
-                      <Dialog.Title
-                        as="h3"
-                        className="text-lg font-medium leading-6 text-gray-900"
-                      >
-                        {!editing ? (
-                          <div>
-                          Team Member: {teamLeader.leader_name}
-                          Role: {teamLeader.team_role}
-                          Thumbnail: <Image className={styles.thumbnail} src={teamLeader.image_src} alt="" width={500} height={500}/>
-                        </div>
-                        ) : (
-                            <></>
-                        )}
-                      </Dialog.Title>
-                      <Description>
-                        {!editing ? (
-                          <div>Description: {teamLeader.about_me}</div>
-                          ) : (
-                          <div className={styles.container}>
-                            <input
-                            className={styles.titleInput}
-                            type="text"
-                            placeholder="Member Name"
-                            id="name"
-                            value={name}
-                            onChange={(e) => setName(e.target.value)}
-                            required/>
-                            <input
-                            className={styles.projectLeadInput}
-                            type="text"
-                            placeholder="Member Role"
-                            id="role"
-                            value={role}
-                            onChange={(e) => setRole(e.target.value)}
-                            required/>
-                            <textarea
-                                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
-                            placeholder="Description of Member"
-                            id="about"
-                            value={about}
-                            onChange={(e) => setAbout(e.target.value)}
-                            required/>
-                            <div
-                            className={styles.galleryLabel}>
-                              Upload New Picture of Member Here
-                            </div>
-                            <DropboxChooser
-                              appKey={appKey}
-                              success={(files: any) => uploadImg(files)}
-                              cancel={() => console.log('Canceled')}
-                              multiselect={false}
-                              extensions={['.jpeg', '.jpg', '.png', 'svg', 'webp', 'wbmp']}
-                            >
-                              <button className={styles.dropboxUpload}>Upload</button>
-                            </DropboxChooser>
-                            <hr style={{gridColumn: 'span 2'}}/>
-                          </div>
-                        )}
-                      </Description>
-                      {!editing ? (
-                      <>
-                        <button
-                          className={styles.btn}
-                          onClick={() => toggleEditing(
-                            teamLeader.leader_name,
-                            teamLeader.team_role,
-                            teamLeader.about_me,
-                            teamLeader.image_src)}
-                        >
-                          Edit
-                        </button>
-                        <button
-                          className={styles.btn}
-                          onClick={() => deleteMember(teamLeader.leader_id, index)}
-                        >
-                          Delete
-                        </button>
-                      </>
-                      ) : (
-                      <>
-                        <button
-                          className={styles.btn}
-                          onClick={() => setEditing(!editing)}
-                        >
-                          Cancel
-                        </button>
-                        <button
-                          className={styles.btn}
-                          onClick={() => updateMember(teamLeader.leader_id, index)}
-                        >
-                          Update
-                        </button>
-                      </>
-                      )}
-                    </Dialog.Panel>
+          <Transition show={modal[index] ?? false} as={Fragment}>
+              <Dialog
+                  as="div" className="relative z-10"
+                  onClose={() => openModal(index)}
+                  open={modal[index] ?? false}>
+                  <Transition.Child
+                      as={Fragment}
+                      enter="ease-out duration-300"
+                      enterFrom="opacity-0"
+                      enterTo="opacity-100"
+                      leave="ease-in duration-200"
+                      leaveFrom="opacity-100"
+                      leaveTo="opacity-0"
+                  >
+                      <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"/>
                   </Transition.Child>
-                </div>
-              </div>
-          </Dialog>
-        </Transition>
-        </>
-      ))) : (
-        <span>No existing team members.</span>
+                  <div className="fixed inset-0 z-10 w-screen overflow-y-auto">
+                      <div className="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+                          <Transition.Child
+                              as={Fragment}
+                              enter="ease-out duration-300"
+                              enterFrom="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                              enterTo="opacity-100 translate-y-0 sm:scale-100"
+                              leave="ease-in duration-200"
+                              leaveFrom="opacity-100 translate-y-0 sm:scale-100"
+                              leaveTo="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
+                          >
+                              <Dialog.Panel className="relative transform overflow-hidden rounded-lg bg-white px-4 pb-4 pt-5 text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg sm:p-6">
+                                      <Dialog.Title as="h3" className="text-base font-semibold leading-6 text-gray-900">
+                                      {!editing ? (
+                                          <div>
+                                              Team Member: {teamLeader.leader_name}
+                                              Role: {teamLeader.team_role}
+                                              Thumbnail: <Image className={styles.thumbnail} src={teamLeader.image_src}
+                                                                alt="" width={500} height={500}/>
+                                          </div>
+                                      ) : (
+                                          <></>
+                                      )}
+                                  </Dialog.Title>
+                                  <Description>
+                                      {!editing ? (
+                                          <div>Description: {teamLeader.about_me}</div>
+                                      ) : (
+                                          <div className={styles.container}>
+                                              <input
+                                                  className={styles.titleInput}
+                                                  type="text"
+                                                  placeholder="Member Name"
+                                                  id="name"
+                                                  value={name}
+                                                  onChange={(e) => setName(e.target.value)}
+                                                  required/>
+                                              <input
+                                                  className={styles.projectLeadInput}
+                                                  type="text"
+                                                  placeholder="Member Role"
+                                                  id="role"
+                                                  value={role}
+                                                  onChange={(e) => setRole(e.target.value)}
+                                                  required/>
+                                              <textarea
+                                                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-red-600 sm:text-sm sm:leading-6"
+                                                  placeholder="Description of Member"
+                                                  id="about"
+                                                  value={about}
+                                                  onChange={(e) => setAbout(e.target.value)}
+                                                  required/>
+                                              <div
+                                                  className={styles.galleryLabel}>
+                                                  Upload New Picture of Member Here
+                                              </div>
+                                              <DropboxChooser
+                                                  appKey={appKey}
+                                                  success={(files: any) => uploadImg(files)}
+                                                  cancel={() => console.log('Canceled')}
+                                                  multiselect={false}
+                                                  extensions={['.jpeg', '.jpg', '.png', 'svg', 'webp', 'wbmp']}
+                                              >
+                                                  <button className={styles.dropboxUpload}>Upload</button>
+                                              </DropboxChooser>
+                                              <hr style={{gridColumn: 'span 2'}}/>
+                                          </div>
+                                      )}
+                                  </Description>
+                                  {!editing ? (
+                                      <>
+                                          <button
+                                              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"                                              onClick={() => toggleEditing(
+                                                  teamLeader.leader_name,
+                                                  teamLeader.team_role,
+                                                  teamLeader.about_me,
+                                                  teamLeader.image_src)}
+                                          >
+                                              Edit
+                                          </button>
+                                          <button
+                                              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"                                              onClick={() => deleteMember(teamLeader.leader_id, index)}
+                                          >
+                                              Delete
+                                          </button>
+                                      </>
+                                  ) : (
+                                      <>
+                                          <button
+                                              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"                                              onClick={() => setEditing(!editing)}
+                                          >
+                                              Cancel
+                                          </button>
+                                          <button
+                                              className="mt-3 inline-flex w-full justify-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:col-start-1 sm:mt-0"                                              onClick={() => updateMember(teamLeader.leader_id, index)}
+                                          >
+                                              Update
+                                          </button>
+                                      </>
+                                  )}
+                              </Dialog.Panel>
+                          </Transition.Child>
+                      </div>
+                  </div>
+              </Dialog>
+          </Transition>
+          </>
+        ))) : (
+          <span>No existing team members.</span>
       )}
       </div>
-      <div
-        className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
-      >
-        {!loading ? (
-          <button onClick={loadMore}>Load more items...</button>
-        ) : (
-          <Spinner />
-        )}
-      </div>
-      <div className="w-full relative mb-15 flex justify-center">
-      <div className="absolute top-0">
-        <UpdateMessage update={updateState} message="Team member successfully updated" />
-      </div>
-      <div className="absolute top-0">
+          <div
+              className="flex justify-center items-center p-4 col-span-1 sm:col-span-2 md:col-span-3"
+          >
+              {!loading ? (
+                  <button onClick={loadMore}>Load more items...</button>
+              ) : (
+                  <Spinner/>
+              )}
+          </div>
+          <div className="w-full relative mb-15 flex justify-center">
+              <div className="absolute top-0">
+                  <UpdateMessage update={updateState} message="Team member successfully updated"/>
+              </div>
+              <div className="absolute top-0">
         <DeleteMessage deleteMsg={deleteState} message="Team member successfully deleted" />
       </div>
     </div>
