@@ -141,6 +141,7 @@ export default function Page() {
       }
 
       setUpdateState(true);
+      setEditing(false);
 
       setTimeout(()  => {
         setUpdateState(false);
@@ -188,6 +189,8 @@ export default function Page() {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
 
+      setDeleteState(true);
+
       setTimeout(()  => {
         setDeleteState(false);
       }, 3000);
@@ -198,7 +201,7 @@ export default function Page() {
         return updatedPartners;
       });
 
-
+      openModal(index);
       const data = await res.json();
 
     }

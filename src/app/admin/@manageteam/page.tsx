@@ -145,6 +145,7 @@ export default function Page() {
       }
 
       setUpdateState(true);
+      setEditing(false);
 
       setTimeout(()  => {
         setUpdateState(false);
@@ -205,6 +206,8 @@ export default function Page() {
         return updatedTeamLeaders;
       });
 
+      openModal(index);
+      
       const data = await res.json();
 
     }

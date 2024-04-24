@@ -40,6 +40,11 @@ export default function Page() {
 
         setTimeout(()  => {
           setSuccess(false);
+          setName('');
+          setImg('');
+          setLink('');
+          setAbout('');
+          setPartnershipFormed('');
         }, 3000);
 
         } catch(error) {
