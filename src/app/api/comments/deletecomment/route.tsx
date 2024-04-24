@@ -20,7 +20,7 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
             return NextResponse.json({error: "no session"}, {status: 403})
         }
 
-        if (session.user.id != comment[0].user_id) {
+        if (session.user.id != comment[0].user_id || session.privilegeLevel != "admin") {
             return NextResponse.json({error: "invalid user"}, {status: 403})
         }
 
