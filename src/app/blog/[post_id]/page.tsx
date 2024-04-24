@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash, faReply, faCancel, faCheck } from '@fortawesome/free-solid-svg-icons';
 import { Post } from '../../types/post'
 import { Comment } from '../../types/comment'
+import { ClassNames } from '@emotion/react';
 
 interface PostPageProps {
     params: {
@@ -39,7 +40,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
     const [expandReply, setExpandReply] = useState<{[commentId: string]: boolean}>({});
 
     // Making a comment
-    const [content, setContent] = useState('');
+    const [content, setContent] = useState<{[commentId: string]: string}>({});
 
     useEffect(() => {
         const queryData = {
@@ -147,11 +148,18 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                 user_id: 'd9f78e32-919a-474e-b7b7-d20449275d24',
                 post_id: postId,
                 parent_comment_id: parentId,
-                content: content
+                content: content[parentId || 'root'] 
             })
         }
 
-        await fetch('/api/unapprovedcomments/createunapprovedcomment', queryData);
+        const res = await fetch('/api/unapprovedcomments/createunapprovedcomment', queryData);
+        if (res.ok) {
+            setContent(prevContent => {
+                const newContent = {...prevContent};
+                newContent[parentId || 'root'] = '';
+                return newContent;
+            });
+        }
     }
 
     async function deleteComment(id: string) {
@@ -174,16 +182,27 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         setComments(prevComments => (prevComments || []).filter(comment => comment.comment_id !== id));
       }
 
-    function toggleReply(id: string) {
-        if(id == "root") {
+      function toggleReply(id: string) {
+        if(id === "root") {
             setExpandReplyRoot(!expandReplyRoot);
         }
         setExpandReply(prevExpandReply => {
-            const newObj = { ...prevExpandReply };
-            newObj[id] = !newObj[id];
+            const newObj = Object.keys(prevExpandReply).reduce((acc, cur) => {
+                acc[cur] = cur === id ? !prevExpandReply[cur] : false; // If the clicked id is already true, set it to false. Otherwise, set all to false.
+                return acc;
+            }, {} as { [key: string]: boolean });
             return newObj;
         });
     }
+
+        // Function to clear the current textarea
+        const clearCurrentTextarea = (currentCommentId) => {
+            setContent(prevContent => {
+                const newContent = {...prevContent};
+                newContent[currentCommentId] = '';
+                return newContent;
+            });
+        };
 
     const renderComments = (roots: Comment[]) => (
         <>
@@ -200,24 +219,27 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                             <div className={styles.postFooter}>
                                 <p className={styles.date} key={comment.comment_id}><i>Edited on: {new Date(comment.last_modified).toLocaleString()}</i></p>
                                 <span>
-                  <button onClick={() => toggleReply(comment.comment_id)}><FontAwesomeIcon className={styles.replyIcon} icon={faReply}/></button>
+                  <button onClick={() => { toggleReply(comment.comment_id); clearCurrentTextarea(comment.comment_id); }}><FontAwesomeIcon className={styles.replyIcon} icon={faReply}/></button>
                   <button onClick={() => deleteComment(comment.comment_id)}><FontAwesomeIcon className={styles.trashIcon} icon={faTrash}/></button></span>
                             </div>
                         </div>
                         {expandReply[comment.comment_id] ? (
                             <>
-                                <div className={styles.commentForm}>
-                                    <input
-                                        className={styles.cmtInput}
-                                        type="text"
-                                        id="content"
-                                        value={content}
-                                        onChange={(e) => setContent(e.target.value)}
-                                        required
-                                    />
+                               <div className={styles.commentForm}>
+                                    <div className={styles.commentBox}>
+                                        <div className={styles.inputWrapper}>
+                                            <textarea
+                                                className={styles.cmtReplyInput}
+                                                id={`content-${comment.comment_id}`} // Assign a unique id to each comment input field
+                                                value={content[comment.comment_id] || ''} // Use the correct content
+                                                onChange={(e) => setContent(prevContent => ({...prevContent, [comment.comment_id]: e.target.value}))} // Update the correct content
+                                                placeholder="Comment"
+                                                required
+                                            ></textarea>
+                                            <button onClick={() => createComment(comment.post_id, comment.comment_id)} className={styles.commentSubmit}>Comment</button>
+                                        </div>
+                                    </div>
                                 </div>
-                                <button onClick={() => createComment(comment.post_id, comment.comment_id)}><FontAwesomeIcon className={styles.checkIcon} icon={faCheck}/></button>
-                                <button onClick={() => toggleReply(comment.comment_id)}><FontAwesomeIcon className={styles.trashIcon} icon={faCancel}/></button>
                             </>
                         ) : (
                             <>
@@ -274,58 +296,47 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                     <p>Error: {error2}</p>
                 ) : comments && comments.length > 0 ? (
                     <div className={styles.postsContainer} key={4}>
-                        <p className={styles.title} key={5}>Comments</p>
-                        {expandReplyRoot ? (
-                            <>
-                                <div className={styles.commentForm}>
-                                    <input
-                                        className={styles.cmtInput}
-                                        type="text"
-                                        id="content"
-                                        value={content}
-                                        onChange={(e) => setContent(e.target.value)}
-                                        placeholder="Comment"
-                                        required
-                                    />
-                                </div>
-                                <button onClick={() => createComment(post?.post_id, null)}><FontAwesomeIcon className={styles.checkIcon} icon={faCheck}/></button>
-                                <button onClick={() => toggleReply("root")}><FontAwesomeIcon className={styles.trashIcon} icon={faCancel}/></button>
-                            </>
-                        ) : (
-                            <>
-                                <button className={styles.postReply} onClick={() => toggleReply("root")}>New Comment</button>
-                            </>
-                        )}
-                        <div key={6}>
-                            {
-                                renderComments(rootComments)
-                            }
+                    <p className={styles.title} key={5}>Comments</p>
+                    <div className={styles.commentForm}>
+                        <div className={styles.commentBox}>
+                            <div className={styles.inputWrapper}>
+                                <textarea
+                                    className={styles.cmtInput}
+                                    id="content-root" // Assign a unique id to the root comment input field
+                                    value={content['root'] || ''} // Use the correct content
+                                    onChange={(e) => setContent(prevContent => ({...prevContent, ['root']: e.target.value}))} // Update the correct content
+                                    placeholder="Comment"
+                                    required
+                                ></textarea>
+                                <button onClick={() => createComment(post?.post_id, null)} className={styles.commentSubmit}>Comment</button>
+                            </div>
                         </div>
                     </div>
+                    <div key={6}>
+                        {renderComments(rootComments)}
+                    </div>
+                </div>
+
                 ) : (
                     <>
                         <p>No comments yet. Click the {"Reply"} button to be the first to share your thoughts!</p>
-                        {expandReplyRoot ? (
-                            <>
-                                <div className={styles.commentForm}>
-                                    <input
-                                        className={styles.cmtInput}
-                                        type="text"
-                                        id="content"
-                                        value={content}
-                                        onChange={(e) => setContent(e.target.value)}
-                                        placeholder="Comment"
-                                        required
-                                    />
+                        <>
+                            <div className={styles.commentForm}>
+                                <div className={styles.commentBox}>
+                                    <div className={styles.inputWrapper}>
+                                        <textarea
+                                            className={styles.cmtInput}
+                                            id="content-root" // Assign a unique id to the root comment input field
+                                            value={content['root'] || ''} // Use the correct content
+                                            onChange={(e) => setContent(prevContent => ({...prevContent, ['root']: e.target.value}))} // Update the correct content
+                                            placeholder="Comment"
+                                            required
+                                        ></textarea>
+                                        <button onClick={() => createComment(post?.post_id, null)} className={styles.commentSubmit}>Comment</button>
+                                    </div>
                                 </div>
-                                <button onClick={() => createComment(post?.post_id, null)}><FontAwesomeIcon className={styles.checkIcon} icon={faCheck}/></button>
-                                <button onClick={() => toggleReply("root")}><FontAwesomeIcon className={styles.trashIcon} icon={faCancel}/></button>
-                            </>
-                        ) : (
-                            <>
-                                <button className={styles.postReply} onClick={() => toggleReply("root")}>New Comment</button>
-                            </>
-                        )}
+                            </div>
+                        </>
                     </>
                 )}
             </div>

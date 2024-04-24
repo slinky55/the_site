@@ -67,8 +67,14 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ params }) => {
 
   useEffect(() => {
     if (project?.gallery) {
-      const urls = project.gallery.slice(1, -1).split(',');
-      setGallery(urls.map(url => url.trim().slice(1, -1)));
+      const encodedGalleryString = project.gallery;
+      const cleanedString = JSON.parse(encodedGalleryString);
+      if (Array.isArray(cleanedString)) {
+        const urls = cleanedString.map(url => url.replace(/^\"|\"$/g, ''));
+        setGallery(urls);
+      } else {
+        console.error('project.gallery is not an array:', project.gallery);
+      }
     }
   }, [project]);
   

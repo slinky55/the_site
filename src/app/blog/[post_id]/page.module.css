@@ -32,7 +32,7 @@
 }
 
 .postContainer {
-
+    
 }
 
 .post {
@@ -59,6 +59,7 @@
 
 .commentsContainer {
     margin-left: 45px;
+    padding-bottom: 10px;
 }
 
 .commentContainer {
@@ -81,9 +82,7 @@
 
 /* Input Boxes */
 .commentForm {
-    display: grid;
-    grid-template-columns: auto auto;
-    justify-content: center;
+    position: relative;
 }
 
 .authorInput {
@@ -94,30 +93,59 @@
     font-size: 16px;
 }
 
+.inputWrapper {
+   padding: 10px;
+   overflow: hidden;
+}
+
+.commentBox{
+    max-width: 50%;
+    height: auto;
+}
+
 .cmtInput {
+    background: #eee;
+    width: 100%;
+    height: 152px;
+    margin: 10px 0;
     padding: 10px;
-    margin-left: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
     font-size: 16px;
 }
 
+
 .authorInput:hover,
-.cmtInput:hover {
+.cmtInput:hover,
+.cmtReplyInput:hover {
   border-color: #999;
 }
 
-/* Icons */
-.checkIcon {
-    color: green;
-    height: 15px;
-    width: 15px;
-    margin-left: 5px;
-    margin-right: 5px;
+
+.commentSubmit{
+    padding: 6px 14px;
+    border: none;
+    background: #009cff;
+    color: #fff;
+    cursor: pointer;
+    border-radius: 2px;;
+    float: right;
+    padding-bottom: 10px ;
 }
 
-.checkIcon:hover {
-    color: rgb(20, 204, 20);
+.cmtReplyInput {
+    background: #eee;
+    width: 100%;
+    height: 49px;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.comment-submit:hover {
+    background: #027ecc;
 }
 
 .trashIcon {
@@ -141,4 +169,13 @@
 
 .replyIcon:hover {
     color: rgb(49, 48, 48);
+}
+
+@media (max-width: 900px) {
+	.commentBox{
+        max-width: 100%;
+    }
+    .cmtInput, .cmtReplyInput {
+        width: 100%;
+    }
 }
