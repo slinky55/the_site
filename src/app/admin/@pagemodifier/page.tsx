@@ -289,7 +289,7 @@ export default function Page() {
                 }} ><FontAwesomeIcon icon={faEdit} /></button>
               )}
               {openEdit['home'][0] && (
-                <div>
+                <div className='flex'>
                   <DropboxChooser
                     appKey={appKey}
                     success={(files: any) => uploadImg2(files, 0)}
@@ -311,16 +311,18 @@ export default function Page() {
                       </div>
                     </button>
                   </DropboxChooser>
-                  <button className='ml-2' onClick={() => updateItem('Slideshow1', true)}>Confirm Changes</button>
-                  <button className='ml-2' onClick={() => {
-                    setOpenEdit(prevState => ({
-                      ...prevState,
-                      home: prevState.home.map((value, index) => index === 0 ? !value : value)
-                    }));
-                    
-                    }} >
-                      <FontAwesomeIcon icon={faCancel} />
-                  </button>
+                  <div className='flex'>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('Slideshow1', true)}>Confirm Changes</button>
+                    <button className='ml-2' onClick={() => {
+                      setOpenEdit(prevState => ({
+                        ...prevState,
+                        home: prevState.home.map((value, index) => index === 0 ? !value : value)
+                      }));
+                      
+                      }} >
+                        <FontAwesomeIcon icon={faCancel} />
+                    </button>
+                  </div>
                 </div>
               )}
               <Image src={getItem('Slideshow2', true)?.url} alt="" width={600} height={600} />
@@ -334,7 +336,7 @@ export default function Page() {
                 }} ><FontAwesomeIcon icon={faEdit} /></button>
               )}
               {openEdit['home'][1] && (
-                <div>
+                <div className='flex'>
                   <DropboxChooser
                     appKey={appKey}
                     success={(files: any) => uploadImg2(files, 1)}
@@ -356,7 +358,7 @@ export default function Page() {
                         </div>
                       </button>
                   </DropboxChooser>
-                  <button className='ml-2' onClick={() => updateItem('Slideshow2', true)}>Confirm Changes</button>
+                  <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('Slideshow2', true)}>Confirm Changes</button>
                   <button className='ml-2' onClick={() => {
                     setOpenEdit(prevState => ({
                       ...prevState,
@@ -378,7 +380,7 @@ export default function Page() {
                 }} ><FontAwesomeIcon icon={faEdit} /></button>
               )}
               {openEdit['home'][2] && (
-                <div>
+                <div className='flex'>
                   <DropboxChooser
                     appKey={appKey}
                     success={(files: any) => uploadImg2(files, 2)}
@@ -400,7 +402,7 @@ export default function Page() {
                           </div>
                       </button>
                   </DropboxChooser>
-                  <button className='ml-2' onClick={() => updateItem('Slideshow3', true)}>Confirm Changes</button>
+                  <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('Slideshow3', true)}>Confirm Changes</button>
                   <button className='ml-2' onClick={() => {
                     setOpenEdit(prevState => ({
                       ...prevState,
@@ -433,7 +435,7 @@ export default function Page() {
                 }} ><FontAwesomeIcon icon={faEdit} /></button>
                 )}
                 {openEdit['home'][12] && (
-                  <div>
+                  <div className='flex'>
                     <DropboxChooser
                       appKey={appKey}
                       success={(files: any) => uploadImg2(files, 12)}
@@ -455,7 +457,7 @@ export default function Page() {
                             </div>
                         </button>
                     </DropboxChooser>
-                    <button className='ml-2' onClick={() => updateItem('WhoWeAre', true)}>Confirm Changes</button>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('WhoWeAre', true)}>Confirm Changes</button>
                     <button className='ml-2' onClick={() => {
                       setOpenEdit(prevState => ({
                         ...prevState,
@@ -486,7 +488,7 @@ export default function Page() {
                       onChange={(event) => setContent(event.target.value)}
                       placeholder="Enter your content here..."
                     />
-                    <button className='ml-2' onClick={() => updateItem('WhoWeAre1', false)}>Confirm Changes</button>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('WhoWeAre1', false)}>Confirm Changes</button>
                     <button className='ml-2' onClick={() => {
                     setOpenEdit(prevState => ({
                       ...prevState,
@@ -515,7 +517,7 @@ export default function Page() {
                       onChange={(event) => setContent(event.target.value)}
                       placeholder="Enter your content here..."
                     />
-                    <button className='ml-2' onClick={() => updateItem('WhoWeAre2', false)}>Confirm Changes</button>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('WhoWeAre2', false)}>Confirm Changes</button>
                     <button className='ml-2' onClick={() => {
                     setOpenEdit(prevState => ({
                       ...prevState,
@@ -547,7 +549,7 @@ export default function Page() {
                   }} ><FontAwesomeIcon icon={faEdit} /></button>
                 ) : (
                   <div>
-                    <div>
+                    <div className='flex'>
                       <DropboxChooser
                         appKey={appKey}
                         success={(files: any) => uploadImg2(files, 6)}
@@ -569,7 +571,7 @@ export default function Page() {
                           </div>
                         </button>
                       </DropboxChooser>
-                      <button className='ml-2' onClick={() => updateItem('Spotlight1', true)}>Confirm Changes</button>
+                      <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('Spotlight1', true)}>Confirm Changes</button>
                       <button className='ml-2' onClick={() => {
                         setOpenEdit(prevState => ({
                           ...prevState,
@@ -600,7 +602,7 @@ export default function Page() {
                         onChange={(event) => setContent(event.target.value)}
                         placeholder="Enter your content here..."
                       />
-                      <button className='ml-2' onClick={() => updateItem('Spotlight1', false)}>Confirm Changes</button>
+                      <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('Spotlight1', false)}>Confirm Changes</button>
                       <button className='ml-2' onClick={() => {
                         setOpenEdit(prevState => ({
                           ...prevState,
@@ -628,7 +630,7 @@ export default function Page() {
                   }} ><FontAwesomeIcon icon={faEdit} /></button>
                 ) : (
                   <div>
-                    <div>
+                    <div className='flex'>
                       <DropboxChooser
                         appKey={appKey}
                         success={(files: any) => uploadImg2(files, 8)}
@@ -650,7 +652,7 @@ export default function Page() {
                           </div>
                         </button>
                       </DropboxChooser>
-                      <button className='ml-2' onClick={() => updateItem('Spotlight2', true)}>Confirm Changes</button>
+                      <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('Spotlight2', true)}>Confirm Changes</button>
                       <button className='ml-2' onClick={() => {
                         setOpenEdit(prevState => ({
                           ...prevState,
@@ -680,7 +682,7 @@ export default function Page() {
                       onChange={(event) => setContent(event.target.value)}
                       placeholder="Enter your content here..."
                     />
-                    <button className='ml-2' onClick={() => updateItem('Spotlight2', false)}>Confirm Changes</button>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('Spotlight2', false)}>Confirm Changes</button>
                     <button className='ml-2' onClick={() => {
                     setOpenEdit(prevState => ({
                       ...prevState,
@@ -707,7 +709,7 @@ export default function Page() {
                   }} ><FontAwesomeIcon icon={faEdit} /></button>
                 ) : (
                   <div>
-                    <div>
+                    <div className='flex'>
                       <DropboxChooser
                         appKey={appKey}
                         success={(files: any) => uploadImg2(files, 10)}
@@ -729,7 +731,7 @@ export default function Page() {
                           </div>
                         </button>
                       </DropboxChooser>
-                      <button className='ml-2' onClick={() => updateItem('Spotlight3', true)}>Confirm Changes</button>
+                      <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('Spotlight3', true)}>Confirm Changes</button>
                       <button className='ml-2' onClick={() => {
                         setOpenEdit(prevState => ({
                           ...prevState,
@@ -759,7 +761,7 @@ export default function Page() {
                       onChange={(event) => setContent(event.target.value)}
                       placeholder="Enter your content here..."
                     />
-                    <button className='ml-2' onClick={() => updateItem('Spotlight3', false)}>Confirm Changes</button>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('Spotlight3', false)}>Confirm Changes</button>
                     <button className='ml-2' onClick={() => {
                     setOpenEdit(prevState => ({
                       ...prevState,
@@ -801,7 +803,7 @@ export default function Page() {
                       onChange={(event) => setContent(event.target.value)}
                       placeholder="Enter your content here..."
                     />
-                    <button className='ml-2' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
                   </div>
                 )}
                   </p>
@@ -830,7 +832,7 @@ export default function Page() {
                       onChange={(event) => setContent(event.target.value)}
                       placeholder="Enter your content here..."
                     />
-                    <button className='ml-2' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
                   </div>
                 )}
             </p>
@@ -856,7 +858,7 @@ export default function Page() {
                       onChange={(event) => setContent(event.target.value)}
                       placeholder="Enter your content here..."
                     />
-                    <button className='ml-2' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
                   </div>
                 )}
             </p>
@@ -882,7 +884,7 @@ export default function Page() {
                       onChange={(event) => setContent(event.target.value)}
                       placeholder="Enter your content here..."
                     />
-                    <button className='ml-2' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
                   </div>
                 )}
             </p>
@@ -908,7 +910,7 @@ export default function Page() {
                       onChange={(event) => setContent(event.target.value)}
                       placeholder="Enter your content here..."
                     />
-                    <button className='ml-2' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
                   </div>
                 )}
             </p>
@@ -934,7 +936,7 @@ export default function Page() {
                       onChange={(event) => setContent(event.target.value)}
                       placeholder="Enter your content here..."
                     />
-                    <button className='ml-2' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
+                    <button className='ml-2 mr-2 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded' onClick={() => updateItem('intro', false)}>Confirm Changes</button>
                   </div>
                 )}
             </p>
