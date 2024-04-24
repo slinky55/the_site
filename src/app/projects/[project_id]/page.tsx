@@ -121,12 +121,16 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ params }) => {
       ) : error ? (
         <p>Error: {error}</p>
       ) : project ? (
-        <div className={styles.container}>
-          <div className={styles.projectHeader}>
-            <div className={styles.title}>{project.title}</div>
+        <div className="bg-white rounded-lg p-6">
+          <div className="mb-4">
+            <div className="text-red-600 text-xl font-bold">
+              {project.title}
+            </div>
           </div>
-          <div className={styles.projectBody}>
-            <div className={styles.content}>{project.content}</div>
+          <div className="">
+            <div className="text-gray-800 mb-5">
+              {project.content}
+            </div>
           </div>
           <div>
             {gallery ? (
@@ -144,7 +148,7 @@ const ProjectPage: React.FC<ProjectPageProps> = ({ params }) => {
                       src={img}
                       alt="Gallery Image"
                       className={styles.galleryImg}
-                      width={75} height={75}
+                      width={200} height={200}
                       onClick={() => openFullImg(img, index)}
                     />
                   ))}

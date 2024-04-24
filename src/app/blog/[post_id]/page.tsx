@@ -42,6 +42,8 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
     // Making a comment
     const [content, setContent] = useState<{[commentId: string]: string}>({});
 
+    const [users, setUsers] = useState<any[]>([]);
+
     useEffect(() => {
         const queryData = {
             method: "POST",
@@ -78,6 +80,25 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
 
                 const data = await res.json();
                 setComments(data.comments);
+
+                
+                // Fetch user data for each post
+                const users = await Promise.all(data.comments.map(async (comment: { user_id: any; }) => {
+                    const userRes = await fetch(`/api/users/getusers`, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({ id: comment.user_id })
+                    });
+                    if (!userRes.ok) {
+                        throw new Error(`HTTP error! Status: ${userRes.status}`);
+                    }
+                    return userRes.json();
+                }));
+
+                setUsers(users);
+
             } catch (error2) {
                 setError2('Failed to load data');
             }
@@ -117,6 +138,10 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
         }
     }, [comments]);
 
+    useEffect(() => {
+        if(users[0]) console.log(users[0]['user'][0].name);
+    }, [users])
+
 
     async function deletePost() {
         const postData = {
@@ -145,7 +170,6 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
             },
             body: JSON.stringify({
                 comment_id: uuidv4(),
-                user_id: 'd9f78e32-919a-474e-b7b7-d20449275d24',
                 post_id: postId,
                 parent_comment_id: parentId,
                 content: content[parentId || 'root'] 
@@ -212,7 +236,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                     <div className={styles.commentsContainer} key={comment.comment_id}>
                         <div className={styles.commentContainer} key={comment.comment_id}>
                             <div className={styles.postHeader}>
-                                <p className={styles.author} key={comment.user_id}>{comment.user_id}</p>
+                                {users[0] && (<p className={styles.author} key={comment.user_id}>{users[0]['user'][0].name}</p>)}
                                 <p className={styles.date} key={comment.comment_id}>{new Date(comment.created_at).toLocaleString()}</p>
                             </div>
                             <p className={styles.post} key={comment.comment_id}>{comment.content}</p>
