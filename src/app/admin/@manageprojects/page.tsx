@@ -152,6 +152,8 @@ export default function Page() {
     }
 
     setUpdateState(true);
+    setEditing(false);
+
 
       setTimeout(()  => {
         setUpdateState(false);
@@ -213,6 +215,7 @@ export default function Page() {
       return updatedProjects;
     });
 
+    openModal(index);
     const data = await res.json();
 
   }

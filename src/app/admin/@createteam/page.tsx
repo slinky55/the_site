@@ -37,6 +37,13 @@ export default function Page() {
         await fetch('/api/teamleaders/createteamleaders', postData);
         setSuccess(true);
 
+        // Reset the states
+        setImg('');
+        setName('');
+        setRole('');
+        setAbout('');
+        setUploaded(false);
+
         setTimeout(()  => {
           setSuccess(false);
         }, 3000);

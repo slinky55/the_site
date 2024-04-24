@@ -37,6 +37,11 @@ export default function Page() {
         setSuccess(true);
 
         setTimeout(()  => {
+          setName('');
+          setUrl('');
+          setContent('');
+          setStart(currentDate);
+          setEnd(currentDate);
           setSuccess(false);
         }, 3000);
 

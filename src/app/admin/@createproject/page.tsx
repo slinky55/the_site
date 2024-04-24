@@ -36,6 +36,12 @@ export default function Page() {
       try {
         await fetch('/api/projects/createproject', postData);
         setSuccess(true);
+        setImg('');
+        setUploaded(false);
+        setTitle('');
+        setProjectLead('');
+        setGallery([]);
+        setContent('');
 
         setTimeout(()  => {
           setSuccess(false);

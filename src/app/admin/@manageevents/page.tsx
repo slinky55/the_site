@@ -7,6 +7,8 @@ import { Event } from '@/app/types/event';
 import { Spinner } from "@/app/components/Spinner";
 import { Sort } from '@/app/types/sort';
 import SearchBar from '@/app/components/Searchbar';
+import UpdateMessage from "@/app/components/UpdateMessage";
+import DeleteMessage from "@/app/components/DeleteMessage";
 
 interface Data {
   events: Event[]
@@ -149,6 +151,7 @@ export default function Page() {
       }
 
       setUpdateState(true);
+      setEditing(false);
 
       setTimeout(()  => {
         setUpdateState(false);
@@ -209,7 +212,7 @@ export default function Page() {
         return updatedEvent;
       });
       
-
+      openModal(index);
       const data = await res.json();
 
     }
@@ -401,6 +404,14 @@ export default function Page() {
           <Spinner />
         )}
       </div>
+      <div className="w-full relative mb-15 flex justify-center">
+      <div className="absolute top-0">
+        <UpdateMessage update={updateState} message="Event successfully updated" />
+      </div>
+      <div className="absolute top-0">
+        <DeleteMessage deleteMsg={deleteState} message="Event successfully deleted" />
+      </div>
+    </div>
       </>
     )
   }

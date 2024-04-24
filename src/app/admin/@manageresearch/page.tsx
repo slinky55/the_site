@@ -163,6 +163,7 @@ export default function Page() {
       }
 
       setUpdateState(true);
+      setEditing(false);
 
       setTimeout(()  => {
         setUpdateState(false);
@@ -224,6 +225,7 @@ export default function Page() {
       });
       
 
+      openModal(index);
       const data = await res.json();
 
     }

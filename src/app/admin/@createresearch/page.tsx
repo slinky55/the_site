@@ -43,6 +43,14 @@ export default function Page() {
         await fetch('/api/research/createresearch', postData);
         setSuccess(true);
 
+        setTitle('');
+        setUrl('');
+        setJournal('');
+        setTopics('');
+        setWrittenOn(currentDate);
+        setImg('');
+        setUploaded(false);
+
         setTimeout(()  => {
           setSuccess(false);
         }, 3000);

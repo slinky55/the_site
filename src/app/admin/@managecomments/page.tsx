@@ -7,6 +7,7 @@ import Image from "next/image"
 import { Filter } from '@/app/types/filter';
 import { Sort } from '@/app/types/sort';
 import SearchBar from '@/app/components/Searchbar';
+import DeleteMessage from "@/app/components/DeleteMessage";
 
 interface Data {
   posts: Post[]
@@ -19,6 +20,8 @@ export default function Page() {
   const [loading, setLoading] = useState(true);
 
   const [searchContent, setSearchContent] = useState<string>('');
+
+  const [deleteState, setDeleteState] = useState(false);
   
   const limit = 10;
   const sort: Sort = {
@@ -118,8 +121,16 @@ export default function Page() {
         throw new Error(`HTTP error! Status: ${res.status}`);
       }
 
+      setPost(null);
+      setDeleteState(true);
+
+      setTimeout(()  => {
+        setDeleteState(false);
+      }, 3000);
+
       const data = await res.json();
 
+      setComments(comments.filter(comment => comment.comment_id !== id));
     }
 
     const handleDataReceived = (data: Data) => {
@@ -193,6 +204,11 @@ export default function Page() {
         <div>No existing posts.</div>
       )} 
       </div>
+      <div className="w-full relative mb-15 flex justify-center">
+      <div className="absolute top-0">
+        <DeleteMessage deleteMsg={deleteState} message="Comment successfully deleted" />
+      </div>
+    </div>
       </>
     )
   }
