@@ -1,12 +1,13 @@
 'use client'
 
-import { Fragment } from 'react'
+import {Fragment, useEffect, useState} from 'react'
 import Link from 'next/link'
 import { Popover, Transition } from '@headlessui/react'
 import clsx from 'clsx'
 import styles from './page.module.css';
 import { Button } from '@/app/components/Button'
 import { NavLink } from '@/app/components/NavLink'
+import {getSession} from "next-auth/react";
 
 function MobileNavLink({
 href,
@@ -97,6 +98,27 @@ function MobileNavigation() {
 }
 
 export function Header() {
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    const [isAdmin, setIsAdmin] = useState<boolean>(false);
+
+    useEffect(() => {
+        async function gs() {
+            const session: any = await getSession()
+            if (session != null) {
+                if (session.user != null) {
+                    setLoggedIn(true);
+                }
+
+                if (session.user!.privilegeLevel == "admin") {
+                    console.log("admin")
+                    setIsAdmin(true);
+                }
+            }
+        }
+
+        gs();
+    }, [])
+
     return (
         <div id={styles.toolbar}>
         <div>
@@ -110,7 +132,8 @@ export function Header() {
           <a href="/contact" className={styles.navLink}>Contact Us</a>
         </div>
         <div>
-          <a href="#link9" className={`${styles.signInButton}`}>Sign In</a>
+            {!loggedIn && (<a href="/login" className={`${styles.signInButton}`}>Sign In</a>) }
+            {isAdmin && (<a href="/admin" className={`${styles.signInButton}`}>Admin</a>)}
         </div>
       </div>
     )

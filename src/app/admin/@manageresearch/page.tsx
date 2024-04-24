@@ -183,7 +183,7 @@ export default function Page() {
       
       setResearch(prevResearch => {
         const updatedResearch = [...prevResearch];
-        updatedResearch[index] = updatedResearchItem;
+        updatedResearch[index] = (updatedResearchItem as any);
         return updatedResearch;
       });
       
@@ -384,7 +384,7 @@ export default function Page() {
                           onClick={() => toggleEditing(
                             research.title, 
                             research.journal, 
-                            research.topics, 
+                            research.topics as any,
                             research.thumbnail,
                             research.url,
                             research.written_on)}
