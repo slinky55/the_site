@@ -103,25 +103,31 @@ export default function Page() {
 
 
   return(
-    <div>
-      <h1>Topics</h1>
-      <form onSubmit={createTopic}>
-        <input
-          type="text"
-          value={newTopic}
-          onChange={(e) => setNewTopic(e.target.value)}
-          placeholder="Enter new topic"
-        />
-        <button type="submit">Create Topic</button>
-      </form>
-      <div>
-        {topics.map((topic, index) => (
-          <li key={topic.topic_id}>
-            {topic.topic}
-            <button onClick={() => deleteTopic(topic.topic_id, index)}>Delete</button>
-          </li>
-        ))}
-      </div>
-    </div>
+    <div className="p-4">
+  <h1 className="text-3xl font-bold mb-4 text-red-500">Topics</h1>
+  <form onSubmit={createTopic} className="mb-4">
+    <input
+      type="text"
+      value={newTopic}
+      onChange={(e) => setNewTopic(e.target.value)}
+      placeholder="Enter new topic"
+      className="border border-gray-300 px-4 py-2 rounded-md mr-2 focus:outline-none focus:border-red-500"
+    />
+    <button type="submit" className="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">
+      Create Topic
+    </button>
+  </form>
+  <ul>
+    {topics.map((topic, index) => (
+      <li key={topic.topic_id} className="flex items-center justify-between mb-2 border-b border-gray-300 py-2">
+        <span className="text-lg">{topic.topic}</span>
+        <button onClick={() => deleteTopic(topic.topic_id, index)} className="text-red-500 hover:text-red-700 focus:outline-none">
+          Delete
+        </button>
+      </li>
+    ))}
+  </ul>
+</div>
+
   );
 }
