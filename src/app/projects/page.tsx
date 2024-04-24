@@ -1,6 +1,6 @@
-import { Project } from "../types/project";
+import {Project} from "../types/project";
 import executeQuery from "../lib/db";
-import { Div } from "../types/div";
+import {Div} from "../types/div";
 import Image from "next/image";
 
 export default async function Projects() {
@@ -13,20 +13,20 @@ export default async function Projects() {
         query: 'SELECT * FROM Images WHERE page=\'projects\'',
         values: '',
       }) as any[];
-    
+
       const images = res.map((img: any) => {
         return { ...img }
       });
-    
+
       const res2 = await executeQuery({
         query: 'SELECT * FROM Divs WHERE page=\'projects\'',
         values: '',
       }) as Div[];
-    
+
       const divs = res2.map((div: Div) => {
         return { ...div }
       });
-    
+
       function getItem(l: string, img: boolean) {
         if(img) {
           for(let i = 0; i < images.length; i++) {
@@ -43,7 +43,7 @@ export default async function Projects() {
           }
         }
       }
-    
+
     return (
         <div className="bg-white py-4 sm:py-8">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
