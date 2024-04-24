@@ -13,15 +13,21 @@ export async function POST(req: NextRequest, res: NextResponse) {
     var query = "SELECT * FROM Research";
 
     if(filters.length > 0) {
-            query = query.concat(" WHERE ")
         for(let i = 0; i < filters.length; i++) {
-            if (i !== 0) query = query.concat(' AND ')
-            query = query.concat(`${filters[i].fieldName} `)
+            if (i === 0) query = query.concat(" WHERE ")
+            else query = query.concat(' AND ')
+
             if(filters[i].operator === 'IN') {
-                query = query.concat(`IN (${filters[i].fieldValue})`);
+                const topicsArray = filters[i].fieldValue.split(',');
+                for(let j = 0; j < topicsArray.length; j++) {
+                    query = query.concat(`\'${topicsArray[j]}\' = ANY(topics) `);
+                    if(((j+1) !== topicsArray.length)) {
+                        query = query.concat('OR ')
+                    }
+                }
             }
             else if(filters[i].operator === 'CONTAINS') {
-                query = query.concat(`LIKE \'%${filters[i].fieldValue}%\'`)
+                query = query.concat(` ${filters[i].fieldName} LIKE \'%${filters[i].fieldValue}%\'`)
             }
         }
     }

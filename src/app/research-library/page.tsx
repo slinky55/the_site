@@ -75,25 +75,33 @@ export default function ResearchLibraryPage() {
                 </div>
                 <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                     {research.map((research: Research) => (
-                        <article key={research.title} className="flex flex-col items-start justify-between">
+                        <a href={`${research.url}`} key={research.title} className="flex flex-col items-start justify-between">
                             <div className="relative w-full">
                                 <Image src={research.thumbnail} alt="" className="object-cover w-full h-48 rounded-2xl" width={500} height={500} />
                                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
                             </div>
                             <div className="max-w-xl">
                                 <div className="group relative">
-                                    <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                                        <a href={`${research.url}`}>
+                                    <h3 className="ml-3 mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
                                             <span className="absolute inset-0" />
-                                            Article Title: {research.title}
-                                        </a>
+                                            {research.title}
                                     </h3>
-                                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Journal: {research.journal}</p>
-                                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Topics: {research.topics.substring(1, research.topics.length-1)}</p>
-                                    <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Written On: {new Date(research.written_on).toLocaleString()}</p>
+                                    <div className='mt-4'>
+                                      {research.topics.map((topic)=>
+                                          (
+                                          <span 
+                                              className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                                          >
+                                              {topic}
+                                          </span>
+                                          )
+                                      )}
+                                    </div>
+                                    <p className="ml-3 mt-5 line-clamp-3 text-sm leading-6 text-gray-600">Journal: {research.journal}</p>
+                                    <p className="ml-3 mt-2 line-clamp-3 text-sm leading-6 text-gray-600" style={{fontStyle:'italic'}}>{new Date(research.written_on).toLocaleString()}</p>
                                 </div>
                             </div>
-                        </article>
+                        </a>
                     ))}
                 </div>
             </div>
