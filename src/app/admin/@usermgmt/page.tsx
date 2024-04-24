@@ -26,7 +26,7 @@ export default function Page() {
     const [modal, setModal] = useState<boolean[]>([]);
     const [editing, setEditing] = useState<boolean>(false);
     // Inputs for Edits
-    const [priv, setPriv] = useState<string>();
+    const [priv, setPriv] = useState<string>("default");
 
 
     async function getData() {
@@ -64,12 +64,29 @@ export default function Page() {
             console.error(error)
         }
 
+        setPriv("default")
+
+        getData();
+    }
+
+    async function deleteUser(id: string) {
+        try {
+            await fetch("/api/users/delete", {
+                method: "POST",
+                body: JSON.stringify({
+                    id: id,
+                })
+            })
+        } catch (err) {
+            console.log(err)
+        }
+
         getData();
     }
 
     useEffect(() => {
         getData()
-    }, [])
+    }, []);
 
     function openModal(index: number) {
         setModal((prevArray) => {
@@ -140,14 +157,16 @@ export default function Page() {
                       </Dialog.Title>
                       <Description>
                         <form>
-                            <select onChange={(e) => {setPriv(e.target.value)}} defaultValue={"admin"}>
+                            <select onChange={(e) => {
+                                setPriv(e.target.value)
+                            }}>
+                                <option selected value={"default"}>Default</option>
                                 <option value={"admin"}>Admin</option>
-                                <option value={"default"}>Default</option>
                             </select>
                             <button className={styles.btn} type={"button"} onClick={() => {updateUser(priv!, user.id)}}>Update</button>
                         </form>
                           <hr />
-                          <button className={styles.btn} onClick={() => {}}>
+                          <button className={styles.btn} onClick={() => {deleteUser(user.id)}}>
                               Delete
                           </button>
                       </Description>

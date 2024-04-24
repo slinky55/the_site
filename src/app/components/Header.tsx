@@ -105,6 +105,8 @@ export function Header() {
         async function gs() {
             const session: any = await getSession()
             if (session != null) {
+                console.log(session)
+
                 if (session.user != null) {
                     setLoggedIn(true);
                 }
@@ -116,7 +118,7 @@ export function Header() {
             }
         }
 
-        gs();
+        gs()
     }, [])
 
     return (
