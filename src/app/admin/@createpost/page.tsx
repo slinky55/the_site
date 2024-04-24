@@ -29,6 +29,7 @@ export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
 
     const [success, setSuccess] = useState(false);
+    const [imgName, setImgName] = useState<string>('');
 
     useEffect(()=> {
         const queryData = {
@@ -118,6 +119,7 @@ export default function Page() {
 
     function uploadImg(files: any) {
         setImg(files[0].link.replace('dl=0', 'raw=1'));
+        setImgName(files[0].name); // Set the image name
         setUploaded(true);
     }
 
@@ -166,8 +168,9 @@ export default function Page() {
                     multiselect={false}
                     extensions={['.jpeg', '.jpg', '.png', 'svg', 'webp', 'wbmp']}
                 >
-                    <button className={styles.dropboxUpload}>Upload Post Thumbnail</button>
+                    <button className={"rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"}>Upload Post Thumbnail</button>
                 </DropboxChooser>
+                <div>Uploaded image: {imgName}</div>
                 {topicsList && (
                 <div className="flex flex-wrap">
                     {topicsList.map((topic, index) => (
