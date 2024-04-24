@@ -103,7 +103,7 @@ export function Header() {
           <a href="/" className={styles.navLink}>Home</a>
           <a href="/about-us" className={styles.navLink}>About Us</a>
           <a href="/research-library" className={styles.navLink}>Research Library</a>
-          <a href="/news-and-events" className={styles.navLink}>News and Events</a>
+          <a href="/events" className={styles.navLink}>Events</a>
           <a href="/partners" className={styles.navLink}>Partners</a>
           <a href="/projects" className={styles.navLink}>Projects</a>
           <a href="/blog" className={styles.navLink}>Blog</a>
