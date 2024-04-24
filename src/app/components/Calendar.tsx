@@ -30,6 +30,13 @@ function useTransformedEvents(initialEvents: unknown) {
 
 export default function Calendar() {
     const [initialEvents, setInitialEvents] = useState([]);
+    const [openEvent, setOpenEvent] = useState(false);
+    const [eventName, setEventName] = useState('');
+    const [link, setLink] = useState('');
+    const [content, setContent] = useState('')
+    const [start, setStart] = useState('');
+    const [end, setEnd] = useState('');
+    
     const sort: Sort = {
         fieldName: 'event_start',
         direction: 'DESC'
@@ -60,32 +67,55 @@ export default function Calendar() {
     const handleEventClick = (clickInfo: { event: { title: string; url: string | undefined; extendedProps: { content: string }; start: Date; end: Date }; jsEvent: MouseEvent}) => {
         clickInfo.jsEvent.preventDefault();
         const eventObj = clickInfo.event;
-        const startDate = new Date(eventObj.start).toLocaleDateString();
-        const endDate = new Date(eventObj.end).toLocaleDateString();
+        const startDate = new Date(eventObj.start).toLocaleString();
+        const endDate = new Date(eventObj.end).toLocaleString();
 
         if (eventObj.url) {
-            const userConfirmation = window.confirm(
-                'Event Name: ' + eventObj.title + '\n' +
-                'Start Date: ' + startDate + ' ' +
-                'End Date: ' + endDate + '\n' +
-                'Registration Link: ' + eventObj.url + '\n' +
-                'Information: ' + eventObj.extendedProps.content + '\n\n' +
-                'Would you like to open the registration link?'
-            );
-            if (userConfirmation) {
-                window.open(eventObj.url, '_blank');
-            }
+            setOpenEvent(!openEvent);
+            setEventName(eventObj.title);
+            setLink(eventObj.url);
+            setContent(eventObj.extendedProps.content);
+            setStart(startDate);
+            setEnd(endDate);
         }
     }
     return (
-        <Container>
-            <FullCalendar
-                plugins={[ dayGridPlugin ]}
-                initialView="dayGridMonth"
-                events={events}
-                //@ts-ignore
-                eventClick={handleEventClick}
-            />
-        </Container>
+        <div className="flex">
+            <Container className="w-3/4">
+                <FullCalendar
+                    plugins={[ dayGridPlugin ]}
+                    initialView="dayGridMonth"
+                    events={events}
+                    //@ts-ignore
+                    eventClick={handleEventClick}
+                />
+            </Container>
+            {openEvent && (
+                <div className="fixed top-0 left-0 z-50 w-full h-full flex items-center justify-center">
+                <div className="absolute top-0 left-0 w-full h-full bg-gray-900 opacity-50"></div>
+                <div className="z-10 w-1/3 p-4">
+                    <div className="bg-white shadow-md rounded-md p-4">
+                        <h2 className="text-lg font-bold mb-4">{eventName}</h2>
+                        <div className="mb-2">
+                            <span className="font-semibold">Link:</span> {link}
+                        </div>
+                        <div className="mb-2">
+                            <span className="font-semibold">Content:</span> {content}
+                        </div>
+                        <div className="mb-2">
+                            <span className="font-semibold">Start:</span> {start}
+                        </div>
+                        <div className="mb-4">
+                            <span className="font-semibold">End:</span> {end}
+                        </div>
+                        <button onClick={() => setOpenEvent(!openEvent)} className="bg-red-500 text-white py-2 px-4 rounded-md hover:bg-red-600 focus:outline-none focus:bg-red-600">Close</button>
+                    </div>
+                </div>
+            </div>
+            
+           
+           
+            )}
+        </div>
     )
 }
