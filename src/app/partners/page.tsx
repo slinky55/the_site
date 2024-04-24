@@ -73,7 +73,7 @@ export default async function PartnersPage() {
               </div>
               <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                   {partners?.map((partner: Partner) => (
-                      <article key={partner.name} className="flex flex-col items-start justify-between">
+                    <a href={`${partner.website_link}`} key={partner.name} className="flex flex-col items-start justify-between">
                           <div className="relative w-full">
                               <Image src={partner.logo} alt="" className="object-cover w-full h-48 rounded-2xl" width={500} height={500} />
                               <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
@@ -81,15 +81,13 @@ export default async function PartnersPage() {
                           <div className="max-w-xl">
                               <div className="group relative">
                                   <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                                      <a href={`${partner.website_link}`}>
                                           <span className="absolute inset-0" />
                                           {partner.name}
-                                      </a>
                                   </h3>
                                   <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{partner.description}</p>
                               </div>
                           </div>
-                      </article>
+                      </a>
                   ))}
               </div>
           </div>

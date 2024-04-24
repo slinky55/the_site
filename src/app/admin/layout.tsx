@@ -23,7 +23,8 @@ export default function AdminLayout({
   manageresearch,
   feedback,
   pagemodifier,
-  usermgmt
+  usermgmt,
+  managetopics
 }: {
   children: React.ReactNode;
   createteam: React.ReactNode;
@@ -43,6 +44,7 @@ export default function AdminLayout({
   feedback: React.ReactNode;
   pagemodifier: React.ReactNode;
   usermgmt: React.ReactNode;
+  managetopics: React.ReactNode;
 }) {
 
   const [display, setDisplay] = useState<number>(0);
@@ -138,6 +140,9 @@ export default function AdminLayout({
               <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(16)}>
                 <div className={styles.headerItem}>User Management</div>
               </div>
+              <div className={styles.layoutSidebarBtn} onClick={() => setDisplay(17)}>
+                <div className={styles.headerItem}>Manage Topics</div>
+              </div>
             </div>
         ) : (
             <div className={`${open && styles.layoutSidebar} ${!open && styles.minimized}`}>
@@ -167,6 +172,7 @@ export default function AdminLayout({
           {(display == 14) && feedback}
           {(display == 15) && pagemodifier}
           {(display == 16) && usermgmt}
+          {(display == 17) && managetopics}
         </div>
       </div>
     </>

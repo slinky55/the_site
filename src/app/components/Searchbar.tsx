@@ -14,13 +14,59 @@ interface SearchBarProps {
     onDataReceived: (data: any) => void
 }
 
+interface Topic {
+    topic_id: string,
+    topic: string
+}
+
 const SearchBar: React.FC<SearchBarProps> = ({ params, onDataReceived }) => {
     const [init, setInit] = useState<boolean>(true);
     const [searchContent, setSearchContent] = useState<string>('');
     const [loading, setLoading] = useState(true);
     const [selectedTopics, setSelectedTopics] = useState<string[]>([]);
     const [data, setData] = useState<any[]>([]);
-    const topics = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health"]
+    const [topicsList, setTopicsList] = useState<Topic[]>([]);
+    const [topics, setTopics] = useState<string[]>([]);
+
+    useEffect(()=> {
+        const queryData = {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            }
+          }
+            async function getData() {
+                try {
+                    const res = await fetch("/api/topic/gettopics", queryData);
+      
+                    if (!res.ok) {
+                        throw new Error(`HTTP error! Status: ${res.status}`);
+                    }
+      
+                    const data = await res.json();
+      
+                    if (!Array.isArray(data.topics)) {
+                        throw new Error('Unexpected data format');
+                    }
+      
+                    setTopicsList(data.topics);
+                } catch (error) {
+                    console.error(error);
+                }
+            }
+      
+            getData();
+    }, [])
+
+    useEffect(()=> {
+        var arr: string[] = []
+        for(let i = 0; i < topicsList.length; i++) {
+            arr.push(topicsList[i].topic)
+        }
+
+        setTopics(arr);
+
+    }, [topicsList])
 
     useEffect(() => {
         // Call the onDataReceived function when data changes
@@ -29,7 +75,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ params, onDataReceived }) => {
         }
     }, [data, onDataReceived]);
 
-    const arrayToString = (array: string[]) => array.join(', ');
+    const arrayToString = (array: string[]) => array.join(',');
 
     const toggleTopic = (topic: string) => {
         setInit(false);
@@ -44,7 +90,8 @@ const SearchBar: React.FC<SearchBarProps> = ({ params, onDataReceived }) => {
         setInit(false);
         setLoading(true);
         var newFilters: Filter[] = [];
-
+        console.log(selectedTopics);
+        console.log(arrayToString(selectedTopics));
         if(selectedTopics.length > 0) {
             const filter = {
                 fieldName: 'topics',

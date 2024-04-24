@@ -19,7 +19,8 @@ export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
 
     const [success, setSuccess] = useState(false);
-
+    const topicsList = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health", "AI", "Science"]
+    
 
     async function createResearch() {
       const postData = {
@@ -28,12 +29,12 @@ export default function Page() {
           "Content-Type": "application/json",
           },
           body: JSON.stringify({
-              event_id: uuidv4(),
+              research_id: uuidv4(),
               title: title,
               journal: journal,
               url: url,
               written_on: writtenOn,
-              topics: topics,
+              topics: "{" + topics + "}",
               thumbnail: img
           }),
       }

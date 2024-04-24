@@ -188,7 +188,7 @@ export default function BlogPage() {
                                             };
 
                                             return (
-                                                <article key={post.post_id} className="relative isolate flex flex-col gap-8 lg:flex-row">
+                                                <article key={post.post_id} className="relative isolate flex flex-col gap-8 lg:flex-row hover:cursor-pointer" onClick={navigateToPost}>
                                                     <div
                                                         className="relative aspect-[16/9] sm:aspect-[2/1] lg:aspect-square lg:w-64 lg:shrink-0">
                                                         <Image
@@ -204,19 +204,21 @@ export default function BlogPage() {
                                                             <time dateTime={date.toISOString()} className="text-gray-500">
                                                                 {formattedDate}
                                                             </time>
-                                                            <a
-                                                                href={post.topics}
-                                                                className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-                                                            >
-                                                                {post.topics}
-                                                            </a>
+                                                            {post.topics.map((topic)=>
+                                                                (
+                                                                <span 
+                                                                    className="relative z-10 rounded-full bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
+                                                                >
+                                                                    {topic}
+                                                                </span>
+                                                                )
+                                                            )}
+                                                            
                                                         </div>
                                                         <div className="group relative max-w-xl">
                                                             <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                                                                <a onClick={navigateToPost}>
                                                                     <span className="absolute inset-0"/>
                                                                     {post.title}
-                                                                </a>
                                                             </h3>
                                                             <p className="mt-5 text-sm leading-6 text-gray-600">
                                                                 {post.content.length > 150
@@ -229,16 +231,14 @@ export default function BlogPage() {
                                                         <div className="mt-6 flex border-t border-gray-900/5 pt-6">
                                                             <div className="relative flex items-center gap-x-4">
                                                                 <Image src={post.image_src} alt=""
-                                                                     className="h-10 w-10 rounded-full bg-gray-50"
-                                                                     width={100}
-                                                                     height={100}
-                                                                     />
+                                                                    className="h-10 w-10 rounded-full bg-gray-50"
+                                                                    width={100}
+                                                                    height={100}
+                                                                    />
                                                                 <div className="text-sm leading-6">
                                                                     <p className="font-semibold text-gray-900">
-                                                                        <a href={post.user_id}>
                                                                             <span className="absolute inset-0"/>
                                                                             {userData ? userData.name : 'Loading...'}
-                                                                        </a>
                                                                     </p>
                                                                 </div>
                                                             </div>

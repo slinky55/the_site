@@ -55,7 +55,8 @@ export default async function Projects() {
                 </div>
                 <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
                     {projects.map((project: Project) => (
-                        <article key={project.title} className="flex flex-col items-start justify-between">
+                      <a className="flex flex-col items-start justify-between hover:cursor-pointer" href={`projects/${project.project_id}`}>
+                        <article key={project.title}>
                             <div className="relative w-full">
                                 <Image src={project.primary_image_src} alt="" className="object-cover w-full h-48 rounded-2xl" width={500} height={500} />
                                 <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-gray-900/10" />
@@ -63,15 +64,12 @@ export default async function Projects() {
                             <div className="max-w-xl">
                                 <div className="group relative">
                                     <h3 className="mt-3 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
-                                        <a href={`projects/${project.project_id}`}>
                                             <span className="absolute inset-0" />
                                             {project.title}
-                                        </a>
                                     </h3>
                                     <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{project.content}</p>
                                 </div>
                                 <div className="relative mt-8 flex items-center gap-x-4">
-                                    <img src={project.project_lead} alt="" className="h-10 w-10 rounded-full bg-gray-100" />
                                     <div className="text-sm leading-6">
                                         <p className="font-semibold text-gray-900">
                                                 {project.project_lead}
@@ -80,6 +78,7 @@ export default async function Projects() {
                                 </div>
                             </div>
                         </article>
+                        </a>
                     ))}
                 </div>
             </div>

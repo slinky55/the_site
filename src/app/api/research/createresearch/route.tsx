@@ -14,7 +14,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     
     try  {
         const result = await executeQuery({
-            query: `INSERT INTO Research (research_id, title, journal, topics, thumbnail, written_on, url, added_to_db) VALUES (?, ?, ?, ?, ?, ?, ?, NOW())`,
+            query: `INSERT INTO Research (research_id, title, journal, topics, thumbnail, written_on, url, created_at) VALUES (?, ?, ?, ?, ?, TO_DATE(?, 'YYYY-MM-DD'), ?, NOW())`,
             values: [researchId, title, journal, topics, thumbnail, writtenOn, url],
         })
         console.log(result);

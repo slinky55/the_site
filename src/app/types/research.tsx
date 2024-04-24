@@ -2,7 +2,7 @@ export type Research = {
     research_id: string,
     title: string,
     journal: string,
-    topics: string,
+    topics: string[],
     thumbnail: string,
     url: string,
     written_on: Date,

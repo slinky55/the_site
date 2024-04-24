@@ -14,7 +14,7 @@ export async function POST(req: NextRequest, res: NextResponse) {
     
     try  {
         const result = await executeQuery({
-            query: `UPDATE Event SET name = ?, content = ?, regLink = ?, eventStart = STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.%fZ'), eventEnd = STR_TO_DATE(?, '%Y-%m-%dT%H:%i:%s.%fZ') WHERE event_id = ?`,
+            query: `UPDATE Event SET name = ?, content = ?, reg_link = ?, event_start = TO_TIMESTAMP(?, 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"'), event_end = TO_TIMESTAMP(?, 'YYYY-MM-DD"T"HH24:MI:SS.US"Z"') WHERE event_id = ?`,
             values: [name, content, regLink, eventStart, eventEnd, eventId],
         })
         console.log(result);
