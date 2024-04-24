@@ -9,11 +9,11 @@ import { DataTypes } from "sequelize";
 import argon2 from "argon2";
 
 export const authConfig = {
-    providers: [    
-        GithubProvider({      
-            clientId: process.env.GITHUB_ID!,      
-            clientSecret: process.env.GITHUB_SECRET!,    
-        }),  
+    providers: [
+        GithubProvider({
+            clientId: process.env.GITHUB_ID!,
+            clientSecret: process.env.GITHUB_SECRET!,
+        }),
         GoogleProvider({
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
@@ -35,7 +35,7 @@ export const authConfig = {
                 const {email, password} = credentials;
                 
                 try {
-                    const rows = await executeQuery({query: "SELECT id, passwordHash FROM users WHERE email = ? LIMIT 1", values: [email]}) as User[];
+                    const rows = await executeQuery({query: `SELECT id, "passwordHash" FROM users WHERE email = ? LIMIT 1`, values: [email]}) as User[];
                     
                     if (rows.length < 1) {
                         // create user

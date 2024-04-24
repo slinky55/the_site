@@ -7,6 +7,8 @@ import argon2 from "argon2";
 import { randomUUID } from "crypto";
 import { redirect } from "next/navigation";
 
+import { sql } from "@vercel/postgres";
+
 const SignUpSchema = z.object({
     firstName: z.string().max(36, { message: "First name is too long"} ),
     lastName: z.string().max(36, { message: "First name is too long"} ),
@@ -14,9 +16,7 @@ const SignUpSchema = z.object({
     password: z.string().min(8, { message: "Password is too short" }),
 });
 
-export async function signUpWithEmail(prevState: any, formData: FormData) {
-    console.log("check")
-
+export async function signUpWithEmail(formData: FormData) {
     const rawForm = {
         firstName: formData.get("first_name"),
         lastName: formData.get("last_name"),
@@ -26,9 +26,8 @@ export async function signUpWithEmail(prevState: any, formData: FormData) {
 
     const parse = SignUpSchema.safeParse(rawForm);
     if (!parse.success) {
-        return {
-            message: "Error when signing up",
-        }
+        console.log("error parsing")
+        return;
     }
 
     const data = parse.data;
@@ -36,9 +35,8 @@ export async function signUpWithEmail(prevState: any, formData: FormData) {
     try {
         const query = await executeQuery({query: "SELECT id FROM users WHERE email = ?", values: [data.email]}) as User[];
         if (query.length > 0) {
-            return {
-                message: "Email is already in use",
-            }
+            console.log("query failed")
+            return;
         }
         
         const uuid = randomUUID();
@@ -48,17 +46,13 @@ export async function signUpWithEmail(prevState: any, formData: FormData) {
             secret: Buffer.from(process.env.HASH_SECRET!),
         });
         const date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+        const priv = "default"
 
-        const insert = await executeQuery({
-            query: "INSERT INTO users (id, name, email, passwordHash, createdAt, updatedAt) VALUES (?, ?, ?, ?, ?, ?)", 
-            values: [uuid, name, data.email, hash, date, date]
-        });
-        console.log(insert)
-
-        redirect("/")
+        await sql`INSERT INTO users (id, name, email, "passwordHash", "privilegeLevel", "createdAt", "updatedAt") VALUES (${uuid}, ${name}, ${data.email}, ${hash}, ${priv}, NOW(), NOW())`
     } catch (err) {
-        return {
-            message: "Error when signing up",
-        }
+        console.log(err)
+        return;
     }
+
+    redirect("/")
 }
