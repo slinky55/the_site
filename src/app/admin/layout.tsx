@@ -4,7 +4,6 @@ import {useState} from "react";
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 import {faBars} from "@fortawesome/free-solid-svg-icons";
 import styles from './page.module.css'
-
 export default function AdminLayout({
   children,
   createteam,
@@ -46,7 +45,6 @@ export default function AdminLayout({
   usermgmt: React.ReactNode;
   managetopics: React.ReactNode;
 }) {
-
   const [display, setDisplay] = useState<number>(0);
   const [submenu, setSubmenu] = useState<number>(14);
   const [open, setOpen] = useState<boolean>(false);
