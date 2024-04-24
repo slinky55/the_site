@@ -5,6 +5,7 @@ import React, { useState, useEffect } from 'react';
 import { Research } from '@/app/types/research';
 import { Sort } from '../types/sort';
 import SearchBar from '../components/Searchbar';
+import { Div } from '../types/div';
 
 interface Data {
   research: Research[]
@@ -13,6 +14,9 @@ interface Data {
 export default function ResearchLibraryPage() {
   const [research, setResearch] = useState<Research[]>([]);
   const [loading, setLoading] = useState(true);
+  const [divs, setDivs] = useState<Div[]>([]);
+  const [images,setImages] = useState<any[]>([]);
+
   const limit = 10;
   const sort: Sort = {
     fieldName: 'title',
@@ -20,6 +24,59 @@ export default function ResearchLibraryPage() {
   }
 
   useEffect(() => {
+    const queryData2 = {
+      method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          page: 'researchlib',
+          limit: limit,
+          offset: 0,
+        })
+    }
+    async function getImgData() {
+        try {
+            const res = await fetch("/api/images/getimages", queryData2);
+
+            if (!res.ok) {
+                throw new Error(`HTTP error! Status: ${res.status}`);
+            }
+
+            const data = await res.json();
+
+            if (!Array.isArray(data.images)) {
+                throw new Error('Unexpected data format');
+            }
+
+            setImages(data.images);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    async function getDivData() {
+      try {
+          const res = await fetch("/api/divs/getdivs", queryData2);
+
+          if (!res.ok) {
+              throw new Error(`HTTP error! Status: ${res.status}`);
+          }
+
+          const data = await res.json();
+
+          if (!Array.isArray(data.divs)) {
+              throw new Error('Unexpected data format');
+          }
+
+          setDivs(data.divs);
+      } catch (error) {
+          console.error(error);
+      }
+  }
+
+    getImgData();
+    getDivData();
+
     const queryData = {
       method: "POST",
         headers: {
@@ -61,6 +118,23 @@ export default function ResearchLibraryPage() {
     setResearch(data.research);
   };
 
+  function getItem(l: string, img: boolean) {
+    if(img) {
+      for(let i = 0; i < images.length; i++) {
+        if(images[i].label===l) {
+          return images[i]
+        }
+      }
+    }
+    else {
+      for(let i = 0; i < divs.length; i++) {
+        if(divs[i].label===l) {
+          return divs[i]
+        }
+      }
+    }
+  }
+
   return (
     <div className={styles.container}>
       <div id="functionalBody">
@@ -70,7 +144,7 @@ export default function ResearchLibraryPage() {
                 <div className="mx-auto max-w-2xl text-center">
                     <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Research Library</h2>
                     <p className="mt-2 text-lg leading-8 text-gray-600">
-                        Research articles spotlighted by the T.H.E. Team
+                      {getItem('intro',false)?.content}
                     </p>
                 </div>
                 <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">
