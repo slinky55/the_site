@@ -84,7 +84,7 @@ export default function Page() {
 
     return (
       <>
-        <div className={styles.header}>Manage Posts</div>
+        <div className={styles.header}>Manage Users</div>
           <hr/>
       <div className={styles.container}> 
       {loading ? (<></>) : users ? (

@@ -218,8 +218,8 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                             <div className={styles.postFooter}>
                                 <p className={styles.date} key={comment.comment_id}><i>Edited on: {new Date(comment.last_modified).toLocaleString()}</i></p>
                                 <span>
-                  <button onClick={() => { toggleReply(comment.comment_id); clearCurrentTextarea(comment.comment_id); }}><FontAwesomeIcon className={styles.replyIcon} icon={faReply}/></button>
-                  <button onClick={() => deleteComment(comment.comment_id)}><FontAwesomeIcon className={styles.trashIcon} icon={faTrash}/></button></span>
+                  <button onClick={() => { toggleReply(comment.comment_id); clearCurrentTextarea(comment.comment_id); }}><FontAwesomeIcon className={styles.replyIcon} icon={faReply as any}/></button>
+                  <button onClick={() => deleteComment(comment.comment_id)}><FontAwesomeIcon className={styles.trashIcon} icon={faTrash as any}/></button></span>
                             </div>
                         </div>
                         {expandReply[comment.comment_id] ? (
@@ -279,7 +279,7 @@ const PostPage: React.FC<PostPageProps> = ({ params }) => {
                         </div>
                         <div className={styles.postFooter}>
                             <p className={styles.date} key={post.post_id}><i>Edited on: {new Date(post.last_modified).toLocaleString()}</i></p>
-                            <button onClick={deletePost}><FontAwesomeIcon className={styles.trashIcon} icon={faTrash}/></button>
+                            <button onClick={deletePost}><FontAwesomeIcon className={styles.trashIcon} icon={faTrash as any}/></button>
                         </div>
                     </div>
                 ) : (

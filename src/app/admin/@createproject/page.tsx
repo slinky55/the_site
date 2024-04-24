@@ -16,6 +16,8 @@ export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
 
     const [success, setSuccess] = useState(false);
+    const [imgName, setImgName] = useState<string>('');
+    const [galleryNames, setGalleryNames] = useState<string[]>([]);
 
     async function createProject() {
       const postData = {
@@ -54,14 +56,18 @@ export default function Page() {
 
     function uploadImg(files: any) {
       setImg(files[0].link.replace('dl=0', 'raw=1'));
+      setImgName(files[0].name); // Save the name of the file
       setUploaded(true);
     }
 
     function uploadImgs(files: any) {
+      const newGalleryNames: string[] = [];
       for(let i = 0; i < files.length; i++) {
         const updatedLink = files[i].link.replace('dl=0', 'raw=1');
         setGallery(prevGallery => [...prevGallery, updatedLink]);
+        newGalleryNames.push(files[i].name); // Save the names of the files
       }
+      setGalleryNames(newGalleryNames);
     }
 
 
@@ -107,6 +113,7 @@ export default function Page() {
             <button                           className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >Upload Thumbnail</button>
           </DropboxChooser>
+          <div>Thumbnail: {imgName}</div>
           <hr style={{gridColumn: 'span 2'}}/>
           <div
           className={styles.galleryLabel}>
@@ -122,6 +129,7 @@ export default function Page() {
               <button                           className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
               >Upload to Gallery</button>
           </DropboxChooser>
+          <div>Gallery: {galleryNames.join(', ')}</div>
           <div></div>
           <hr style={{gridColumn: 'span 2'}}/>
           <button

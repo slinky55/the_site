@@ -6,6 +6,7 @@ import { Dialog, Description, Transition, Button } from '@headlessui/react'
 import styles from '../page.module.css'
 import { Comment } from '../../types/comment'
 import { Spinner } from "@/app/components/Spinner";
+import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
 export default function Page() {
     // Get Unapproved Comments
@@ -300,7 +301,7 @@ export default function Page() {
                                   )}
                                   {comment.comment_id && comment.comment_id in parentComment ? 
                                   (
-                                    <div className={styles.contextComment}><FontAwesomeIcon icon={faReply}/><span className={styles.gap}></span>{parentComment[comment.comment_id]}</div>
+                                    <div className={styles.contextComment}><FontAwesomeIcon icon={faReply as IconProp}/><span className={styles.gap}></span>{parentComment[comment.comment_id]}</div>
                                   ) : (
                                     <></>
                                   )}
@@ -316,13 +317,13 @@ export default function Page() {
                                     onClick={() => approveComment(comment)}
                                     className={styles.approveModal}
                                   >
-                                    Approve<span className={styles.gap}></span><FontAwesomeIcon className={styles.checkmark} icon={faCheckCircle}/>
+                                    Approve<span className={styles.gap}></span><FontAwesomeIcon className={styles.checkmark} icon={faCheckCircle as IconProp}/>
                                   </Button>
                                   <Button 
                                     type="button"
                                     onClick={() => rejectComment(comment.comment_id)}
                                     className={styles.rejectModal}>
-                                    Reject<span className={styles.gap}></span><FontAwesomeIcon className={styles.x} icon={faXmarkCircle}/>
+                                    Reject<span className={styles.gap}></span><FontAwesomeIcon className={styles.x} icon={faXmarkCircle as IconProp}/>
                                   </Button>
                                 </div>
                               </Dialog.Panel>

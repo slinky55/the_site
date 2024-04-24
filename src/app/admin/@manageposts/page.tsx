@@ -174,7 +174,7 @@ export default function Page() {
 
       setPosts(prevPosts => {
         const updatedPost = [...prevPosts];
-        updatedPost[index] = updatedPostItem;
+        updatedPost[index] = (updatedPostItem as any);
         return updatedPost;
       });
 
@@ -351,7 +351,7 @@ export default function Page() {
                           className={styles.btn}
                           onClick={() => toggleEditing(
                             post.title,
-                            post.topics,
+                            post.topics as any,
                             post.content,
                             post.image_src)}
                         >

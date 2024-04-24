@@ -11,6 +11,7 @@ import { faEdit, faCancel } from '@fortawesome/free-solid-svg-icons';
 // @ts-ignore
 import DropboxChooser from 'react-dropbox-chooser';
 import Image from 'next/image';
+import {IconProp} from "@fortawesome/fontawesome-svg-core";
 
 type editState = {
   [key: string]: boolean[];
@@ -286,7 +287,7 @@ export default function Page() {
                     home: prevState.home.map((value, index) => index === 0 ? !value : value)
                   }));
                   
-                }} ><FontAwesomeIcon icon={faEdit} /></button>
+                }} ><FontAwesomeIcon icon={faEdit as any} /></button>
               )}
               {openEdit['home'][0] && (
                 <div className='flex'>
@@ -320,7 +321,7 @@ export default function Page() {
                       }));
                       
                       }} >
-                        <FontAwesomeIcon icon={faCancel} />
+                        <FontAwesomeIcon icon={faCancel as any} />
                     </button>
                   </div>
                 </div>
@@ -333,7 +334,7 @@ export default function Page() {
                     home: prevState.home.map((value, index) => index === 1 ? !value : value)
                   }));
                   
-                }} ><FontAwesomeIcon icon={faEdit} /></button>
+                }} ><FontAwesomeIcon icon={faEdit as any} /></button>
               )}
               {openEdit['home'][1] && (
                 <div className='flex'>
@@ -365,7 +366,7 @@ export default function Page() {
                       home: prevState.home.map((value, index) => index === 1 ? !value : value)
                     }));
                     }} >
-                      <FontAwesomeIcon icon={faCancel} />
+                      <FontAwesomeIcon icon={faCancel as any} />
                   </button>
                 </div>
               )}
@@ -377,7 +378,7 @@ export default function Page() {
                     home: prevState.home.map((value, index) => index === 2 ? !value : value)
                   }));
                   
-                }} ><FontAwesomeIcon icon={faEdit} /></button>
+                }} ><FontAwesomeIcon icon={faEdit as any} /></button>
               )}
               {openEdit['home'][2] && (
                 <div className='flex'>
@@ -410,7 +411,7 @@ export default function Page() {
                     }));
                     
                     }} >
-                      <FontAwesomeIcon icon={faCancel} />
+                      <FontAwesomeIcon icon={faCancel as any} />
                   </button>
                 </div>
               )}
@@ -432,7 +433,7 @@ export default function Page() {
                     home: prevState.home.map((value, index) => index === 12 ? !value : value)
                   }));
                   
-                }} ><FontAwesomeIcon icon={faEdit} /></button>
+                }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 )}
                 {openEdit['home'][12] && (
                   <div className='flex'>
@@ -465,7 +466,7 @@ export default function Page() {
                       }));
                       
                       }} >
-                        <FontAwesomeIcon icon={faCancel} />
+                        <FontAwesomeIcon icon={faCancel as any} />
                     </button>
                   </div>
                 )}
@@ -479,7 +480,7 @@ export default function Page() {
                       ...prevState,
                       home: prevState.home.map((value, index) => index === 4 ? !value : value)
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <textarea
@@ -495,7 +496,7 @@ export default function Page() {
                       home: prevState.home.map((value, index) => index === 4 ? !value : value)
                     }));
                     }} >
-                      <FontAwesomeIcon icon={faCancel} />
+                      <FontAwesomeIcon icon={faCancel as any} />
                   </button>
                   </div>
                 )}
@@ -508,7 +509,7 @@ export default function Page() {
                       ...prevState,
                       home: prevState.home.map((value, index) => index === 5 ? !value : value)
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <textarea
@@ -524,7 +525,7 @@ export default function Page() {
                       home: prevState.home.map((value, index) => index === 5 ? !value : value)
                     }));
                     }} >
-                      <FontAwesomeIcon icon={faCancel} />
+                      <FontAwesomeIcon icon={faCancel as any} />
                   </button>
                   </div>
                 )}
@@ -546,7 +547,7 @@ export default function Page() {
                       ...prevState,
                       home: prevState.home.map((value, index) => index === 6 ? !value : value)
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <div className='flex'>
@@ -578,7 +579,7 @@ export default function Page() {
                           home: prevState.home.map((value, index) => index === 6 ? !value : value)
                         }));
                         }} >
-                          <FontAwesomeIcon icon={faCancel} />
+                          <FontAwesomeIcon icon={faCancel as any} />
                       </button>
                     </div>
                   </div>
@@ -592,7 +593,7 @@ export default function Page() {
                       ...prevState,
                       home: prevState.home.map((value, index) => index === 7 ? !value : value)
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <div>
@@ -609,7 +610,7 @@ export default function Page() {
                           home: prevState.home.map((value, index) => index === 7 ? !value : value)
                         }));
                         }} >
-                          <FontAwesomeIcon icon={faCancel} />
+                          <FontAwesomeIcon icon={faCancel as any} />
                       </button>
                     </div>
                   </div>
@@ -627,7 +628,7 @@ export default function Page() {
                       ...prevState,
                       home: prevState.home.map((value, index) => index === 8 ? !value : value)
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <div className='flex'>
@@ -659,7 +660,7 @@ export default function Page() {
                           home: prevState.home.map((value, index) => index === 8 ? !value : value)
                         }));
                         }} >
-                          <FontAwesomeIcon icon={faCancel} />
+                          <FontAwesomeIcon icon={faCancel as any} />
                       </button>
                     </div>
                   </div>
@@ -673,7 +674,7 @@ export default function Page() {
                       ...prevState,
                       home: prevState.home.map((value, index) => index === 9 ? !value : value)
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <textarea
@@ -689,7 +690,7 @@ export default function Page() {
                       home: prevState.home.map((value, index) => index === 9 ? !value : value)
                     }));
                     }} >
-                      <FontAwesomeIcon icon={faCancel} />
+                      <FontAwesomeIcon icon={faCancel as any} />
                   </button>
                   </div>
                 )}
@@ -706,7 +707,7 @@ export default function Page() {
                       ...prevState,
                       home: prevState.home.map((value, index) => index === 10 ? !value : value)
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <div className='flex'>
@@ -738,7 +739,7 @@ export default function Page() {
                           home: prevState.home.map((value, index) => index === 10 ? !value : value)
                         }));
                         }} >
-                          <FontAwesomeIcon icon={faCancel} />
+                          <FontAwesomeIcon icon={faCancel as any} />
                       </button>
                     </div>
                   </div>
@@ -752,7 +753,7 @@ export default function Page() {
                       ...prevState,
                       home: prevState.home.map((value, index) => index === 11 ? !value : value)
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <textarea
@@ -768,7 +769,7 @@ export default function Page() {
                       home: prevState.home.map((value, index) => index === 11 ? !value : value)
                     }));
                     }} >
-                      <FontAwesomeIcon icon={faCancel} />
+                      <FontAwesomeIcon icon={faCancel as any} />
                   </button>
                   </div>
                 )}
@@ -794,7 +795,7 @@ export default function Page() {
                       ...prevState,
                       about: [!prevState.about[0]]
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <textarea
@@ -823,7 +824,7 @@ export default function Page() {
                       ...prevState,
                       blog: [!prevState.blog[0]]
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <textarea
@@ -849,7 +850,7 @@ export default function Page() {
                       ...prevState,
                       contact: [!prevState.contact[0]]
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <textarea
@@ -875,7 +876,7 @@ export default function Page() {
                       ...prevState,
                       partners: [!prevState.partners[0]]
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <textarea
@@ -901,7 +902,7 @@ export default function Page() {
                       ...prevState,
                       projects: [!prevState.projects[0]]
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <textarea
@@ -927,7 +928,7 @@ export default function Page() {
                       ...prevState,
                       researchlib: [!prevState.researchlib[0]]
                     }));
-                  }} ><FontAwesomeIcon icon={faEdit} /></button>
+                  }} ><FontAwesomeIcon icon={faEdit as any} /></button>
                 ) : (
                   <div>
                     <textarea
