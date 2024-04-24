@@ -17,6 +17,7 @@ export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
 
     const [success, setSuccess] = useState(false);
+    const [fileName, setFileName] = useState<string>('');
 
     async function createTeam() {
       const postData = {
@@ -55,6 +56,7 @@ export default function Page() {
 
     function uploadImg(files: any) {
       setImg(files[0].link.replace('dl=0', 'raw=1'));
+      setFileName(files[0].name); // Set the file name
       setUploaded(true);
     }
 
@@ -105,6 +107,9 @@ export default function Page() {
                   </div>
 
               </button>
+              <div>
+            Uploaded image: {fileName}
+          </div>
           </DropboxChooser>
             <button
                 className="block w-full rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-red-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"

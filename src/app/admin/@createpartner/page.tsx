@@ -17,6 +17,7 @@ export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
 
     const [success, setSuccess] = useState(false);
+    const [imgName, setImgName] = useState<string>('')
 
     async function createPartner() {
       const postData = {
@@ -54,6 +55,7 @@ export default function Page() {
 
     function uploadImg(files: any) {
       setImg(files[0].link.replace('dl=0', 'raw=1'));
+      setImgName(files[0].name); // Set the image name
       setUploaded(true);
     }
 
@@ -93,10 +95,6 @@ export default function Page() {
           value={partnershipFormed}
           onChange={(e) => setPartnershipFormed(e.target.value)}
           required/>
-          <div
-          className={styles.galleryLabel}>
-            Upload Partner{"'"}s Logo
-          </div>
           <DropboxChooser
             appKey={appKey}
             success={(files: any) => uploadImg(files)}
@@ -119,6 +117,9 @@ export default function Page() {
                   </div>
               </button>
           </DropboxChooser>
+          <div>
+            Uploaded image: {imgName}
+          </div>
             <hr style={{gridColumn: 'span 2'}}/>
             <button
                 className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"

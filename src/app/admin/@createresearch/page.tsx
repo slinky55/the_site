@@ -19,6 +19,7 @@ export default function Page() {
     const appKey = process.env.NEXT_PUBLIC_DROPBOX_KEY;
 
     const [success, setSuccess] = useState(false);
+    const [imgName, setImgName] = useState<string>('');
     const topicsList = ["Lifestyle", "Innovation", "Research", "Events", "Finance", "Technology & Gadgets", "Health", "AI", "Science"]
     
 
@@ -62,6 +63,7 @@ export default function Page() {
 
   function uploadImg(files: any) {
     setImg(files[0].link.replace('dl=0', 'raw=1'));
+    setImgName(files[0].name); // Set the image name
     setUploaded(true);
   }
 
@@ -111,6 +113,7 @@ export default function Page() {
             <button                           className="rounded-md bg-white px-2.5 py-1.5 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
             >Upload Thumbnail</button>
           </DropboxChooser>
+          <div>Uploaded image: {imgName}</div>
           <div
           className={styles.eventLabel}>
             Select when the research article was written.
