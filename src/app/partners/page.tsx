@@ -9,7 +9,7 @@ async function getData() {
     const result: Partner[] = await executeQuery({
         query: 'SELECT * FROM Partner',
         values: '',
-    })
+    }) as Partner[];
     if (result) {
       return result;
     } else {
@@ -68,7 +68,7 @@ export default async function PartnersPage() {
               <div className="mx-auto max-w-2xl text-center">
                   <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Partners</h2>
                   <p className="mt-2 text-lg leading-8 text-gray-600">
-                      Meet the T.H.E. Team's partners!
+                      Meet the T.H.E. Team{"'"}s partners!
                   </p>
               </div>
               <div className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-20 lg:mx-0 lg:max-w-none lg:grid-cols-3">

@@ -77,6 +77,8 @@ export const authConfig = {
 
         async session({session, token, user}: any) {
             session.privilegeLevel = user.privilegeLevel;
+            session.user.privilegeLevel = user.privilegeLevel;
+            session.user.id = user.id;
 
             console.log(session)
 

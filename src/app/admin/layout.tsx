@@ -66,7 +66,7 @@ export default function AdminLayout({
         {open ? (
             <div className={styles.layoutSidebar}>
               <div className={styles.menuBtn} onClick={() => setOpen(!open)}>
-                <FontAwesomeIcon className={styles.menuIcon} icon={faBars}/>
+                <FontAwesomeIcon className={styles.menuIcon} icon={faBars as any}/>
               </div>
               <div className={styles.layoutSidebarBtn} onClick={() => toggleSubmenu(0)}>
                 <div className={`${styles.headerItem} ${submenu === 0 && styles.selected}`}>Team Members</div>
@@ -147,7 +147,7 @@ export default function AdminLayout({
         ) : (
             <div className={`${open && styles.layoutSidebar} ${!open && styles.minimized}`}>
               <div className={styles.menuBtn} onClick={()=> setOpen(!open)}>
-              <FontAwesomeIcon className={styles.menuIcon} icon={faBars}/>
+              <FontAwesomeIcon className={styles.menuIcon} icon={faBars as any}/>
             </div>
           </div>
         )

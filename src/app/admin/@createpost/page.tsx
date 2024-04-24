@@ -95,7 +95,6 @@ export default function Page() {
             },
             body: JSON.stringify({
                 post_id: uuidv4(),
-                user_id: 'd9f78e32-919a-474e-b7b7-d20449275d24',
                 title: title,
                 topics: "{" + topics + "}",
                 image_src: img,
